@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal da Transparência | Câmara Municipal</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Variáveis de Cores */
+        :root {
+            --cor-fundo: #f2f2f2;
+            --cor-primaria: #025d3b; /* Verde da Câmara */
+            --cor-primaria-hover: #01472c;
+            --cor-primaria-bg: rgba(2, 93, 59, 0.08);
+            --branco: #ffffff;
+            --texto-escuro: #1f2937;
+            --texto-medio: #4b5563;
+            --texto-claro: #6b7280;
+            --borda: #e5e7eb;
+            --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--texto-escuro);
+            line-height: 1.6;
+            padding: 60px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Cabeçalho da Página */
+        .header-transparencia {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .badge-titulo {
+            display: inline-block;
+            background-color: var(--cor-primaria-bg);
+            color: var(--cor-primaria);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .header-transparencia h1 {
+            font-size: 2.5rem;
+            color: var(--texto-escuro);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .header-transparencia p {
+            font-size: 1.1rem;
+            color: var(--texto-medio);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Grid de Cartões */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        /* Estilo do Cartão (Clicável) */
+        .card-item {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--branco);
+            border-radius: 16px;
+            padding: 24px;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid var(--borda);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transicao);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Detalhe lateral verde que aparece no Hover */
+        .card-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--cor-primaria);
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.4s ease;
+        }
+
+        .card-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(2, 93, 59, 0.1);
+            border-color: transparent;
+        }
+
+        .card-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        /* Cabeçalho do Cartão (Ícone + Título) */
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .icone-box {
+            width: 48px;
+            height: 48px;
+            background-color: var(--cor-fundo);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            transition: var(--transicao);
+        }
+
+        .icone-box svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--cor-primaria);
+            transition: var(--transicao);
+        }
+
+        .card-item:hover .icone-box {
+            background-color: var(--cor-primaria);
+        }
+
+        .card-item:hover .icone-box svg {
+            fill: var(--branco);
+            transform: scale(1.1);
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--texto-escuro);
+            transition: color 0.3s ease;
+        }
+
+        .card-item:hover .card-title {
+            color: var(--cor-primaria);
+        }
+
+        /* Descrição do Cartão */
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--texto-medio);
+            flex-grow: 1; /* Faz os botões ficarem alinhados se colocar no futuro */
+        }
+
+        /* Destacar o Portal Externo (I-LAI) */
+        .card-destaque {
+            background-color: var(--cor-primaria);
+            color: var(--branco);
+        }
+        
+        .card-destaque .card-title,
+        .card-destaque .card-desc {
+            color: var(--branco);
+        }
+
+        .card-destaque .icone-box {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .card-destaque .icone-box svg {
+            fill: var(--branco);
+        }
+
+        .card-destaque:hover {
+            background-color: var(--cor-primaria-hover);
+        }
+
+        .card-destaque::before {
+            background-color: #fde047; /* Detalhe amarelo no portal principal */
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .header-transparencia h1 { font-size: 2rem; }
+            .grid-cards { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="header-transparencia">
+            <span class="badge-titulo">Gestão Pública</span>
+            <h1>Acesso à Informação</h1>
+            <p>Acompanhe a aplicação dos recursos públicos e conheça todas as ações administrativas, contratos e balanços da Câmara Municipal.</p>
+        </div>
+
+        <div class="grid-cards">
+
+            <a href="https://ilai.memory.com.br/#/entidades/login/99RRQE/2/public~2Finicio" target="_blank" class="card-item card-destaque">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,120v64a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V120a16,16,0,0,1,16-16H208A16,16,0,0,1,224,120Zm-16,0H48v64H208Z"></path><path d="M168,40v40H144V40H112V80H88V40A16,16,0,0,1,104,24h48A16,16,0,0,1,168,40Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Portal da Transparência</h3>
+                </div>
+                <p class="card-desc">Ambiente digital completo que reúne todas as informações públicas exigidas pela Lei de Acesso à Informação (LAI).</p>
+            </a>
+
+            <a href="portal-da-transparencia/balancos-anuais" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,200h-8V40a8,8,0,0,0-8-8H48a8,8,0,0,0-8,8V200H32a8,8,0,0,0,0,16H224a8,8,0,0,0,0-16ZM72,48H184V200H72ZM96,88a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,88Zm0,32a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,120Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Balanços Anuais</h3>
+                </div>
+                <p class="card-desc">Relatórios consolidados com demonstrativos contábeis, patrimoniais e financeiros da Câmara ao final de cada exercício.</p>
+            </a>
+
+            <a href="portal-da-transparencia/contratos" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216ZM104,128a8,8,0,0,1,8-8h32a8,8,0,0,1,0,16H112A8,8,0,0,1,104,128Zm0,32a8,8,0,0,1,8-8h32a8,8,0,0,1,0,16H112A8,8,0,0,1,104,160Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Contratos</h3>
+                </div>
+                <p class="card-desc">Relação completa de contratos firmados, administrativos ou emergenciais, contendo objeto, valores e vigência.</p>
+            </a>
+
+            <a href="portal-da-transparencia/plano-de-contratacoes-anual" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Plano de Contratação Anual</h3>
+                </div>
+                <p class="card-desc">Previsões de compras, contratações e licitações para o ano, promovendo planejamento e economicidade.</p>
+            </a>
+
+            <a href="portal-da-transparencia/pareceres-prestacao-de-contas-do-municipio" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M232,136v64a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V136a16,16,0,0,1,16-16H216A16,16,0,0,1,232,136Zm-16,0H40v64H216Zm-64,16H104a8,8,0,0,0,0,16h48a8,8,0,0,0,0-16ZM128,40A48.05,48.05,0,0,0,80,88V96H176V88A48.05,48.05,0,0,0,128,40Zm32,40H96V88a32,32,0,0,1,64,0Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Pareceres de Prestação</h3>
+                </div>
+                <p class="card-desc">Documentos emitidos pelo Tribunal de Contas e Câmara analisando a prestação de contas do Poder Executivo.</p>
+            </a>
+
+            <a href="portal-da-transparencia/concursos" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,16,208a8,8,0,0,0,16,0,80,80,0,0,1,104,0,8,8,0,0,0,16,0A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.7,79.8,79.8,0,0,0-45-36.42,60,60,0,1,0-36.26-95.27,8,8,0,1,1-10.4-12.16,76,76,0,1,1,53.51,123A95.82,95.82,0,0,1,252.84,195.6,8,8,0,0,1,250.14,206.7Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Concursos</h3>
+                </div>
+                <p class="card-desc">Editais, cronogramas e resultados de concursos públicos e processos seletivos para servidores e prestadores.</p>
+            </a>
+
+            <a href="portal-da-transparencia/convenios" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M192,104A88.08,88.08,0,0,0,104,16H88A16,16,0,0,0,72,32V56H48A16,16,0,0,0,32,72v80a8,8,0,0,0,8,8H56v48a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V120A16,16,0,0,0,208,104ZM88,32h16a72.08,72.08,0,0,1,72,72v40H160a8,8,0,0,0,0,16h16v48H72V144A88.08,88.08,0,0,0,160,56h16V104h32v40H192a8,8,0,0,0,0,16h16v48H184V144A72.08,72.08,0,0,1,112,72H88ZM48,72H72v72H48Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Convênios</h3>
+                </div>
+                <p class="card-desc">Informações sobre repasses realizados a entidades do terceiro setor, detalhando valores, objetivos e vigência.</p>
+            </a>
+
+            <a href="portal-da-transparencia/obras/" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M128,16A112,112,0,1,0,240,128,112.13,112.13,0,0,0,128,16Zm0,208a96,96,0,1,1,96-96A96.11,96.11,0,0,1,128,224Zm-16-96a8,8,0,0,1-8,8H88a8,8,0,0,1,0-16h16A8,8,0,0,1,112,128Zm40,0a8,8,0,0,1-8,8H128a8,8,0,0,1,0-16h16A8,8,0,0,1,152,128Zm40,0a8,8,0,0,1-8,8H168a8,8,0,0,1,0-16h16A8,8,0,0,1,192,128Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Obras</h3>
+                </div>
+                <p class="card-desc">Andamento das obras e serviços de engenharia, com projetos, empresas responsáveis e prazos de execução.</p>
+            </a>
+
+            <a href="portal-da-transparencia/acordos-firmados" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M245.48,150.14l-40.42-42.54A16,16,0,0,0,193.43,103h-24v-4A24,24,0,0,0,145.43,75H110.57A24,24,0,0,0,86.57,99v4h-24a16,16,0,0,0-11.63,4.6L10.52,150.14A16,16,0,0,0,10.21,173L54,218.42A16,16,0,0,0,65.5,223h125a16,16,0,0,0,11.5-4.58L245.79,173A16,16,0,0,0,245.48,150.14ZM102.57,99a8,8,0,0,1,8-8h34.86a8,8,0,0,1,8,8v4h-50.86ZM234.34,162l-43.83,45H65.5L21.66,162,62.57,119h130.86Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Acordos Firmados</h3>
+                </div>
+                <p class="card-desc">Termos de cooperação e parcerias com órgãos públicos e instituições, contendo partes, valores e vigência.</p>
+            </a>
+
+            <a href="portal-da-transparencia/estagiarios" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M228.61,71.07l-96-48a8,8,0,0,0-7.22,0l-96,48a8,8,0,0,0,0,14.33L50.59,96H40a8,8,0,0,0-8,8v48a8,8,0,0,0,16,0V108.73l72.39,36.19a8,8,0,0,0,7.22,0l40.39-20.19V176a24,24,0,0,0,24,24h24a24,24,0,0,0,24-24V113l12.61-6.3A8,8,0,0,0,228.61,71.07ZM224,176a8,8,0,0,1-8,8H192a8,8,0,0,1-8-8V106.73l40,20ZM128,128.5,41.51,85.25,128,42l86.49,43.25Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Estagiários</h3>
+                </div>
+                <p class="card-desc">Lista de estagiários contratados, instituições conveniadas, valores de bolsa e editais de seleção de estágio.</p>
+            </a>
+
+            <a href="sobre/estrutura-organizacional" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M216,104H168a16,16,0,0,0-16,16v32a16,16,0,0,0,16,16h16v40a8,8,0,0,1-8,8H80a8,8,0,0,1-8-8V168h16a16,16,0,0,0,16-16V120a16,16,0,0,0-16-16H40a16,16,0,0,0-16,16v32a16,16,0,0,0,16,16H56v40a24,24,0,0,0,24,24h96a24,24,0,0,0,24-24V168h16a16,16,0,0,0,16-16V120A16,16,0,0,0,216,104ZM88,152H40V120H88v32Zm56-88a32,32,0,1,0-32-32A32,32,0,0,0,144,64ZM112,32a16,16,0,1,1,16,16A16,16,0,0,1,112,32ZM216,152H168V120h48v32Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Estrutura Organizacional</h3>
+                </div>
+                <p class="card-desc">Visão geral dos órgãos e setores da Câmara, níveis de subordinação e atribuições administrativas.</p>
+            </a>
+
+            <a href="sobre/acesso-1" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M136,112V88a8,8,0,0,0-16,0v24a8,8,0,0,0,16,0Zm80-16a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,96Zm-16,0a71.86,71.86,0,0,1-21.36,51.05A71.77,71.77,0,0,1,128,168a72,72,0,1,1,0-144,72.18,72.18,0,0,1,72,72ZM128,152a12,12,0,1,0-12-12A12,12,0,0,0,128,152Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Links Úteis</h3>
+                </div>
+                <p class="card-desc">Canal de suporte ao cidadão, endereços, contatos e acesso rápido a serviços externos.</p>
+            </a>
+            
+            <a href="portal-da-transparencia/perguntas-e-respostas-frequentes" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M216,48H40A16,16,0,0,0,24,64V224a15.84,15.84,0,0,0,9.25,14.5A16.05,16.05,0,0,0,40,240a15.89,15.89,0,0,0,10.25-3.78.69.69,0,0,0,.13-.11L82.5,208H216a16,16,0,0,0,16-16V64A16,16,0,0,0,216,48ZM88,144H88.17v0A8,8,0,0,1,88,128h.17A8,8,0,0,1,88,144Zm40,0h.17v0A8,8,0,0,1,128,128h.17A8,8,0,0,1,128,144Zm40,0h.17v0A8,8,0,0,1,168,128h.17A8,8,0,0,1,168,144Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Perguntas Frequentes</h3>
+                </div>
+                <p class="card-desc">Dúvidas comuns recebidas pela Câmara, com respostas sobre serviços e procedimentos.</p>
+            </a>
+
+            <a href="portal-da-transparencia/portal-da-transparencia" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Informações Gerais</h3>
+                </div>
+                <p class="card-desc">Nesta página estão disponíveis dados complementares e outros avisos de transparência.</p>
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>
