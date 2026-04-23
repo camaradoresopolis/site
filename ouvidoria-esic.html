@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ouvidoria e e-SIC — Câmara Municipal de Doresópolis</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',Arial,sans-serif;background:#f4f6f4;padding:1.5rem 1rem}
+.wrap{max-width:900px;margin:0 auto}
+.header{background:#0f4c2a;border-radius:14px;padding:24px 32px;margin-bottom:1.5rem;display:flex;align-items:center;gap:16px}
+.header-icon{width:44px;height:44px;background:rgba(255,255,255,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.header-icon svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.header h1{font-size:18px;font-weight:600;color:#fff}
+.header p{font-size:11px;color:rgba(255,255,255,0.55);margin-top:3px}
+.tabs{display:flex;gap:8px;margin-bottom:1.25rem;flex-wrap:wrap}
+.tab-btn{flex:1;min-width:140px;padding:11px 12px;border:2px solid #1a5c3a;background:#fff;color:#1a5c3a;font-weight:600;font-size:12px;border-radius:10px;cursor:pointer;transition:all .18s;font-family:'Inter',Arial,sans-serif;text-align:center}
+.tab-btn.active{background:#0f4c2a;color:#fff;border-color:#0f4c2a}
+.tab-btn:hover:not(.active){background:#e8f4ef}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.card{background:#fff;border:0.5px solid #e0e0e0;border-radius:12px;overflow:hidden;margin-bottom:1rem}
+.card-header{background:#f8faf8;border-bottom:0.5px solid #e0e0e0;padding:14px 20px;display:flex;align-items:center;gap:8px}
+.card-header svg{width:15px;height:15px;stroke:#0f4c2a;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.card-header span{font-size:12px;font-weight:600;color:#0f4c2a;letter-spacing:0.3px;text-transform:uppercase}
+.card-body{padding:20px 24px}
+.card-body p{font-size:13px;color:#333;line-height:1.8;margin-bottom:10px}
+.card-body p:last-child{margin-bottom:0}
+.card-body strong{font-weight:600;color:#0f4c2a}
+.prazo-row{display:flex;gap:10px;margin:14px 0}
+.prazo-card{flex:1;background:#e8f4ef;border-radius:8px;padding:12px 10px;text-align:center}
+.prazo-card .num{font-size:20px;font-weight:600;color:#0f4c2a}
+.prazo-card .label{font-size:10px;color:#1a5c3a;margin-top:2px;line-height:1.4}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.info-item{background:#f8faf8;border-radius:8px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px}
+.info-item svg{width:16px;height:16px;stroke:#0f4c2a;fill:none;stroke-width:1.8;stroke-linecap:round;flex-shrink:0;margin-top:1px}
+.info-item-text .lbl{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px}
+.info-item-text .val{font-size:13px;color:#222;font-weight:500;line-height:1.4}
+.info-item-text a{color:#0f4c2a;text-decoration:none}
+.info-item-text a:hover{text-decoration:underline}
+.notice{background:#e8f4ef;border-left:3px solid #0f4c2a;border-radius:0 8px 8px 0;padding:12px 16px;margin-top:12px}
+.notice p{font-size:12px;color:#0f4c2a;line-height:1.7;margin:0}
+.alert{background:#fff8e8;border-left:3px solid #b8860b;border-radius:0 8px 8px 0;padding:12px 16px;margin-top:12px}
+.alert p{font-size:12px;color:#7a5a00;line-height:1.7;margin:0}
+.form-wrap{background:#fff;border:0.5px solid #e0e0e0;border-radius:12px;overflow:hidden;margin-top:1rem}
+.form-wrap iframe{display:block;width:100%;border:none}
+table.stat-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:10px}
+table.stat-table th{background:#0f4c2a;color:#fff;padding:10px 12px;text-align:left;font-weight:600}
+table.stat-table td{padding:10px 12px;border-bottom:0.5px solid #eee;color:#333}
+table.stat-table tr:last-child td{border-bottom:none}
+table.stat-table tr:nth-child(even) td{background:#f8faf8}
+.serv-item{border:0.5px solid #e0e0e0;border-radius:10px;padding:16px 18px;margin-bottom:10px}
+.serv-item:last-child{margin-bottom:0}
+.serv-title{font-size:13.5px;font-weight:600;color:#0f4c2a;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.serv-title svg{width:15px;height:15px;stroke:#0f4c2a;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.serv-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.serv-badge{font-size:11px;padding:3px 10px;border-radius:6px;font-weight:500}
+.serv-badge.prazo{background:#e8f4ef;color:#0f4c2a}
+.serv-badge.req{background:#f0f0f0;color:#555}
+.serv-desc{font-size:12.5px;color:#555;line-height:1.6;margin-top:4px}
+@media(max-width:600px){
+  .info-grid{grid-template-columns:1fr}
+  .prazo-row{flex-direction:column}
+  .tabs{flex-direction:column}
+}
+</style>
+<meta property="og:title" content="Ouvidoria e e-SIC — Câmara Municipal de Doresópolis">
+<meta property="og:type" content="website">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="header-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+    <div>
+      <h1>Ouvidoria, e-SIC e Carta de Serviços</h1>
+      <p>Câmara Municipal de Doresópolis — Canais Oficiais de Atendimento ao Cidadão</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn" onclick="showTab('ouvidoria',this)">Ouvidoria</button>
+    <button class="tab-btn active" onclick="showTab('esic',this)">e-SIC</button>
+    <button class="tab-btn" onclick="showTab('relatorio',this)">Relatório Estatístico</button>
+    <button class="tab-btn" onclick="showTab('sigilo',this)">Rol de Sigilo</button>
+    <button class="tab-btn" onclick="showTab('carta',this)">Carta de Serviços</button>
+  </div>
+
+  <div id="ouvidoria" class="tab-content">
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span class="">Sobre a Ouvidoria</span></div>
+      <div class="card-body">
+        <p>A <strong>Ouvidoria da Câmara Municipal de Doresópolis</strong> é o canal oficial para recebimento de reclamações, denúncias, sugestões, elogios e solicitações dos cidadãos, em conformidade com a Lei Federal nº 12.527/2011 (Lei de Acesso à Informação). O sigilo da identidade do manifestante será garantido quando solicitado.</p>
+        <div class="prazo-row">
+          <div class="prazo-card"><div class="num">20</div><div class="label">dias corridos para resposta</div></div>
+          <div class="prazo-card"><div class="num">+10</div><div class="label">dias prorrogáveis mediante justificativa</div></div>
+          <div class="prazo-card"><div class="num">LAI</div><div class="label">Lei Federal nº 12.527/2011</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><span>Atendimento Presencial</span></div>
+      <div class="card-body">
+        <p>Além do atendimento pelo formulário eletrônico abaixo, a Ouvidoria da Câmara Municipal de Doresópolis também realiza <strong>atendimento presencial</strong>, no seguinte endereço e horários:</p>
+        <div class="info-grid">
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <div class="info-item-text">
+              <div class="lbl">Endereço</div>
+              <div class="val">Rua Farnésio Paim Pamplona, nº 61<br>Centro — Doresópolis/MG</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.37a16 16 0 0 0 6 6l1.27-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <div class="info-item-text">
+              <div class="lbl">Telefone</div>
+              <div class="val">(37) 3441-0012</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div class="info-item-text">
+              <div class="lbl">Horário de Funcionamento</div>
+              <div class="val">Segunda a Sexta-feira<br>08h00 às 17h00</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <div class="info-item-text">
+              <div class="lbl">E-mail</div>
+              <div class="val"><a href="mailto:cac@camaradoresopolis.com.br">cac@camaradoresopolis.com.br</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span>Formulário Eletrônico — Ouvidoria</span></div>
+      <div class="form-wrap">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfuA_YjV_tTZSpikmMSwBNl1ejBtV5zUVhj9FAfE4SASTKERw/viewform?embedded=true" height="1925" frameborder="0" marginheight="0" marginwidth="0">Carregando...</iframe>
+      </div>
+    </div>
+  </div>
+
+  <div id="esic" class="tab-content active">
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>Sobre o e-SIC</span></div>
+      <div class="card-body">
+        <p>O <strong class="">e-SIC — Serviço de Informação ao Cidadão</strong> é o canal oficial para pedidos de acesso à informação da Câmara Municipal de Doresópolis, em cumprimento à Lei Federal nº 12.527/2011. O solicitante receberá confirmação com dados para acompanhamento do pedido.</p>
+        <div class="prazo-row">
+          <div class="prazo-card"><div class="num" >20</div><div class="label" >dias corridos para resposta</div></div>
+          <div class="prazo-card"><div class="num">+10</div><div class="label">dias prorrogáveis mediante justificativa</div></div>
+          <div class="prazo-card"><div class="num">LAI</div><div class="label">Lei Federal nº 12.527/2011</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><span>Atendimento Presencial — SIC</span></div>
+      <div class="card-body">
+        <div class="info-grid">
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <div class="info-item-text">
+              <div class="lbl">Endereço</div>
+              <div class="val">Rua Farnésio Paim Pamplona, nº 61<br>Centro — Doresópolis/MG</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.37a16 16 0 0 0 6 6l1.27-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <div class="info-item-text">
+              <div class="lbl">Telefone</div>
+              <div class="val">(37) 3441-0012</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div class="info-item-text">
+              <div class="lbl">Horário de Funcionamento</div>
+              <div class="val">Segunda a Sexta-feira<br>08h00 às 17h00</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <div class="info-item-text">
+              <div class="lbl">E-mail</div>
+              <div class="val"><a href="mailto:cac@camaradoresopolis.com.br">cac@camaradoresopolis.com.br</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg><span>Informações Desclassificadas — Últimos 12 Meses</span></div>
+      <div class="card-body">
+        <p>Em cumprimento ao art. 30, inciso III, da Lei Federal nº 12.527/2011, a Câmara Municipal de Doresópolis declara que <strong>não houve desclassificação de informações sigilosas</strong> nos últimos 12 (doze) meses.</p>
+        <div class="notice"><p>Esta seção será atualizada caso ocorra qualquer desclassificação de informação sigilosa, com indicação do assunto, fundamento legal e data da desclassificação.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span>Formulário Eletrônico — e-SIC</span></div>
+      <div class="form-wrap">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScYoEMks8W5_xJZsXWk3Y7ndts4ufASOl_JOtG63mC9TiM8gQ/viewform?embedded=true" height="1813" frameborder="0" marginheight="0" marginwidth="0" class="">Carregando...</iframe>
+      </div>
+    </div>
+  </div>
+
+  <div id="relatorio" class="tab-content">
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg><span>Relatório Estatístico Anual — Exercício 2025</span></div>
+      <div class="card-body">
+        <p>Em cumprimento ao art. 30, inciso IV, da Lei Federal nº 12.527/2011, a Câmara Municipal de Doresópolis divulga o <strong>Relatório Estatístico Anual</strong> contendo os dados quantitativos de pedidos de acesso à informação e manifestações recebidas.</p>
+        <table class="stat-table" style="margin-top:16px">
+          <tbody><tr><th colspan="2">Pedidos de Acesso à Informação — e-SIC</th></tr>
+          <tr><td>Total de pedidos recebidos</td><td><strong>0</strong></td></tr>
+          <tr><td>Pedidos atendidos (deferidos)</td><td><strong>0</strong></td></tr>
+          <tr><td>Pedidos indeferidos</td><td><strong>0</strong></td></tr>
+          <tr><td>Pedidos em tramitação</td><td><strong>0</strong></td></tr>
+          <tr><td>Recursos interpostos</td><td><strong>0</strong></td></tr>
+        </tbody></table>
+        <table class="stat-table" style="margin-top:16px">
+          <tbody><tr><th colspan="2">Manifestações — Ouvidoria</th></tr>
+          <tr><td>Reclamações</td><td><strong>0</strong></td></tr>
+          <tr><td>Denúncias</td><td><strong>0</strong></td></tr>
+          <tr><td>Sugestões</td><td><strong>0</strong></td></tr>
+          <tr><td>Elogios</td><td><strong>0</strong></td></tr>
+          <tr><td>Solicitações</td><td><strong>0</strong></td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>0</strong></td></tr>
+        </tbody></table>
+        <table class="stat-table" style="margin-top:16px">
+          <tbody><tr><th colspan="2">Perfil Geral dos Solicitantes</th></tr>
+          <tr><td>Pessoa Física</td><td><strong>0</strong></td></tr>
+          <tr><td>Pessoa Jurídica</td><td><strong>0</strong></td></tr>
+          <tr><td>Manifestações anônimas</td><td><strong>0</strong></td></tr>
+        </tbody></table>
+        <div class="notice" style="margin-top:16px"><p>Os dados acima refletem o período de implantação do sistema. O relatório será atualizado anualmente, conforme determinação legal, à medida que pedidos forem recebidos.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sigilo" class="tab-content">
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span>Rol de Informações Sigilosas — Art. 30, II, Lei nº 12.527/2011</span></div>
+      <div class="card-body">
+        <p>Em cumprimento ao art. 30, inciso II, da Lei Federal nº 12.527/2011, a Câmara Municipal de Doresópolis divulga o <strong>Rol de Informações Classificadas por Grau de Sigilo</strong>, contendo o assunto, a categoria e o prazo de restrição de acesso.</p>
+        <table class="stat-table" style="margin-top:16px">
+          <tbody><tr>
+            <th>Assunto</th><th>Categoria</th><th>Grau de Sigilo</th><th>Prazo</th><th>Situação</th>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align:center;color:#888;padding:20px;font-style:italic">Não há informações classificadas com restrição de acesso no âmbito desta Câmara Municipal.</td>
+          </tr>
+        </tbody></table>
+        <div class="notice" style="margin-top:16px"><p>A Câmara Municipal de Doresópolis declara que não possui informações classificadas nos graus Reservado, Secreto ou Ultrassecreto, nos termos dos arts. 23 e 24 da Lei Federal nº 12.527/2011. Esta lista será atualizada caso haja classificação de qualquer informação, contendo obrigatoriamente: assunto, categoria, fundamento legal, data de classificação e prazo de restrição.</p></div>
+        <div class="alert" style="margin-top:12px"><p><strong>Base legal:</strong> Lei Federal nº 12.527/2011, art. 30, II — Decreto Federal nº 7.724/2012, art. 45, II.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="carta" class="tab-content">
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg><span>Carta de Serviços ao Usuário — Lei Federal nº 13.460/2017</span></div>
+      <div class="card-body">
+        <p>A <strong>Câmara Municipal de Doresópolis</strong>, em cumprimento à Lei Federal nº 13.460/2017, que dispõe sobre participação, proteção e defesa dos direitos do usuário dos serviços públicos, divulga sua <strong>Carta de Serviços ao Usuário</strong>, com informações claras sobre os serviços prestados, requisitos, prazos e canais de atendimento.</p>
+        <div class="info-grid" style="margin-top:14px">
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <div class="info-item-text">
+              <div class="lbl">Endereço</div>
+              <div class="val">Rua Farnésio Paim Pamplona, nº 61<br>Centro — Doresópolis/MG</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.37a16 16 0 0 0 6 6l1.27-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <div class="info-item-text">
+              <div class="lbl">Telefone</div>
+              <div class="val">(37) 3441-0012</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div class="info-item-text">
+              <div class="lbl">Horário de Atendimento</div>
+              <div class="val">Segunda a Sexta-feira<br>08h00 às 17h00</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <div class="info-item-text">
+              <div class="lbl">E-mail</div>
+              <div class="val"><a href="mailto:cac@camaradoresopolis.com.br">cac@camaradoresopolis.com.br</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg><span>Serviços Prestados</span></div>
+      <div class="card-body">
+
+        <div class="serv-item">
+          <div class="serv-title"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Emissão de Certidões e Documentos Legislativos</div>
+          <div class="serv-desc">Emissão de certidões de votações, atas de sessões, cópias de leis, decretos legislativos, resoluções e demais documentos produzidos pela Câmara Municipal.</div>
+          <div class="serv-row">
+            <span class="serv-badge prazo">Prazo: 5 dias úteis</span>
+            <span class="serv-badge req">Requerimento escrito ou presencial</span>
+            <span class="serv-badge req">Gratuito</span>
+          </div>
+        </div>
+
+        <div class="serv-item">
+          <div class="serv-title"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>Acesso à Informação (e-SIC)</div>
+          <div class="serv-desc">Atendimento a pedidos de acesso a informações públicas produzidas ou custodiadas pela Câmara Municipal, nos termos da Lei Federal nº 12.527/2011.</div>
+          <div class="serv-row">
+            <span class="serv-badge prazo">Prazo: 20 dias úteis</span>
+            <span class="serv-badge req">Formulário eletrônico ou presencial</span>
+            <span class="serv-badge req">Gratuito</span>
+          </div>
+        </div>
+
+        <div class="serv-item">
+          <div class="serv-title"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>Ouvidoria — Recebimento de Manifestações</div>
+          <div class="serv-desc">Recebimento e processamento de reclamações, denúncias, sugestões, elogios e solicitações dos cidadãos relacionadas à atuação da Câmara Municipal.</div>
+          <div class="serv-row">
+            <span class="serv-badge prazo">Prazo: 20 dias úteis</span>
+            <span class="serv-badge req">Formulário eletrônico ou presencial</span>
+            <span class="serv-badge req">Possibilidade de anonimato</span>
+          </div>
+        </div>
+
+        <div class="serv-item">
+          <div class="serv-title"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>Transmissão ao Vivo das Sessões Legislativas</div>
+          <div class="serv-desc">Transmissão ao vivo das sessões ordinárias, extraordinárias e solenes da Câmara Municipal pelo canal oficial no YouTube, garantindo o acompanhamento remoto pelos cidadãos.</div>
+          <div class="serv-row">
+            <span class="serv-badge prazo">Disponível durante as sessões</span>
+            <span class="serv-badge req"><a href="https://www.youtube.com/@C%C3%A2maraMunicipalDores%C3%B3polis" target="_blank" style="color:#555;text-decoration:none">YouTube — Câmara Municipal Doresópolis</a></span>
+            <span class="serv-badge req">Gratuito</span>
+          </div>
+        </div>
+
+        <div class="serv-item">
+          <div class="serv-title"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>Portal da Transparência</div>
+          <div class="serv-desc">Disponibilização de informações sobre receitas, despesas, contratos, licitações, folha de pagamento e demais dados exigidos pela legislação de transparência pública.</div>
+          <div class="serv-row">
+            <span class="serv-badge prazo">Disponível 24 horas</span>
+            <span class="serv-badge req">Acesso pelo site oficial</span>
+            <span class="serv-badge req">Gratuito</span>
+          </div>
+        </div>
+
+        <div class="serv-item">
+          <div class="serv-title"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Atendimento ao Cidadão — Informações Gerais</div>
+          <div class="serv-desc">Prestação de informações gerais sobre o funcionamento da Câmara Municipal, calendário de sessões, composição da Mesa Diretora, vereadores e demais assuntos institucionais.</div>
+          <div class="serv-row">
+            <span class="serv-badge prazo">Atendimento imediato</span>
+            <span class="serv-badge req">Presencial, telefone ou e-mail</span>
+            <span class="serv-badge req">Gratuito</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg><span>Direitos e Deveres do Usuário</span></div>
+      <div class="card-body">
+        <p>Conforme a Lei Federal nº 13.460/2017, são direitos dos usuários dos serviços públicos desta Câmara Municipal:</p>
+        <p>• Receber atendimento com urbanidade, respeito e eficiência;<br>
+        • Obter informações claras sobre os serviços prestados e seus prazos;<br>
+        • Ter suas manifestações respondidas dentro dos prazos legais;<br>
+        • Ter preservado o sigilo de suas comunicações quando solicitado;<br>
+        • Receber tratamento igualitário, sem discriminação de qualquer natureza;<br>
+        • Obter certidões, atestados e documentos em prazo razoável.</p>
+        <div class="notice" style="margin-top:12px"><p><strong>Base legal:</strong> Lei Federal nº 13.460/2017 — Lei Federal nº 12.527/2011 — Lei Orgânica do Município de Doresópolis.</p></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function showTab(tab,btn){
+  document.querySelectorAll('.tab-content').forEach(function(el){el.classList.remove('active')});
+  document.querySelectorAll('.tab-btn').forEach(function(el){el.classList.remove('active')});
+  document.getElementById(tab).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+</body>
+</html>
