@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Licitações e Contratos | Câmara Municipal</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cor-fundo: #f2f2f2;
+            --cor-primaria: #025d3b; 
+            --cor-primaria-hover: #01472c;
+            --cor-primaria-bg: rgba(2, 93, 59, 0.08);
+            --branco: #ffffff;
+            --texto-escuro: #1f2937;
+            --texto-medio: #4b5563;
+            --texto-claro: #6b7280;
+            --borda: #e5e7eb;
+            --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--cor-fundo); color: var(--texto-escuro); line-height: 1.6; padding: 40px 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .btn-voltar { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--texto-medio); font-size: 0.9rem; font-weight: 600; margin-bottom: 30px; transition: var(--transicao); padding: 8px 16px; border-radius: 8px; background-color: transparent; }
+        .btn-voltar:hover { color: var(--cor-primaria); background-color: var(--cor-primaria-bg); transform: translateX(-4px); }
+        .btn-voltar svg { width: 20px; height: 20px; fill: currentColor; }
+        .header-transparencia { text-align: center; margin-bottom: 50px; animation: fadeIn 0.6s ease-out; }
+        .badge-titulo { display: inline-block; background-color: var(--cor-primaria-bg); color: var(--cor-primaria); padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
+        .header-transparencia h1 { font-size: 2.5rem; color: var(--texto-escuro); font-weight: 700; margin-bottom: 15px; }
+        .header-transparencia p { font-size: 1.1rem; color: var(--texto-medio); max-width: 700px; margin: 0 auto; }
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; animation: slideUp 0.8s ease-out; }
+        .card-item { display: flex; flex-direction: column; background-color: var(--branco); border-radius: 16px; padding: 24px; text-decoration: none; color: inherit; border: 1px solid var(--borda); position: relative; overflow: hidden; transition: var(--transicao); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+        .card-item::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background-color: var(--cor-primaria); transform: scaleY(0); transform-origin: bottom; transition: transform 0.4s ease; }
+        .card-item:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(2, 93, 59, 0.1); border-color: transparent; }
+        .card-item:hover::before { transform: scaleY(1); }
+        .card-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+        .icone-box { width: 48px; height: 48px; background-color: var(--cor-fundo); border-radius: 12px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; transition: var(--transicao); }
+        .icone-box svg { width: 24px; height: 24px; fill: var(--cor-primaria); transition: var(--transicao); }
+        .card-item:hover .icone-box { background-color: var(--cor-primaria); }
+        .card-item:hover .icone-box svg { fill: var(--branco); transform: scale(1.1); }
+        .card-title { font-size: 1.15rem; font-weight: 700; color: var(--texto-escuro); transition: color 0.3s ease; }
+        .card-item:hover .card-title { color: var(--cor-primaria); }
+        .card-desc { font-size: 0.95rem; color: var(--texto-medio); flex-grow: 1; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 768px) { .header-transparencia h1 { font-size: 2rem; } .grid-cards { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <a href="https://www.doresopolis.mg.leg.br/transparencia" class="btn-voltar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+            Voltar para Transparência
+        </a>
+
+        <div class="header-transparencia">
+            <span class="badge-titulo">Gestão de Contratos</span>
+            <h1>Licitações e Compras</h1>
+            <p>Acesse de forma transparente as informações sobre os processos licitatórios, contratos firmados e contratações diretas da Câmara Municipal.</p>
+        </div>
+
+        <div class="grid-cards">
+
+            <a href="https://ilai.memory.com.br/#/99RRQE/2/share?resource=public/licitacoes/licitacao" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,146.34,26.34L32,140.69a8,8,0,0,0-2.34,5.65V216a8,8,0,0,0,8,8H109.66a8,8,0,0,0,5.65-2.34L229.66,107.66A8,8,0,0,0,213.66,82.34ZM106.34,208H48V149.66l96-96L202.34,112Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Licitações</h3>
+                </div>
+                <p class="card-desc">Acompanhe os processos licitatórios, contratos firmados, termos aditivos e andamento das licitações do poder legislativo.</p>
+            </a>
+
+            <a href="https://ilai.memory.com.br/#/99RRQE/2/share?resource=public/licitacoes/dispensaporvalor" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M128,88a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152Zm112-96H16A8,8,0,0,0,8,64V192a8,8,0,0,0,8,8H240a8,8,0,0,0,8-8V64A8,8,0,0,0,240,56ZM232,184H24V72H232Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Dispensa por Valor</h3>
+                </div>
+                <p class="card-desc">Relação de contratações diretas realizadas com base nos limites de dispensa de licitação previstos na legislação.</p>
+            </a>
+
+            <a href="https://ilai.memory.com.br/#/99RRQE/2/share?resource=public/licitacoes/fiscaiscontrato" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Fiscais de Contrato</h3>
+                </div>
+                <p class="card-desc">Portarias e nomeações dos servidores responsáveis pelo acompanhamento e fiscalização dos contratos em vigor.</p>
+            </a>
+
+            <a href="https://ilai.memory.com.br/#/99RRQE/2/share?resource=public/licitacoes/edital" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Editais de Licitação</h3>
+                </div>
+                <p class="card-desc">Consulta na íntegra aos editais, anexos e termos de referência dos certames em andamento ou já concluídos.</p>
+            </a>
+
+            <a href="https://www.doresopolis.mg.leg.br/portal-da-transparencia/plano-de-contratacoes-anual" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Plano de Contratações Anual (PCA)</h3>
+                </div>
+                <p class="card-desc">Documento de planejamento das contratações de bens, serviços e obras estimadas para o exercício.</p>
+            </a>
+
+            <a href="atas-adesao.html" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M162.34,93.66a8,8,0,0,1-11.32,11.32l-32-32a8,8,0,0,1,11.32-11.32l32,32ZM213.66,42.34a40,40,0,0,0-56.57,0L130.34,69.09a8,8,0,0,0,11.32,11.31l26.75-26.74a24,24,0,0,1,33.94,33.94L175.61,114.34a8,8,0,0,0,11.31,11.32l26.74-26.75A40,40,0,0,0,213.66,42.34Zm-83.32,144.57L103.59,213.66a40,40,0,0,1-56.57-56.57L73.77,130.34a8,8,0,0,0-11.32-11.31L35.7,145.78a56,56,0,0,0,79.2,79.2l26.75-26.75a8,8,0,1,0-11.31-11.32Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Atas de Adesão - SRP</h3>
+                </div>
+                <p class="card-desc">Informações sobre as adesões a Atas de Registro de Preços (Sistema "Carona") realizadas pelo órgão.</p>
+            </a>
+
+            <a href="licitantes-sancionados.html" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,104v40a8,8,0,0,0,16,0V104a8,8,0,0,0-16,0Zm8,88a12,12,0,1,0-12-12A12,12,0,0,0,128,192Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Licitantes Sancionados</h3>
+                </div>
+                <p class="card-desc">Lista de empresas e profissionais penalizados ou impedidos de licitar e contratar com a Administração Pública.</p>
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>
