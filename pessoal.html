@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Variáveis de Cores */
         :root {
             --cor-fundo: #f2f2f2;
             --cor-primaria: #025d3b; 
@@ -41,7 +40,6 @@
             margin: 0 auto;
         }
 
-        /* Estilo do Botão Voltar */
         .btn-voltar {
             display: inline-flex;
             align-items: center;
@@ -54,7 +52,6 @@
             transition: var(--transicao);
             padding: 8px 16px;
             border-radius: 8px;
-            background-color: transparent;
         }
 
         .btn-voltar:hover {
@@ -69,7 +66,6 @@
             fill: currentColor;
         }
 
-        /* Cabeçalho da Página */
         .header-transparencia {
             text-align: center;
             margin-bottom: 50px;
@@ -91,7 +87,6 @@
 
         .header-transparencia h1 {
             font-size: 2.5rem;
-            color: var(--texto-escuro);
             font-weight: 700;
             margin-bottom: 15px;
         }
@@ -103,7 +98,6 @@
             margin: 0 auto;
         }
 
-        /* Grid de Cartões */
         .grid-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -129,10 +123,7 @@
         .card-item::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
+            top: 0; left: 0; width: 4px; height: 100%;
             background-color: var(--cor-primaria);
             transform: scaleY(0);
             transform-origin: bottom;
@@ -145,9 +136,7 @@
             border-color: transparent;
         }
 
-        .card-item:hover::before {
-            transform: scaleY(1);
-        }
+        .card-item:hover::before { transform: scaleY(1); }
 
         .card-header {
             display: flex;
@@ -172,27 +161,14 @@
             width: 24px;
             height: 24px;
             fill: var(--cor-primaria);
-            transition: var(--transicao);
         }
 
-        .card-item:hover .icone-box {
-            background-color: var(--cor-primaria);
-        }
-
-        .card-item:hover .icone-box svg {
-            fill: var(--branco);
-            transform: scale(1.1);
-        }
+        .card-item:hover .icone-box { background-color: var(--cor-primaria); }
+        .card-item:hover .icone-box svg { fill: var(--branco); }
 
         .card-title {
             font-size: 1.15rem;
             font-weight: 700;
-            color: var(--texto-escuro);
-            transition: color 0.3s ease;
-        }
-
-        .card-item:hover .card-title {
-            color: var(--cor-primaria);
         }
 
         .card-desc {
@@ -201,15 +177,8 @@
             flex-grow: 1;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         @media (max-width: 768px) {
             .header-transparencia h1 { font-size: 2rem; }
@@ -229,11 +198,10 @@
         <div class="header-transparencia">
             <span class="badge-titulo">Gestão de Pessoas</span>
             <h1>Recursos Humanos</h1>
-            <p>Acesse de forma transparente as informações sobre o quadro de pessoal, remunerações e processos de seleção da Câmara Municipal.</p>
+            <p>Acesse as informações sobre o quadro de pessoal, remunerações e processos de seleção da Câmara Municipal.</p>
         </div>
 
         <div class="grid-cards">
-
             <a href="https://ilai.memory.com.br/#/99RRQE/2/share?resource=public/pessoal/servidor" target="_blank" rel="noopener noreferrer" class="card-item">
                 <div class="card-header">
                     <div class="icone-box">
@@ -241,7 +209,7 @@
                     </div>
                     <h3 class="card-title">Servidores</h3>
                 </div>
-                <p class="card-desc">Relação nominal dos servidores efetivos, comissionados e cedidos, detalhando cargos, funções, lotação e remuneração.</p>
+                <p class="card-desc">Relação nominal dos servidores efetivos, comissionados e cedidos, detalhando cargos e remuneração.</p>
             </a>
             
             <a href="https://ilai.memory.com.br/#/99RRQE/2/share?resource=public/pessoal/estagiario" target="_blank" rel="noopener noreferrer" class="card-item">
@@ -251,7 +219,7 @@
                     </div>
                     <h3 class="card-title">Estagiários</h3>
                 </div>
-                <p class="card-desc">Lista de estagiários contratados, instituições conveniadas, valores de bolsa e editais de seleção de estágio.</p>
+                <p class="card-desc">Lista de estagiários contratados, instituições conveniadas e editais de seleção.</p>
             </a>
       
             <a href="#" class="card-item">
@@ -261,7 +229,7 @@
                     </div>
                     <h3 class="card-title">Terceirizados</h3>
                 </div>
-                <p class="card-desc">Relação de empregados de empresas contratadas para prestação de serviços continuados ou terceirizados.</p>
+                <p class="card-desc">Relação de empregados de empresas contratadas para prestação de serviços continuados.</p>
             </a>
             
             <a href="#" class="card-item">
@@ -271,7 +239,7 @@
                     </div>
                     <h3 class="card-title">Padrão Remuneratório</h3>
                 </div>
-                <p class="card-desc">Tabelas com as faixas salariais, vencimentos básicos e gratificações correspondentes a cada cargo e função.</p>
+                <p class="card-desc">Tabelas com as faixas salariais e vencimentos básicos correspondentes a cada cargo.</p>
             </a>
 
             <a href="#" class="card-item">
@@ -281,11 +249,17 @@
                     </div>
                     <h3 class="card-title">Concursos Públicos</h3>
                 </div>
-                <p class="card-desc">Editais, cronogramas, convocações e resultados de concursos públicos e processos seletivos simplificados.</p>
+                <p class="card-desc">Editais, cronogramas e resultados de concursos públicos e processos seletivos.</p>
             </a>
-
         </div>
     </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            // Tenta abrir o link de login em uma nova aba assim que a página carrega
+            window.open("https://ilai.memory.com.br/#/entidades/login/99RRQE/2/public~2Finicio", "_blank");
+        });
+    </script>
 
 </body>
 </html>
