@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obras | Câmara Municipal</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Variáveis de Cores - Mantendo a identidade visual */
+        :root {
+            --cor-fundo: #f2f2f2;
+            --cor-primaria: #025d3b; 
+            --cor-primaria-hover: #01472c;
+            --cor-primaria-bg: rgba(2, 93, 59, 0.08);
+            --branco: #ffffff;
+            --texto-escuro: #1f2937;
+            --texto-medio: #4b5563;
+            --texto-claro: #6b7280;
+            --borda: #e5e7eb;
+            --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--texto-escuro);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Estilo do Botão Voltar */
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--texto-medio);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: var(--transicao);
+            padding: 8px 16px;
+            border-radius: 8px;
+            background-color: transparent;
+        }
+
+        .btn-voltar:hover {
+            color: var(--cor-primaria);
+            background-color: var(--cor-primaria-bg);
+            transform: translateX(-4px);
+        }
+
+        .btn-voltar svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Cabeçalho da Página */
+        .header-transparencia {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .badge-titulo {
+            display: inline-block;
+            background-color: var(--cor-primaria-bg);
+            color: var(--cor-primaria);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .header-transparencia h1 {
+            font-size: 2.5rem;
+            color: var(--texto-escuro);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .header-transparencia p {
+            font-size: 1.1rem;
+            color: var(--texto-medio);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Grid de Cartões */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .card-item {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--branco);
+            border-radius: 16px;
+            padding: 24px;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid var(--borda);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transicao);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--cor-primaria);
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.4s ease;
+        }
+
+        .card-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(2, 93, 59, 0.1);
+            border-color: transparent;
+        }
+
+        .card-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .icone-box {
+            width: 48px;
+            height: 48px;
+            background-color: var(--cor-fundo);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            transition: var(--transicao);
+        }
+
+        .icone-box svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--cor-primaria);
+            transition: var(--transicao);
+        }
+
+        .card-item:hover .icone-box {
+            background-color: var(--cor-primaria);
+        }
+
+        .card-item:hover .icone-box svg {
+            fill: var(--branco);
+            transform: scale(1.1);
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--texto-escuro);
+            transition: color 0.3s ease;
+        }
+
+        .card-item:hover .card-title {
+            color: var(--cor-primaria);
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--texto-medio);
+            flex-grow: 1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .header-transparencia h1 { font-size: 2rem; }
+            .grid-cards { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <a href="https://www.doresopolis.mg.leg.br/transparencia" class="btn-voltar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+            Voltar para Transparência
+        </a>
+
+        <div class="header-transparencia">
+            <span class="badge-titulo">Infraestrutura</span>
+            <h1>Obras Públicas</h1>
+            <p>Acompanhe de forma transparente as informações sobre o andamento, custos e status das obras e construções do órgão.</p>
+        </div>
+
+        <div class="grid-cards">
+
+            <a href="https://ilai.memory.com.br/#/99RRQE/2/share?resource=public/obras/obraspublicas" target="_blank" rel="noopener noreferrer" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M240,208H224V96a16,16,0,0,0-16-16H144V32a16,16,0,0,0-16-16H48A16,16,0,0,0,32,32V208H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM48,32h80V208H48ZM144,96h64V208H144ZM112,80a8,8,0,0,1-8,8H72a8,8,0,0,1,0-16h32A8,8,0,0,1,112,80Zm0,48a8,8,0,0,1-8,8H72a8,8,0,0,1,0-16h32A8,8,0,0,1,112,128Zm0,48a8,8,0,0,1-8,8H72a8,8,0,0,1,0-16h32A8,8,0,0,1,112,176Zm80-48a8,8,0,0,1-8,8H168a8,8,0,0,1,0-16h16A8,8,0,0,1,192,128Zm0,48a8,8,0,0,1-8,8H168a8,8,0,0,1,0-16h16A8,8,0,0,1,192,176Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Obras Públicas</h3>
+                </div>
+                <p class="card-desc">Consulta detalhada sobre o andamento, valores, cronogramas e execução física e financeira das obras em andamento ou concluídas.</p>
+            </a>
+
+            <a href="https://ilai.memory.com.br/#/99RRQE/2/share?resource=public/obras/obrasparalisadas" target="_blank" rel="noopener noreferrer" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM112,88v80a8,8,0,0,1-16,0V88a8,8,0,0,1,16,0Zm48,0v80a8,8,0,0,1-16,0V88a8,8,0,0,1,16,0Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Obras Paralisadas</h3>
+                </div>
+                <p class="card-desc">Relação de obras paralisadas, contendo os motivos da interrupção, data de paralisação e providências para retomada.</p>
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>
