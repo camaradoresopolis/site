@@ -292,7 +292,7 @@
             <p><strong>Para acessar o Portal da Transparência, é necessário permitir a autenticação do sistema.</strong></p>
             <p class="subtexto">Clique em “Permitir” para continuar.</p>
         </div>
-        <a href="https://ilai.memory.com.br/#/entidades/login/99RRQE/2/public~2Finicio" target="_blank" class="btn-permitir" onclick="liberarPagina()">Permitir</a>
+        <a href="#" class="btn-permitir" onclick="abrirEFecharLogin(event)">Permitir</a>
     </div>
     <div class="container">
         
@@ -391,7 +391,7 @@
                     </div>
                     <h3 class="card-title">Obras</h3>
                 </div>
-                <p class="card-desc">Andamento das obras e serviços de engenharia, com projects, empresas responsáveis e prazos de execução.</p>
+                <p class="card-desc">Andamento das obras e serviços de engenharia, com projetos, empresas responsáveis e prazos de execução.</p>
             </a>
 
              <a href="https://www.doresopolis.mg.leg.br/portal-da-transparencia/estagiarios" target="_blank" rel="noopener noreferrer" class="card-item">
@@ -469,19 +469,34 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Verifica se o usuário já clicou em 'Permitir' durante esta sessão
+            // A caixa de diálogo (banner) ficará visível ATÉ que o usuário clique no botão
             if (!sessionStorage.getItem("acesso_portal_liberado")) {
-                // Se não clicou, exibe a caixa de diálogo no topo
                 document.getElementById("alertaTopo").style.display = "flex";
             }
         });
 
-        function liberarPagina() {
-            // Salva a permissão temporária na sessão
-            sessionStorage.setItem("acesso_portal_liberado", "true");
-            
-            // Oculta a caixa de diálogo suavemente
+        function abrirEFecharLogin(event) {
+            // Previne que a tela role para o topo ao clicar no botão
+            event.preventDefault(); 
+
+            // 1. Oculta a CAIXA DE DIÁLOGO imediatamente após o clique
             document.getElementById("alertaTopo").style.display = "none";
+            
+            // Grava a permissão para a caixa não aparecer de novo se a pessoa atualizar a página
+            sessionStorage.setItem("acesso_portal_liberado", "true");
+
+            // 2. Abre o site da Memory em uma NOVA ABA
+            var urlPortal = "https://ilai.memory.com.br/#/entidades/login/99RRQE/2/public~2Finicio";
+            var abaExterna = window.open(urlPortal, "_blank");
+
+            // 3. Fecha APENAS o site que abriu na nova aba após 2 segundos
+            if (abaExterna) {
+                setTimeout(function() {
+                    abaExterna.close(); // Este comando fecha a aba do site da Memory
+                }, 2000); // 2000 milissegundos equivalem a 2 segundos
+            } else {
+                alert("O seu navegador bloqueou a abertura do site. Por favor, permita pop-ups.");
+            }
         }
     </script>
 
