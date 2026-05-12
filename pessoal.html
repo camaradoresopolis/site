@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
+        /* Variáveis de Cores */
         :root {
             --cor-fundo: #f2f2f2;
             --cor-primaria: #025d3b; 
@@ -21,7 +22,11 @@
             --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -31,88 +36,251 @@
             padding: 40px 20px;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-        /* --- TELA PARA BURLAR O BLOQUEADOR DE POP-UP --- */
+        /* --- OVERLAY DE LOGIN --- */
         .login-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-color: rgba(242, 242, 242, 0.95);
             backdrop-filter: blur(8px);
-            display: flex; /* Começa visível */
-            flex-direction: column; justify-content: center; align-items: center;
-            z-index: 9999; text-align: center; padding: 20px;
+            display: none; /* Controlado pelo JavaScript */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            text-align: center;
+            padding: 20px;
         }
 
         .login-box {
-            background: var(--branco); padding: 40px; border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 450px;
+            background: var(--branco);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 450px;
             border: 1px solid var(--borda);
             animation: slideUp 0.5s ease-out;
         }
 
-        .login-box h2 { color: var(--texto-escuro); font-size: 1.5rem; margin-bottom: 15px; }
-        .login-box p { color: var(--texto-medio); margin-bottom: 25px; font-size: 0.95rem; }
+        .login-box h2 {
+            color: var(--texto-escuro);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .login-box p {
+            color: var(--texto-medio);
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
 
         .btn-login {
-            display: inline-block; background-color: var(--cor-primaria); color: var(--branco);
-            padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;
-            transition: var(--transicao); width: 100%; font-size: 1.1rem;
+            display: inline-block;
+            background-color: var(--cor-primaria);
+            color: var(--branco);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transicao);
+            width: 100%;
         }
 
-        .btn-login:hover { background-color: var(--cor-primaria-hover); transform: translateY(-2px); }
-        /* ----------------------------------------------- */
+        .btn-login:hover {
+            background-color: var(--cor-primaria-hover);
+            transform: translateY(-2px);
+        }
 
+        .link-voltar-login {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--texto-claro);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transicao);
+        }
+
+        .link-voltar-login:hover {
+            color: var(--cor-primaria);
+        }
+        /* ------------------------ */
+
+        /* Estilo do Botão Voltar (Página Principal) */
         .btn-voltar {
-            display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
-            color: var(--texto-medio); font-size: 0.9rem; font-weight: 600;
-            margin-bottom: 30px; transition: var(--transicao); padding: 8px 16px; border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--texto-medio);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: var(--transicao);
+            padding: 8px 16px;
+            border-radius: 8px;
+            background-color: transparent;
         }
 
-        .btn-voltar:hover { color: var(--cor-primaria); background-color: var(--cor-primaria-bg); transform: translateX(-4px); }
-        .btn-voltar svg { width: 20px; height: 20px; fill: currentColor; }
+        .btn-voltar:hover {
+            color: var(--cor-primaria);
+            background-color: var(--cor-primaria-bg);
+            transform: translateX(-4px);
+        }
 
-        .header-transparencia { text-align: center; margin-bottom: 50px; animation: fadeIn 0.6s ease-out; }
+        .btn-voltar svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Cabeçalho da Página */
+        .header-transparencia {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
         .badge-titulo {
-            display: inline-block; background-color: var(--cor-primaria-bg); color: var(--cor-primaria);
-            padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px;
+            display: inline-block;
+            background-color: var(--cor-primaria-bg);
+            color: var(--cor-primaria);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
         }
-        .header-transparencia h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 15px; }
-        .header-transparencia p { font-size: 1.1rem; color: var(--texto-medio); max-width: 700px; margin: 0 auto; }
 
-        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; animation: slideUp 0.8s ease-out; }
+        .header-transparencia h1 {
+            font-size: 2.5rem;
+            color: var(--texto-escuro);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .header-transparencia p {
+            font-size: 1.1rem;
+            color: var(--texto-medio);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Grid de Cartões */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            animation: slideUp 0.8s ease-out;
+        }
 
         .card-item {
-            display: flex; flex-direction: column; background-color: var(--branco);
-            border-radius: 16px; padding: 24px; text-decoration: none; color: inherit;
-            border: 1px solid var(--borda); position: relative; overflow: hidden;
-            transition: var(--transicao); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            background-color: var(--branco);
+            border-radius: 16px;
+            padding: 24px;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid var(--borda);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transicao);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
         .card-item::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
-            background-color: var(--cor-primaria); transform: scaleY(0);
-            transform-origin: bottom; transition: transform 0.4s ease;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--cor-primaria);
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.4s ease;
         }
 
-        .card-item:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(2, 93, 59, 0.1); border-color: transparent; }
-        .card-item:hover::before { transform: scaleY(1); }
+        .card-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(2, 93, 59, 0.1);
+            border-color: transparent;
+        }
 
-        .card-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+        .card-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
         .icone-box {
-            width: 48px; height: 48px; background-color: var(--cor-fundo); border-radius: 12px;
-            display: flex; justify-content: center; align-items: center; flex-shrink: 0; transition: var(--transicao);
+            width: 48px;
+            height: 48px;
+            background-color: var(--cor-fundo);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            transition: var(--transicao);
         }
-        .icone-box svg { width: 24px; height: 24px; fill: var(--cor-primaria); }
 
-        .card-item:hover .icone-box { background-color: var(--cor-primaria); }
-        .card-item:hover .icone-box svg { fill: var(--branco); }
+        .icone-box svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--cor-primaria);
+            transition: var(--transicao);
+        }
 
-        .card-title { font-size: 1.15rem; font-weight: 700; }
-        .card-desc { font-size: 0.95rem; color: var(--texto-medio); flex-grow: 1; }
+        .card-item:hover .icone-box {
+            background-color: var(--cor-primaria);
+        }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .card-item:hover .icone-box svg {
+            fill: var(--branco);
+            transform: scale(1.1);
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--texto-escuro);
+            transition: color 0.3s ease;
+        }
+
+        .card-item:hover .card-title {
+            color: var(--cor-primaria);
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--texto-medio);
+            flex-grow: 1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         @media (max-width: 768px) {
             .header-transparencia h1 { font-size: 2rem; }
@@ -120,15 +288,19 @@
         }
     </style>
 </head>
-<body style="overflow: hidden;"> <div id="loginOverlay" class="login-overlay">
+<body>
+
+    <div id="loginOverlay" class="login-overlay">
         <div class="login-box">
             <div class="icone-box" style="margin: 0 auto 20px auto; background-color: var(--cor-primaria-bg); width: 64px; height: 64px;">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" style="fill: var(--cor-primaria); width: 32px; height: 32px;"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-63.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,135.52,0Z"></path></svg>
             </div>
-            <h2>Acesso ao Portal Memory</h2>
-            <p>Para visualizar as informações corretamente, você precisa estar conectado ao sistema de transparência.</p>
+            <h2>Acesso Restrito</h2>
+            <p>Para visualizar as informações de Gestão de Pessoas, é necessário conectar-se ao Portal da Transparência.</p>
             
-            <a href="https://ilai.memory.com.br/#/entidades/login/99RRQE/2/public~2Finicio" target="_blank" class="btn-login" onclick="liberarPagina()">Acessar Sistema</a>
+            <a href="https://ilai.memory.com.br/#/entidades/login/99RRQE/2/public~2Finicio" target="_blank" class="btn-login" onclick="liberarPagina()">Fazer Login no Portal</a>
+            
+            <a href="https://www.doresopolis.mg.leg.br/transparencia" class="link-voltar-login">Cancelar e voltar ao início</a>
         </div>
     </div>
     <div class="container">
@@ -141,38 +313,39 @@
         <div class="header-transparencia">
             <span class="badge-titulo">Gestão de Pessoas</span>
             <h1>Recursos Humanos</h1>
-            <p>Acesse as informações sobre o quadro de pessoal, remunerações e processos de seleção da Câmara Municipal.</p>
+            <p>Acesse de forma transparente as informações sobre o quadro de pessoal, remunerações e processos de seleção da Câmara Municipal.</p>
         </div>
 
         <div class="grid-cards">
-            <a href="https://ilai.memory.com.br/#/99RRQE/2/share?resource=public/pessoal/servidor" target="_blank" rel="noopener noreferrer" class="card-item">
+
+        <a href="https://ilai.memory.com.br/#/99RRQE/2/share?resource=public/pessoal/servidor" target="_blank" rel="noopener noreferrer" class="card-item">
                 <div class="card-header">
                     <div class="icone-box">
                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path></svg>
                     </div>
                     <h3 class="card-title">Servidores</h3>
                 </div>
-                <p class="card-desc">Relação nominal dos servidores efetivos, comissionados e cedidos, detalhando cargos e remuneração.</p>
-            </a>
+                <p class="card-desc">Relação nominal dos servidores efetivos, comissionados e cedidos, detalhando cargos, funções, lotação e remuneração.</p>
+        </a>
             
-            <a href="https://ilai.memory.com.br/#/99RRQE/2/share?resource=public/pessoal/estagiario" target="_blank" rel="noopener noreferrer" class="card-item">
+        <a href="https://ilai.memory.com.br/#/99RRQE/2/share?resource=public/pessoal/estagiario" target="_blank" rel="noopener noreferrer" class="card-item">
                 <div class="card-header">
                     <div class="icone-box">
                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M228.61,71.07l-96-48a8,8,0,0,0-7.22,0l-96,48a8,8,0,0,0,0,14.33L50.59,96H40a8,8,0,0,0-8,8v48a8,8,0,0,0,16,0V108.73l72.39,36.19a8,8,0,0,0,7.22,0l40.39-20.19V176a24,24,0,0,0,24,24h24a24,24,0,0,0,24-24V113l12.61-6.3A8,8,0,0,0,228.61,71.07ZM224,176a8,8,0,0,1-8,8H192a8,8,0,0,1-8-8V106.73l40,20ZM128,128.5,41.51,85.25,128,42l86.49,43.25Z"></path></svg>
                     </div>
                     <h3 class="card-title">Estagiários</h3>
                 </div>
-                <p class="card-desc">Lista de estagiários contratados, instituições conveniadas e editais de seleção.</p>
-            </a>
+                <p class="card-desc">Lista de estagiários contratados, instituições conveniadas, valores de bolsa e editais de seleção de estágio</p>
+        </a>
       
-            <a href="#" class="card-item">
+        <a href="#" class="card-item">
                 <div class="card-header">
                     <div class="icone-box">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M244.24,138.83a8,8,0,0,0-10.74-2.5A44,44,0,0,1,164,101.4a8,8,0,1,0-15.53-3.8A60,60,0,0,0,222.18,148.9,8,8,0,0,0,244.24,138.83ZM160,152a56.06,56.06,0,0,0-45.71-55A48,48,0,1,0,65.71,97,56,56,0,0,0,16,152a8,8,0,0,0,16,0,40,40,0,0,1,80,0,8,8,0,0,0,16,0,40,40,0,0,1,80,0,8,8,0,0,0,16,0ZM96,48A32,32,0,1,1,64,80,32,32,0,0,1,96,48Z"></path></svg>
                     </div>
                     <h3 class="card-title">Terceirizados</h3>
                 </div>
-                <p class="card-desc">Relação de empregados de empresas contratadas para prestação de serviços continuados.</p>
+                <p class="card-desc">Relação de empregados de empresas contratadas para prestação de serviços continuados ou terceirizados.</p>
             </a>
             
             <a href="#" class="card-item">
@@ -182,10 +355,44 @@
                     </div>
                     <h3 class="card-title">Padrão Remuneratório</h3>
                 </div>
-                <p class="card-desc">Tabelas com as faixas salariais e vencimentos básicos correspondentes a cada cargo.</p>
+                <p class="card-desc">Tabelas com as faixas salariais, vencimentos básicos e gratificações correspondentes a cada cargo e função.</p>
             </a>
 
             <a href="#" class="card-item">
                 <div class="card-header">
                     <div class="icone-box">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,16,208a8,8,0,0,0,16,0,80,80,0,0,1,104,0,8,8,0,0,0,16,0A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.7,79.8,79.8,0,0,0-45-36.42,60,60,0,1,0-36.26-95.27,8,8,0,1,1-10.4-12.16,76,76,0,1,1,53.51,123A95.82,95.82,0,0,1,252.84,195.6,8,8,0,0,1,250.14,206.7Z"></
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,16,208a8,8,0,0,0,16,0,80,80,0,0,1,104,0,8,8,0,0,0,16,0A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.7,79.8,79.8,0,0,0-45-36.42,60,60,0,1,0-36.26-95.27,8,8,0,1,1-10.4-12.16,76,76,0,1,1,53.51,123A95.82,95.82,0,0,1,252.84,195.6,8,8,0,0,1,250.14,206.7Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Concursos Públicos</h3>
+                </div>
+                <p class="card-desc">Editais, cronogramas, convocações e resultados de concursos públicos e processos seletivos simplificados.</p>
+            </a>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Verifica se o usuário já clicou no login durante esta sessão (aba do navegador)
+            if (!sessionStorage.getItem("acesso_portal_liberado")) {
+                // Se não liberou, mostra o aviso e impede rolagem da tela
+                document.getElementById("loginOverlay").style.display = "flex";
+                document.body.style.overflow = "hidden";
+            }
+        });
+
+        function liberarPagina() {
+            // Salva a permissão temporária na sessão do navegador
+            sessionStorage.setItem("acesso_portal_liberado", "true");
+            
+            // Oculta a tela de bloqueio e volta a barra de rolagem
+            // Usamos um pequeno atraso (setTimeout) para o clique ser registrado antes de sumir
+            setTimeout(() => {
+                document.getElementById("loginOverlay").style.display = "none";
+                document.body.style.overflow = "auto";
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>
