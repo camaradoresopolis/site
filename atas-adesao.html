@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atas de Adesão - SRP | Câmara Municipal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --cor-fundo: #f2f2f2; --cor-primaria: #025d3b; --cor-primaria-bg: rgba(2, 93, 59, 0.08); --branco: #ffffff; --texto-escuro: #1f2937; --texto-medio: #4b5563; --texto-claro: #6b7280; --borda: #e5e7eb; --transicao: all 0.3s ease; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--cor-fundo); color: var(--texto-escuro); line-height: 1.6; padding: 40px 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .btn-voltar { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--texto-medio); font-size: 0.9rem; font-weight: 600; margin-bottom: 30px; transition: var(--transicao); padding: 8px 16px; border-radius: 8px; }
+        .btn-voltar:hover { color: var(--cor-primaria); background-color: var(--cor-primaria-bg); transform: translateX(-4px); }
+        .btn-voltar svg { width: 20px; height: 20px; fill: currentColor; }
+        .header-transparencia { text-align: center; margin-bottom: 50px; animation: fadeIn 0.6s ease-out; }
+        .badge-titulo { display: inline-block; background-color: var(--cor-primaria-bg); color: var(--cor-primaria); padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; }
+        .header-transparencia h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 15px; }
+        .header-transparencia p { font-size: 1.1rem; color: var(--texto-medio); max-width: 700px; margin: 0 auto; }
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 40px; animation: slideUp 0.8s ease-out; }
+        .card-item { display: flex; flex-direction: column; background-color: var(--branco); border-radius: 16px; padding: 24px; text-decoration: none; border: 1px solid var(--borda); position: relative; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+        .card-item::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background-color: var(--cor-primaria); }
+        .card-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+        .icone-box { width: 48px; height: 48px; background-color: var(--cor-primaria-bg); border-radius: 12px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .icone-box svg { width: 24px; height: 24px; fill: var(--cor-primaria); }
+        .card-title { font-size: 1.15rem; font-weight: 700; color: var(--texto-escuro); }
+        .card-desc { font-size: 0.95rem; color: var(--texto-medio); }
+        .secao-declaracoes { background-color: var(--branco); border-radius: 16px; padding: 32px; border: 1px solid var(--borda); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); animation: slideUp 1s ease-out; }
+        .titulo-declaracoes { font-size: 1.2rem; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; }
+        .titulo-declaracoes svg { width: 24px; height: 24px; fill: var(--cor-primaria); }
+        .declaracao-item { background-color: var(--cor-fundo); padding: 18px 20px; border-radius: 8px; border-left: 3px solid var(--texto-claro); display: flex; flex-direction: column; gap: 8px; }
+        .declaracao-texto { font-size: 1rem; color: var(--texto-escuro); font-weight: 400; }
+        .contador-data { font-size: 0.85rem; color: var(--cor-primaria); font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="licitacoes.html" class="btn-voltar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+            Voltar para Licitações
+        </a>
+
+        <div class="header-transparencia">
+            <span class="badge-titulo">Transparência</span>
+            <h1>Atas de Adesão - SRP</h1>
+            <p>Informações sobre as adesões a Atas de Registro de Preços realizadas pelo órgão.</p>
+        </div>
+
+        <div class="grid-cards">
+            <div class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M162.34,93.66a8,8,0,0,1-11.32,11.32l-32-32a8,8,0,0,1,11.32-11.32l32,32ZM213.66,42.34a40,40,0,0,0-56.57,0L130.34,69.09a8,8,0,0,0,11.32,11.31l26.75-26.74a24,24,0,0,1,33.94,33.94L175.61,114.34a8,8,0,0,0,11.31,11.32l26.74-26.75A40,40,0,0,0,213.66,42.34Zm-83.32,144.57L103.59,213.66a40,40,0,0,1-56.57-56.57L73.77,130.34a8,8,0,0,0-11.32-11.31L35.7,145.78a56,56,0,0,0,79.2,79.2l26.75-26.75a8,8,0,1,0-11.31-11.32Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Atas de Adesão (Sistema Carona)</h3>
+                </div>
+                <p class="card-desc">Quadro geral de acompanhamento</p>
+            </div>
+        </div>
+
+        <div class="secao-declaracoes">
+            <h3 class="titulo-declaracoes">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z" transform="rotate(180 128 128)"></path></svg>
+                Declaração de Integridade
+            </h3>
+            <div class="declaracao-item">
+                <p class="declaracao-texto">
+                    Declaramos, para fins de transparência pública, que, no período de 2022 até o presente momento, a Câmara Municipal de Doresópolis/MG não realizou adesão a ata de registro de preços.
+                </p>
+                <span class="contador-data">
+                    Atualizado em: <span class="data-dinamica"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function atualizarContador() {
+            const dataAtual = new Date();
+            const dataBase = new Date('2026-05-12T00:00:00'); 
+            
+            const diferencaTempo = dataAtual - dataBase;
+            const diferencaDias = Math.floor(diferencaTempo / (1000 * 60 * 60 * 24));
+            
+            let ciclosPassados = 0;
+            if(diferencaDias > 0) {
+                ciclosPassados = Math.floor(diferencaDias / 30);
+            }
+            
+            const dataUltimaAtualizacao = new Date(dataBase);
+            dataUltimaAtualizacao.setDate(dataBase.getDate() + (ciclosPassados * 30));
+            
+            const opcoes = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            const dataFormatada = dataUltimaAtualizacao.toLocaleDateString('pt-BR', opcoes);
+            
+            document.querySelectorAll('.data-dinamica').forEach(elemento => {
+                elemento.textContent = dataFormatada;
+            });
+        }
+        document.addEventListener('DOMContentLoaded', atualizarContador);
+    </script>
+</body>
+</html>
