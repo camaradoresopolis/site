@@ -54,15 +54,22 @@
         .subtopico-titulo-texto .icone-seta { width: 16px; height: 16px; fill: var(--texto-escuro); }
         details[open] > .subtopico-titulo .subtopico-titulo-texto .icone-seta { fill: var(--cor-primaria); }
         .subtopico-conteudo { padding-top: 16px; animation: fadeIn 0.4s ease-in-out; }
+        
+        /* AJUSTES NA TABELA PARA REMOVER ROLAGEM HORIZONTAL */
         .table-responsive { width: 100%; overflow-x: auto; border-radius: 8px; border: 1px solid var(--borda); margin-bottom: 24px; }
-        table { width: 100%; border-collapse: collapse; text-align: left; min-width: 1400px; }
+        /* Removido o min-width: 1400px; para permitir que a tabela encolha */
+        table { width: 100%; border-collapse: collapse; text-align: left; }
         thead { background-color: var(--cor-primaria); color: var(--branco); }
-        th { padding: 12px 14px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
-        td { padding: 12px 14px; border-bottom: 1px solid var(--borda); font-size: 0.85rem; color: var(--texto-escuro); vertical-align: middle; }
+        /* Removido white-space: nowrap; para permitir quebra de linha nos títulos */
+        th { padding: 12px 14px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        /* Adicionado word-wrap para quebra de texto longa natural */
+        td { padding: 12px 14px; border-bottom: 1px solid var(--borda); font-size: 0.85rem; color: var(--texto-escuro); vertical-align: middle; word-wrap: break-word; }
         tbody tr:hover { background-color: var(--cor-fundo); }
         .tabela-total { background-color: #e5e7eb !important; font-weight: 700; }
         .tabela-total td { font-size: 0.9rem; }
-        .col-justificativa { min-width: 300px; }
+        /* Removido a largura forçada (min-width) da justificativa */
+        .col-justificativa { width: auto; }
+
         .msg-vazio, .msg-loading { padding: 20px; text-align: center; color: var(--texto-claro); font-weight: 600; background: var(--cor-fundo); border-radius: 8px; margin-bottom: 20px; border: 1px dashed var(--borda); }
         .msg-vazio { display: none; }
         .avisos-container { margin-top: 40px; }
@@ -184,7 +191,9 @@
             try {
                 let textoCSV = "";
                 if (URL_PLANILHA_GOOGLE.trim() !== '') {
-                    const resposta = await fetch(URL_PLANILHA_GOOGLE);
+                    // Truque Anti-Cache para forçar atualização instântanea da planilha
+                    const urlSemCache = URL_PLANILHA_GOOGLE + '&nocache=' + new Date().getTime();
+                    const resposta = await fetch(urlSemCache, { cache: "no-store" });
                     textoCSV = await resposta.text();
                 }
 
