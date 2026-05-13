@@ -55,19 +55,15 @@
         details[open] > .subtopico-titulo .subtopico-titulo-texto .icone-seta { fill: var(--cor-primaria); }
         .subtopico-conteudo { padding-top: 16px; animation: fadeIn 0.4s ease-in-out; }
         
-        /* AJUSTES NA TABELA PARA REMOVER ROLAGEM HORIZONTAL */
+        /* Ajustes na tabela */
         .table-responsive { width: 100%; overflow-x: auto; border-radius: 8px; border: 1px solid var(--borda); margin-bottom: 24px; }
-        /* Removido o min-width: 1400px; para permitir que a tabela encolha */
         table { width: 100%; border-collapse: collapse; text-align: left; }
         thead { background-color: var(--cor-primaria); color: var(--branco); }
-        /* Removido white-space: nowrap; para permitir quebra de linha nos títulos */
         th { padding: 12px 14px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
-        /* Adicionado word-wrap para quebra de texto longa natural */
         td { padding: 12px 14px; border-bottom: 1px solid var(--borda); font-size: 0.85rem; color: var(--texto-escuro); vertical-align: middle; word-wrap: break-word; }
         tbody tr:hover { background-color: var(--cor-fundo); }
         .tabela-total { background-color: #e5e7eb !important; font-weight: 700; }
         .tabela-total td { font-size: 0.9rem; }
-        /* Removido a largura forçada (min-width) da justificativa */
         .col-justificativa { width: auto; }
 
         .msg-vazio, .msg-loading { padding: 20px; text-align: center; color: var(--texto-claro); font-weight: 600; background: var(--cor-fundo); border-radius: 8px; margin-bottom: 20px; border: 1px dashed var(--borda); }
@@ -163,7 +159,6 @@
                             <li>Não são permitidas viagens ou diárias internacionais.</li>
                             <li>As informações refletem a realidade atual, pois foram atualizadas em tempo real através de busca em banco de dados.</li>
                             <li>Não há período inicial/final de busca, ou seja, foi pesquisado todo o histórico existente no banco de dados.</li>
-                            <li>Não há informações anteriores ou posteriores às que estão sendo exibidas na página atual quando não filtrado.</li>
                             <li>A regulamentação que trata sobre viagens e diárias é recente e, anteriormente, elas eram vedadas.</li>
                         </ul>
                     </div>
@@ -173,7 +168,9 @@
     </div>
 
     <script>
+        // ====================================================================
         const URL_PLANILHA_GOOGLE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZFfD3-GCVUkHA7MwCWobcTDKcdsWK3-WHiZpLXurvYjNve-S4BMSDfyhZ6Vyk-3Vp8wKoWMeG94pu/pub?output=csv'; 
+        // ====================================================================
 
         document.addEventListener('DOMContentLoaded', () => {
             const dataAtual = new Date();
@@ -192,7 +189,7 @@
             try {
                 let textoCSV = "";
                 if (URL_PLANILHA_GOOGLE.trim() !== '') {
-                    // Truque Anti-Cache para forçar atualização instântanea da planilha
+                    // Anti-cache para sempre pegar a versão atualizada da planilha
                     const urlSemCache = URL_PLANILHA_GOOGLE + '&nocache=' + new Date().getTime();
                     const resposta = await fetch(urlSemCache, { cache: "no-store" });
                     textoCSV = await resposta.text();
@@ -231,7 +228,7 @@
 
         function construirInterfaceHTML(linhas) {
             const container = document.getElementById('container-dados');
-            linhas.shift(); // Remove cabeçalho
+            linhas.shift(); // Remove cabeçalho do CSV
 
             const dadosAgrupados = {};
             linhas.forEach(linha => {
@@ -290,20 +287,45 @@
                                     <div class="table-responsive">
                                         <table>
                                             <thead>
-                                                <tr><th>Nº</th><th>Nome Beneficiário</th><th>Cargo/Função Beneficiário</th><th>Período de Afastamento</th><th>Destino</th><th class="col-justificativa">Justificativa Afastamento</th><th>Qtd Diárias</th><th>Valor Recebido</th><th>Apontamentos</th></tr>
+                                                <tr>
+                                                    <th>Nº</th>
+                                                    <th>Nome Beneficiário</th>
+                                                    <th>Cargo/Função Beneficiário</th>
+                                                    <th>Data de Saída</th>
+                                                    <th>Data de Chegada</th>
+                                                    <th>Destino</th>
+                                                    <th class="col-justificativa">Justificativa Afastamento</th>
+                                                    <th>Qtd Diárias</th>
+                                                    <th>Valor Recebido</th>
+                                                </tr>
                                             </thead>
                                             <tbody>`;
                         let somaMes = 0;
                         dadosAgrupados[ano][mes].forEach(linha => {
-                            htmlFinal += `<tr class="linha-dado"><td>${linha[2]||''}</td><td>${linha[3]||''}</td><td>${linha[4]||''}</td><td>${linha[5]||''}</td><td>${linha[6]||''}</td><td>${linha[7]||''}</td><td>${linha[8]||''}</td><td>${linha[9]||''}</td><td>${linha[10]||''}</td></tr>`;
-                            let valStr = linha[9] || '';
+                            htmlFinal += `
+                                <tr class="linha-dado">
+                                    <td>${linha[2]||''}</td>
+                                    <td>${linha[3]||''}</td>
+                                    <td>${linha[4]||''}</td>
+                                    <td>${linha[5]||''}</td>
+                                    <td>${linha[6]||''}</td>
+                                    <td>${linha[7]||''}</td>
+                                    <td>${linha[8]||''}</td>
+                                    <td>${linha[9]||''}</td>
+                                    <td>${linha[10]||''}</td>
+                                </tr>`;
+                            // No novo layout, Valor Recebido está no índice 10 (Coluna K)
+                            let valStr = linha[10] || '';
                             if (valStr.includes('R$')) {
                                 let num = parseFloat(valStr.replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
                                 if (!isNaN(num)) somaMes += num;
                             }
                         });
                         htmlFinal += `
-                                        <tr class="tabela-total"><td colspan="7">TOTAL LISTADO - ${mes.toUpperCase()}</td><td colspan="2">${somaMes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td></tr>
+                                        <tr class="tabela-total">
+                                            <td colspan="8">TOTAL LISTADO - ${mes.toUpperCase()}</td>
+                                            <td>${somaMes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                                        </tr>
                                     </tbody></table></div></div></details>`;
                     });
                 }
@@ -323,35 +345,54 @@
             const msgV = document.getElementById('msg-vazio');
             const painelR = document.getElementById('resumo-filtro');
             const txtVT = document.getElementById('valor-total-filtrado');
+            
             let encontrou = false, somaT = 0;
             let fAtivo = nomeF !== '' || dInicio !== '' || dFim !== '';
+            
             totais.forEach(t => t.style.display = fAtivo ? 'none' : '');
+            
             linhas.forEach(linha => {
                 const nomeT = linha.cells[1].textContent.toLowerCase() + linha.cells[2].textContent.toLowerCase();
                 const textoL = linha.innerHTML;
                 let bateN = nomeF === '' || nomeT.includes(nomeF);
+                
                 const regexD = /(\d{2})\/(\d{2})\/(\d{4})/g;
                 let match, dDentro = false, pData = false;
+                
                 while ((match = regexD.exec(textoL)) !== null) {
                     pData = true;
                     const dNum = parseInt(`${match[3]}${match[2]}${match[1]}`); 
                     if (dNum >= diNum && dNum <= dfNum) { dDentro = true; break; }
                 }
+                
                 let bateD = (!dInicio && !dFim) || (pData && dDentro);
+                
                 if (bateN && bateD) {
-                    linha.style.display = ''; encontrou = true;
+                    linha.style.display = ''; 
+                    encontrou = true;
                     let valStr = "";
-                    for (let i = 0; i < linha.cells.length; i++) { if (linha.cells[i].textContent.includes('R$')) { valStr = linha.cells[i].textContent; break; } }
+                    for (let i = 0; i < linha.cells.length; i++) { 
+                        if (linha.cells[i].textContent.includes('R$')) { 
+                            valStr = linha.cells[i].textContent; 
+                            break; 
+                        } 
+                    }
                     if (valStr !== "") {
                         let num = parseFloat(valStr.replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
                         if (!isNaN(num)) somaT += num;
                     }
-                } else { linha.style.display = 'none'; }
+                } else { 
+                    linha.style.display = 'none'; 
+                }
             });
+            
             if (fAtivo && encontrou) {
-                painelR.style.display = 'block'; txtVT.textContent = somaT.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                painelR.style.display = 'block'; 
+                txtVT.textContent = somaT.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                 document.querySelectorAll('details').forEach(d => d.open = true);
-            } else { painelR.style.display = 'none'; }
+            } else { 
+                painelR.style.display = 'none'; 
+            }
             msgV.style.display = (!encontrou && fAtivo) ? 'block' : 'none';
         }
 
