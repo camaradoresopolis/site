@@ -4,142 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viagens e Diárias | Câmara Municipal de Doresópolis</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
     <style>
-        /* Variáveis de Cores */
-        :root {
-            --cor-fundo: #f2f2f2;
-            --cor-primaria: #025d3b; 
-            --cor-primaria-hover: #01472c;
-            --cor-primaria-bg: rgba(2, 93, 59, 0.08);
-            --branco: #ffffff;
-            --texto-escuro: #1f2937;
-            --texto-medio: #4b5563;
-            --texto-claro: #6b7280;
-            --borda: #e5e7eb;
-            --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            
-            --alerta-amarelo-bg: #fff3cd;
-            --alerta-amarelo-texto: #856404;
-            --alerta-azul-bg: #d1ecf1;
-            --alerta-azul-texto: #0c5460;
-        }
-
+        :root { --cor-fundo: #f2f2f2; --cor-primaria: #025d3b; --cor-primaria-hover: #01472c; --cor-primaria-bg: rgba(2, 93, 59, 0.08); --branco: #ffffff; --texto-escuro: #1f2937; --texto-medio: #4b5563; --texto-claro: #6b7280; --borda: #e5e7eb; --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); --alerta-amarelo-bg: #fff3cd; --alerta-amarelo-texto: #856404; --alerta-azul-bg: #d1ecf1; --alerta-azul-texto: #0c5460; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background-color: var(--cor-fundo); color: var(--texto-escuro); line-height: 1.6; padding: 40px 20px; }
         .container { max-width: 1200px; margin: 0 auto; }
-
         .btn-voltar { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--texto-medio); font-size: 0.9rem; font-weight: 600; margin-bottom: 30px; transition: var(--transicao); padding: 8px 16px; border-radius: 8px; background-color: transparent; }
         .btn-voltar:hover { color: var(--cor-primaria); background-color: var(--cor-primaria-bg); transform: translateX(-4px); }
         .btn-voltar svg { width: 20px; height: 20px; fill: currentColor; }
-
         .header-transparencia { text-align: center; margin-bottom: 40px; animation: fadeIn 0.6s ease-out; }
         .header-transparencia svg { width: 40px; height: 40px; fill: var(--cor-primaria); margin-bottom: 10px; }
         .header-transparencia h1 { font-size: 2.5rem; color: var(--texto-escuro); font-weight: 700; margin-bottom: 15px; }
-
         .info-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--borda); margin-bottom: 30px; font-size: 0.9rem; color: var(--texto-claro); }
-
-        .conteudo-box { background-color: var(--branco); border-radius: 16px; padding: 32px; border: 1px solid var(--borda); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); animation: slideUp 0.8s ease-out; margin-bottom: 30px; }
-
-        /* Estilos do Filtro de Pesquisa */
-        .filtro-box { background-color: var(--branco); border-radius: 12px; padding: 24px; border: 1px solid var(--borda); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); margin-bottom: 30px; animation: slideUp 0.6s ease-out; }
+        .conteudo-box, .filtro-box { background-color: var(--branco); border-radius: 16px; padding: 32px; border: 1px solid var(--borda); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); animation: slideUp 0.8s ease-out; margin-bottom: 30px; }
         .filtro-titulo { font-size: 1.1rem; color: var(--cor-primaria); font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
         .filtro-titulo svg { width: 20px; height: 20px; fill: var(--cor-primaria); }
-        
         .filtro-grid { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 16px; align-items: end; }
         .filtro-item { display: flex; flex-direction: column; gap: 6px; }
         .filtro-item label { font-size: 0.85rem; font-weight: 600; color: var(--texto-medio); }
-        .filtro-item input, .filtro-item select { width: 100%; padding: 10px 12px; border: 1px solid var(--borda); border-radius: 8px; font-size: 0.9rem; color: var(--texto-escuro); font-family: inherit; transition: var(--transicao); outline: none; }
-        .filtro-item input:focus, .filtro-item select:focus { border-color: var(--cor-primaria); box-shadow: 0 0 0 3px var(--cor-primaria-bg); }
-        
+        .filtro-item input { width: 100%; padding: 10px 12px; border: 1px solid var(--borda); border-radius: 8px; font-size: 0.9rem; color: var(--texto-escuro); font-family: inherit; transition: var(--transicao); outline: none; }
+        .filtro-item input:focus { border-color: var(--cor-primaria); box-shadow: 0 0 0 3px var(--cor-primaria-bg); }
         .filtro-acoes { display: flex; gap: 10px; }
         .btn { padding: 10px 16px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; border: none; transition: var(--transicao); display: inline-flex; align-items: center; gap: 6px; font-family: inherit; }
         .btn-primario { background-color: var(--cor-primaria); color: var(--branco); }
         .btn-primario:hover { background-color: var(--cor-primaria-hover); transform: translateY(-2px); }
         .btn-secundario { background-color: var(--cor-fundo); color: var(--texto-escuro); border: 1px solid var(--borda); }
         .btn-secundario:hover { background-color: #e5e7eb; }
-
-        /* Botão Exportar CSV */
-        .btn-download-csv {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--cor-primaria);
-            background-color: var(--cor-primaria-bg);
-            border: 1px solid rgba(2, 93, 59, 0.2);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: var(--transicao);
-            text-transform: none; /* Ignora o uppercase do summary */
-            letter-spacing: normal;
-        }
-        .btn-download-csv:hover {
-            background-color: var(--cor-primaria);
-            color: var(--branco);
-            border-color: var(--cor-primaria);
-        }
-        .btn-download-csv svg {
-            width: 14px;
-            height: 14px;
-            stroke: currentColor;
-        }
-
-        /* Painel de Resumo Total */
+        .btn-download-csv { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8rem; font-weight: 600; color: var(--cor-primaria); background-color: var(--cor-primaria-bg); border: 1px solid rgba(2, 93, 59, 0.2); border-radius: 6px; cursor: pointer; transition: var(--transicao); text-transform: none; letter-spacing: normal; }
+        .btn-download-csv:hover { background-color: var(--cor-primaria); color: var(--branco); border-color: var(--cor-primaria); }
+        .btn-download-csv svg { width: 14px; height: 14px; stroke: currentColor; }
         .resumo-filtro { background-color: var(--cor-primaria-bg); border: 2px dashed var(--cor-primaria); border-radius: 12px; padding: 24px; margin-bottom: 30px; text-align: center; animation: fadeIn 0.4s ease-in-out; }
         .resumo-conteudo { display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .resumo-label { font-size: 0.9rem; color: var(--texto-escuro); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .resumo-valor { font-size: 2.5rem; color: var(--cor-primaria); font-weight: 800; line-height: 1; }
-
-        /* Menus Expansíveis */
         details { margin-bottom: 20px; }
-        summary { list-style: none; cursor: pointer; user-select: none; transition: var(--transicao); outline: none; }
+        summary { list-style: none; cursor: pointer; user-select: none; outline: none; }
         summary::-webkit-details-marker { display: none; }
         .icone-seta { width: 18px; height: 18px; fill: var(--cor-primaria); transition: transform 0.3s ease; }
-
         .topico-titulo { font-size: 1.2rem; color: var(--cor-primaria); font-weight: 600; display: flex; align-items: center; gap: 10px; padding: 8px 0; }
         .topico-titulo:hover { color: var(--cor-primaria-hover); }
         details[open] > summary .icone-seta { transform: rotate(180deg); }
         .topico-conteudo { padding-left: 28px; margin-top: 10px; margin-bottom: 20px; animation: fadeIn 0.4s ease-in-out; }
         .topico-link { color: var(--texto-medio); text-decoration: none; display: inline-block; font-size: 1rem; transition: var(--transicao); }
         .topico-link:hover { color: var(--cor-primaria); text-decoration: underline; }
-
-        /* Modificação no subtítulo para suportar o botão à direita */
-        .subtopico-titulo { 
-            font-size: 1rem; 
-            color: var(--texto-escuro); 
-            font-weight: 600; 
-            text-transform: uppercase; 
-            display: flex; 
-            justify-content: space-between; /* Espalha título e botão */
-            align-items: center; 
-            padding: 8px 0; 
-        }
+        .subtopico-titulo { font-size: 1rem; color: var(--texto-escuro); font-weight: 600; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; padding: 8px 0; }
         .subtopico-titulo:hover { color: var(--cor-primaria); }
         .subtopico-titulo-texto { display: flex; align-items: center; gap: 8px; }
         .subtopico-titulo-texto .icone-seta { width: 16px; height: 16px; fill: var(--texto-escuro); }
         details[open] > .subtopico-titulo .subtopico-titulo-texto .icone-seta { fill: var(--cor-primaria); }
         .subtopico-conteudo { padding-top: 16px; animation: fadeIn 0.4s ease-in-out; }
-
-        /* Estilização da Tabela */
-        .table-responsive { width: 100%; overflow-x: auto; border-radius: 8px; border: 1px solid var(--borda); margin-bottom: 24px; }
-        table { width: 100%; border-collapse: collapse; text-align: left; min-width: 1400px; }
-        thead { background-color: var(--cor-primaria); color: var(--branco); }
-        th { padding: 12px 14px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
-        td { padding: 12px 14px; border-bottom: 1px solid var(--borda); font-size: 0.85rem; color: var(--texto-escuro); vertical-align: middle; }
-        tbody tr:hover { background-color: var(--cor-fundo); }
         
+        /* Ajustes na tabela */
+        .table-responsive { width: 100%; overflow-x: auto; border-radius: 8px; border: 1px solid var(--borda); margin-bottom: 24px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        thead { background-color: var(--cor-primaria); color: var(--branco); }
+        th { padding: 12px 14px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        td { padding: 12px 14px; border-bottom: 1px solid var(--borda); font-size: 0.85rem; color: var(--texto-escuro); vertical-align: middle; word-wrap: break-word; }
+        tbody tr:hover { background-color: var(--cor-fundo); }
         .tabela-total { background-color: #e5e7eb !important; font-weight: 700; }
         .tabela-total td { font-size: 0.9rem; }
-        .col-justificativa { min-width: 300px; }
+        .col-justificativa { width: auto; }
 
-        /* Nenhum resultado */
-        .msg-vazio { display: none; padding: 20px; text-align: center; color: var(--texto-claro); font-weight: 600; background: var(--cor-fundo); border-radius: 8px; margin-bottom: 20px; border: 1px dashed var(--borda); }
-
+        .msg-vazio, .msg-loading { padding: 20px; text-align: center; color: var(--texto-claro); font-weight: 600; background: var(--cor-fundo); border-radius: 8px; margin-bottom: 20px; border: 1px dashed var(--borda); }
+        .msg-vazio { display: none; }
         .avisos-container { margin-top: 40px; }
         .alerta { display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px; border-radius: 8px; margin-bottom: 16px; font-size: 0.95rem; }
         .alerta-icone { display: flex; justify-content: center; align-items: center; width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; font-weight: bold; font-size: 1.2rem; }
@@ -150,10 +78,8 @@
         .alerta ul { list-style: none; margin-left: 0; }
         .alerta ul li { margin-bottom: 4px; }
         .alerta ul li::before { content: "- "; }
-
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
         @media (max-width: 768px) {
             .header-transparencia h1 { font-size: 2rem; }
             .info-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -179,7 +105,7 @@
         </div>
 
         <div class="info-bar">
-            <span>Atualizado em tempo real - acesso em <span class="data-dinamica"></span></span>
+            <span>Atualizado em <span class="data-dinamica"></span></span>
         </div>
 
         <div class="filtro-box">
@@ -215,942 +141,288 @@
         </div>
 
         <div class="conteudo-box">
-            
             <div id="msg-vazio" class="msg-vazio">Nenhum registro encontrado para os filtros selecionados.</div>
 
             <div id="container-dados">
-                <details>
-                    <summary class="topico-titulo">
-                        <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                        Regulamentações
-                    </summary>
-                    <div class="topico-conteudo">
-                        <a href="#" class="topico-link">Resolução Nº 2.873, de 14 de outubro de 2025</a>
-                    </div>
-                </details>
-
-                <details>
-                    <summary class="topico-titulo">
-                        <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                        2026
-                    </summary>
-                    
-                    <div class="topico-conteudo">
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    Janeiro
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nº</th>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Cargo/Função Beneficiário</th>
-                                                <th>Período de Afastamento</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                                <th>Apontamentos</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="linha-dado"><td>1</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>28/01/2026</td><td>Lagoa da Prata-MG</td><td>Viagem a Lagoa da Prata conforme relatório em anexo</td><td>1</td><td>R$ 225,00</td><td></td></tr>
-                                            <tr class="linha-dado"><td>2</td><td>HUGO OLIVEIRA LEÃO</td><td>VEREADOR</td><td>28/01/2026</td><td>Passos-MG</td><td>Viagem a Passos conforme relatório em anexo</td><td>1</td><td>R$ 225,00</td><td></td></tr>
-                                            <tr class="linha-dado"><td>3</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>28/01/2026</td><td>Belo Horizonte-MG</td><td>Viagem a Belo Horizonte conforme relatório em anexo</td><td>1</td><td>R$ 730,00</td><td></td></tr>
-                                            <tr class="linha-dado"><td>4</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>28/01/2026</td><td>Passos-MG</td><td>Viagem a Passos conforme relatório em anexo</td><td>1</td><td>R$ 225,00</td><td></td></tr>
-                                            <tr class="linha-dado"><td>5</td><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>VEREADOR</td><td>28/01/2026</td><td>Belo Horizonte-MG</td><td>Viagem a Belo Horizonte conforme relatório em anexo</td><td>1</td><td>R$ 547,50</td><td></td></tr>
-                                            <tr class="linha-dado"><td>6</td><td>REINALDO DE SOUZA LOPES</td><td>VEREADOR</td><td>28/01/2026</td><td>Belo Horizonte-MG</td><td>Viagem a Belo Horizonte conforme relatório em anexo</td><td>1</td><td>R$ 547,50</td><td></td></tr>
-                                            <tr class="linha-dado"><td>7</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>28/01/2026</td><td>Belo Horizonte-MG</td><td>Viagem a Belo Horizonte conforme relatório em anexo</td><td>1</td><td>R$ 547,50</td><td></td></tr>
-                                            <tr class="linha-dado"><td>8</td><td>KEYLA MARIA PAIM</td><td>VEREADOR</td><td>28/01/2026</td><td>Passos-MG</td><td>Viagem a Passos conforme relatório em anexo</td><td>1</td><td>R$ 225,00</td><td></td></tr>
-                                            <tr class="linha-dado"><td>9</td><td>MARA GOMES FREIRE</td><td>PRESIDENTE</td><td>28/01/2026</td><td>Passos-MG</td><td>Viagem a Passos conforme relatório de viagem</td><td>1</td><td>R$ 225,00</td><td></td></tr>
-                                            <tr class="tabela-total">
-                                                <td colspan="7">TOTAL LISTADO - JANEIRO</td>
-                                                <td colspan="2">R$ 3.497,50</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </details>
-
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    Fevereiro
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nº</th>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Cargo/Função Beneficiário</th>
-                                                <th>Período de Afastamento</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                                <th>Apontamentos</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="linha-dado"><td>1</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>04/02/2026</td><td>Belo Horizonte-MG</td><td>Encontro com Deputado Estadual Marcos Joseraldo Lemos (Marquinho Lemos) para tratar assuntos de ineteresse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
-                                            <tr class="linha-dado"><td>2</td><td>KEYLA MARIA PAIM</td><td>VEREADOR</td><td>09/02/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Marcelo Álvaro e Deputada Amanda Teixeira para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
-                                            <tr class="linha-dado"><td>3</td><td>MARA GOMES FREIRE</td><td>PRESIDENTE</td><td>09/02/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Marcelo Álvaro e Deputada Amanda Teixeira para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
-                                            <tr class="linha-dado"><td>4</td><td>HUGO OLIVEIRA LEÃO</td><td>VEREADOR</td><td>09/02/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Marcelo Álvaro e Deputada Amanda Teixeira para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
-                                            <tr class="linha-dado"><td>5</td><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>VEREADOR</td><td>09/02/2026</td><td>Belo Horizonte-MG</td><td>Encontro com Deputado Antônio Carlos Arantes para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
-                                            <tr class="linha-dado"><td>6</td><td>KEYLA MARIA PAIM</td><td>VEREADOR</td><td>26/02/2026</td><td>Belo Horizonte-MG</td><td>Reunião no DER-MG para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
-                                            <tr class="linha-dado"><td>7</td><td>MARA GOMES FREIRE</td><td>PRESIDENTE</td><td>26/02/2026</td><td>Belo Horizonte-MG</td><td>Reunião no DER-MG para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
-                                            <tr class="linha-dado"><td>8</td><td>HUGO OLIVEIRA LEÃO</td><td>VEREADOR</td><td>26/02/2026</td><td>Belo Horizonte-MG</td><td>Reunião no DER-MG para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
-                                            <tr class="linha-dado"><td>9</td><td>ANTONIO JOSE DE MORAIS FILHO</td><td>VEREADOR</td><td>26/02/2026</td><td>Belo Horizonte-MG</td><td>Reunião no DER-MG para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
-                                            <tr class="linha-dado"><td>10</td><td>HIGOR ALVES BORGES</td><td>SERVIDOR</td><td>26/02/2026 a 27/02/2026</td><td>Belo Horizonte-MG</td><td>Realização de curso de capacitação relacionado ao cargo que ocupa</td><td>1,75</td><td>R$ 1.277,50</td><td>REEMBOLSO JUSTIFICADO</td></tr>
-                                            <tr class="linha-dado"><td>11</td><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>VEREADOR</td><td>27/02/2026</td><td>Passos-MG</td><td>Viagem a cidade de passos para participação da 2ª remessa de sementes de feijão com o deputado Emidinho Madeira</td><td>1</td><td>R$ 225,00</td><td></td></tr>
-                                            <tr class="linha-dado"><td>12</td><td>HUMBERTO SOARES BUENO</td><td>VEREADOR</td><td>27/02/2026</td><td>Passos-MG</td><td>Viagem a cidade de passos para participação da 2ª remessa de sementes de feijão com o deputado Emidinho Madeira</td><td>1</td><td>R$ 225,00</td><td></td></tr>
-                                            <tr class="linha-dado"><td>13</td><td>REINALDO DE SOUZA LOPES</td><td>VEREADOR</td><td>27/02/2026</td><td>Passos-MG</td><td>Viagem a cidade de passos para participação da 2ª remessa de sementes de feijão com o deputado Emidinho Madeira</td><td>1</td><td>R$ 225,00</td><td></td></tr>
-                                            <tr class="linha-dado"><td>14</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>27/02/2026</td><td>Passos-MG</td><td>Viagem a cidade de passos para participação da 2ª remessa de sementes de feijão com o deputado Emidinho Madeira</td><td>1</td><td>R$ 225,00</td><td></td></tr>
-                                            <tr class="tabela-total">
-                                                <td colspan="7">TOTAL LISTADO - FEVEREIRO</td>
-                                                <td colspan="2">R$ 7.105,00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </details>
-
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    Março
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nº</th>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Cargo/Função Beneficiário</th>
-                                                <th>Período de Afastamento</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                                <th>Apontamentos</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="linha-dado"><td>1</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>03/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Marquinho Lemos para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td>RES 09</td></tr>
-                                            <tr class="linha-dado"><td>2</td><td>REINALDO DE SOUZA LOPES</td><td>VEREADOR</td><td>03/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Marquinho Lemos para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td>RES 09</td></tr>
-                                            <tr class="linha-dado"><td>3</td><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>VEREADOR</td><td>03/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Marquinho Lemos para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td>RES 09, REEMBOLSO JUSTIFICADO</td></tr>
-                                            <tr class="linha-dado"><td>4</td><td>HUMBERTO SOARES BUENO</td><td>VEREADOR</td><td>03/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Marquinho Lemos para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td>RES 09</td></tr>
-                                            <tr class="linha-dado"><td>5</td><td>MARA GOMES FREIRE</td><td>PRESIDENTE</td><td>09/03/2026 a 12/03/2026</td><td>Belo Horizonte-MG</td><td>Participação no Evento Mulheres que Governam e Evento 1º Marcha dos Vereadores de Minas Gerais</td><td>3,75</td><td>R$ 2.737,50</td><td>RES 09</td></tr>
-                                            <tr class="linha-dado"><td>6</td><td>KEYLA MARIA PAIM</td><td>VEREADOR</td><td>09/03/2026 a 12/03/2026</td><td>Belo Horizonte-MG</td><td>Participação no Evento Mulheres que Governam e Evento 1º Marcha dos Vereadores de Minas Gerais</td><td>3,75</td><td>R$ 2.737,50</td><td>RES 09</td></tr>
-                                            <tr class="linha-dado"><td>7</td><td>HUGO OLIVEIRA LEÃO</td><td>VEREADOR</td><td>09/03/2026 a 12/03/2026</td><td>Belo Horizonte-MG</td><td>Participação no Evento Mulheres que Governam e Evento 1º Marcha dos Vereadores de Minas Gerais</td><td>3,75</td><td>R$ 2.737,50</td><td>RES 09</td></tr>
-                                            <tr class="linha-dado"><td>8</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>12/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Miguel Ângelo e Presidente do TCE-MG Durval Angelo para tratar de assuntos de interesse público</td><td>1</td><td>R$ 700,00</td><td>RES 11-26</td></tr>
-                                            <tr class="linha-dado"><td>9</td><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>VEREADOR</td><td>12/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Miguel Ângelo e Presidente do TCE-MG Durval Angelo para tratar de assuntos de interesse público</td><td>1</td><td>R$ 700,00</td><td>RES 11-26</td></tr>
-                                            <tr class="linha-dado"><td>10</td><td>REINALDO DE SOUZA LOPES</td><td>VEREADOR</td><td>12/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Miguel Ângelo e Presidente do TCE-MG Durval Angelo para tratar de assuntos de interesse público</td><td>1</td><td>R$ 700,00</td><td>RES 11-26</td></tr>
-                                            <tr class="linha-dado"><td>11</td><td>REINALDO DE SOUZA LOPES</td><td>VEREADOR</td><td>17/03/2026 a 19/03/2026</td><td>Lavras-MG</td><td>Participação no 1º Encontro Estadual de Prefeitos, Vereadores e Gestores Públicos</td><td>3</td><td>R$ 2.100,00</td><td>RES 11-26</td></tr>
-                                            <tr class="linha-dado"><td>12</td><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>VEREADOR</td><td>17/03/2026 a 19/03/2026</td><td>Lavras-MG</td><td>Participação no 1º Encontro Estadual de Prefeitos, Vereadores e Gestores Públicos</td><td>3</td><td>R$ 2.100,00</td><td>RES 11-26</td></tr>
-                                            <tr class="linha-dado"><td>13</td><td>ANTONIO JOSE DE MORAIS FILHO</td><td>VEREADOR</td><td>21/03/2026</td><td>Belo Horizonte-MG</td><td>Participação no Evento de filiação do Deputado Zé Silva</td><td>1</td><td>R$ 700,00</td><td>RES 11-26</td></tr>
-                                            <tr class="linha-dado"><td>14</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>27/03/2026</td><td>Nova Resende-MG</td><td>Participação no 5º Encontro Anual de Prestação de Contas do Mandato do Deputado Federal Emidinho Madeira</td><td>1</td><td>R$ 700,00</td><td>RES 11-26</td></tr>
-                                            <tr class="linha-dado"><td>15</td><td>REINALDO DE SOUZA LOPES</td><td>VEREADOR</td><td>27/03/2026</td><td>Nova Resende-MG</td><td>Participação no 5º Encontro Anual de Prestação de Contas do Mandato do Deputado Federal Emidinho Madeira</td><td>1</td><td>R$ 700,00</td><td>RES 11-26</td></tr>
-                                            <tr class="linha-dado"><td>16</td><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>VEREADOR</td><td>27/03/2026</td><td>Nova Resende-MG</td><td>Participação no 5º Encontro Anual de Prestação de Contas do Mandato do Deputado Federal Emidinho Madeira</td><td>1</td><td>R$ 700,00</td><td>RES 11-26</td></tr>
-                                            <tr class="linha-dado"><td>17</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>30/03/2026 a 31/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com o Deputado Miguel Ângelo e com o Deputado Marquinho Lemos</td><td>2</td><td>R$ 1.400,00</td><td>RES 11-26</td></tr>
-                                            <tr class="linha-dado"><td>18</td><td>HIGOR ALVES BORGES</td><td>SERVIDOR</td><td>30/03/2026 a 31/03/2026</td><td>Belo Horizonte-MG</td><td>Participação do 2º Encontro Nacional de Inteligência Artificial dos Tribunais de Contas</td><td>2</td><td>R$ 1.400,00</td><td>RES 11-26</td></tr>
-                                            <tr class="tabela-total">
-                                                <td colspan="7">TOTAL LISTADO - MARÇO</td>
-                                                <td colspan="2">R$ 22.302,50</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </details>
-                    </div>
-                </details>
-
-                <details>
-                    <summary class="topico-titulo">
-                        <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                        2025
-                    </summary>
-                    <div class="topico-conteudo">
-                        
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    Março
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Período / Referência</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>06/03/2025</td><td>Belo Horizonte-MG</td><td>1 diária para Belo Horizonte para tratar de assuntos de interesse do município junto à FUNASA</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>HUGO OLIVEIRA LEÃO</td><td>06/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Dep. Federal Marcelo A. Antonio e Dep. Amanda Teixeira</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>HUMBERTO SOARES BUENO</td><td>06/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Dep. Federal Marcelo A. Antonio e Dep. Amanda Teixeira</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>06/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Dep. Federal Marcelo A. Antonio e Dep. Amanda Teixeira</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>06/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Dep. Federal Marcelo A. Antonio e Dep. Amanda Teixeira</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>ANTONIO JOSE DE MORAIS FILHO</td><td>06/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Dep. Federal Marcelo A. Antonio e Dep. Amanda Teixeira</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>06/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Dep. Federal Marcelo A. Antonio e Dep. Amanda Teixeira</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>06/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Dep. Federal Marcelo A. Antonio e Dep. Amanda Teixeira</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>17/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao vice-governador de Minas Gerais Mateus Simões</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>21/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao vice-governador de Minas Gerais Mateus Simões</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>HUGO OLIVEIRA LEÃO</td><td>21/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao vice-governador de Minas Gerais Mateus Simões</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>HUMBERTO SOARES BUENO</td><td>17/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao vice-governador de Minas Gerais Mateus Simões</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>17/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao vice-governador de Minas Gerais Mateus Simões</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>ANTONIO JOSE DE MORAIS FILHO</td><td>21/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao vice-governador de Minas Gerais Mateus Simões</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>21/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Deputado Federal Marcelo Alvaro Antonio</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>21/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Deputado Federal Marcelo Alvaro Antonio</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>21/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Deputado Federal Marcelo Alvaro Antonio</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>17/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Deputado Federal Marcelo Alvaro Antonio</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>HUMBERTO SOARES BUENO</td><td>17/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Deputado Federal Marcelo Alvaro Antonio</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>HUGO OLIVEIRA LEÃO</td><td>21/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Deputado Federal Marcelo Alvaro Antonio</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>17/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Deputado Federal Marcelo Alvaro Antonio</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>ANTONIO JOSE DE MORAIS FILHO</td><td>21/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Deputado Federal Marcelo Alvaro Antonio</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>31/03/2025</td><td>Belo Horizonte-MG</td><td>Tratar de assuntos de interesse do município junto ao Dep. Marcelo Alvaro Antonio</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="tabela-total">
-                                                <td colspan="5">TOTAL LISTADO - MARÇO</td>
-                                                <td>R$ 16.100,00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </details>
-
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    Abril
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Período / Referência</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>03/04/2025</td><td>Lavras-MG</td><td>Participar do 1º encontro de prefeitos, vereadores e secretários (UNIVES)</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>03/04/2025</td><td>Lavras-MG</td><td>Participar do 1º encontro de prefeitos, vereadores e secretários (UNIVES)</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>03/04/2025</td><td>Nova Resende-MG</td><td>Reunião junto à diretoria da CEMIG para tratar de assuntos de interesse do município</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>03/04/2025</td><td>Nova Resende-MG</td><td>Reunião junto à diretoria da CEMIG para tratar de assuntos de interesse do município</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>HUMBERTO SOARES BUENO</td><td>03/04/2025</td><td>Nova Resende-MG</td><td>Reunião junto à diretoria da CEMIG para tratar de assuntos de interesse do município</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>16/04/2025</td><td>Belo Horizonte-MG</td><td>Participação no I Encontro Estadual de Gestoras</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>16/04/2025</td><td>Belo Horizonte-MG</td><td>Participação no I Encontro Estadual de Gestoras</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>ANTONIO JOSE DE MORAIS FILHO</td><td>16/04/2025</td><td>Belo Horizonte-MG</td><td>Reunião com o deputado estadual Wendel Mesquita</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="tabela-total">
-                                                <td colspan="5">TOTAL LISTADO - ABRIL</td>
-                                                <td>R$ 5.600,00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </details>
-
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    Maio
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Período / Referência</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>16/05/2025</td><td>Passos-MG</td><td>Levar o veículo placa TCO-8I28 da câmara municipal para realizar revisão</td><td>1</td><td>R$ 300,00</td></tr>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>19/05/2025</td><td>Brasília-DF</td><td>Participar da XXVI Marcha em Defesa dos Municípios</td><td>5</td><td>R$ 6.000,00</td></tr>
-                                            <tr class="linha-dado"><td>ANTONIO VICTOR DA SILVA</td><td>19/05/2025</td><td>Brasília-DF</td><td>Participar da XXVI Marcha em Defesa dos Municípios</td><td>5</td><td>R$ 6.000,00</td></tr>
-                                            <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>19/05/2025</td><td>Brasília-DF</td><td>Participar da XXVI Marcha em Defesa dos Municípios</td><td>5</td><td>R$ 6.000,00</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>20/05/2025</td><td>Brasília-DF</td><td>Participar da XXVI Marcha em Defesa dos Municípios</td><td>5</td><td>R$ 6.000,00</td></tr>
-                                            <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>19/05/2025</td><td>Brasília-DF</td><td>Participar da XXVI Marcha em Defesa dos Municípios</td><td>5</td><td>R$ 6.000,00</td></tr>
-                                            <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>19/05/2025</td><td>Brasília-DF</td><td>Participar da XXVI Marcha em Defesa dos Municípios</td><td>5</td><td>R$ 6.000,00</td></tr>
-                                            <tr class="tabela-total">
-                                                <td colspan="5">TOTAL LISTADO - MAIO</td>
-                                                <td>R$ 36.300,00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </details>
-
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    Junho
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Período / Referência</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>03/06/2025</td><td>Belo Horizonte-MG</td><td>Seminário de Combate à Desinformação</td><td>2</td><td>R$ 1.400,00</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>23/06/2025</td><td>Divinópolis-MG</td><td>Encontro com o deputado estadual Wendel Mesquita</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>23/06/2025</td><td>Divinópolis-MG</td><td>Encontro com o deputado estadual Wendel Mesquita</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>23/06/2025</td><td>Divinópolis-MG</td><td>Encontro com o deputado estadual Wendel Mesquita</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>ANTONIO VICTOR DA SILVA</td><td>23/06/2025</td><td>Divinópolis-MG</td><td>Encontro com o deputado estadual Wendel Mesquita</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>30/06/2025</td><td>Passos-MG</td><td>Câmara Técnica de Saúde - Judicialização na AMEG</td><td>1</td><td>R$ 300,00</td></tr>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>30/06/2025</td><td>Passos-MG</td><td>Câmara Técnica de Saúde - Judicialização na AMEG</td><td>1</td><td>R$ 300,00</td></tr>
-                                            <tr class="linha-dado"><td>HUGO OLIVEIRA LEÃO</td><td>30/06/2025</td><td>Passos-MG</td><td>Câmara Técnica de Saúde - Judicialização na AMEG</td><td>1</td><td>R$ 300,00</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>30/06/2025</td><td>Passos-MG</td><td>Câmara Técnica de Saúde - Judicialização na AMEG</td><td>1</td><td>R$ 300,00</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>30/06/2025</td><td>Belo Horizonte-MG</td><td>Participar do grande encontro do PL de Minas Gerais</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>30/06/2025</td><td>Belo Horizonte-MG</td><td>Participar do grande encontro do PL de Minas Gerais</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>HUGO OLIVEIRA LEÃO</td><td>30/06/2025</td><td>Belo Horizonte-MG</td><td>Participar do grande encontro do PL de Minas Gerais</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>30/06/2025</td><td>Belo Horizonte-MG</td><td>Participar do grande encontro do PL de Minas Gerais</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>30/06/2025</td><td>Belo Horizonte-MG</td><td>Participar do grande encontro do PL de Minas Gerais</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="tabela-total">
-                                                <td colspan="5">TOTAL LISTADO - JUNHO</td>
-                                                <td>R$ 8.900,00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </details>
-
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    Agosto
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Período / Referência</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>11/08/2025</td><td>Passos-MG</td><td>Reunião junto com o diretor geral do DER e secretário de governo na sede da AMEG</td><td>1</td><td>R$ 300,00</td></tr>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>14/08/2025</td><td>Nova Resende-MG</td><td>Encontro técnico sobre os programas Cuidar e Cirurgias Eletivas</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>14/08/2025</td><td>Nova Resende-MG</td><td>Encontro técnico sobre os programas Cuidar e Cirurgias Eletivas</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>14/08/2025</td><td>Nova Resende-MG</td><td>Encontro técnico sobre os programas Cuidar e Cirurgias Eletivas</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="linha-dado"><td>ANTONIO VICTOR DA SILVA</td><td>14/08/2025</td><td>Nova Resende-MG</td><td>Encontro técnico sobre os programas Cuidar e Cirurgias Eletivas</td><td>1</td><td>R$ 700,00</td></tr>
-                                            <tr class="tabela-total">
-                                                <td colspan="5">TOTAL LISTADO - AGOSTO</td>
-                                                <td>R$ 3.100,00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </details>
-
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    Setembro
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Período / Referência</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="linha-dado"><td>HUMBERTO SOARES BUENO</td><td>03/09/2025</td><td>Divinópolis-MG</td><td>Caravana AMM "Ouvir os municípios para propor soluções"</td><td>1</td><td>R$ 680,00</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>03/09/2025</td><td>Divinópolis-MG</td><td>Caravana AMM "Ouvir os municípios para propor soluções"</td><td>2</td><td>R$ 1.360,00</td></tr>
-                                            <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>03/09/2025</td><td>Divinópolis-MG</td><td>Caravana AMM "Ouvir os municípios para propor soluções"</td><td>2</td><td>R$ 1.360,00</td></tr>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>03/09/2025</td><td>Divinópolis-MG</td><td>Caravana AMM "Ouvir os municípios para propor soluções"</td><td>2</td><td>R$ 1.360,00</td></tr>
-                                            <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>03/09/2025</td><td>Divinópolis-MG</td><td>Caravana AMM "Ouvir os municípios para propor soluções"</td><td>2</td><td>R$ 1.360,00</td></tr>
-                                            <tr class="linha-dado"><td>HUGO OLIVEIRA LEÃO</td><td>03/09/2025</td><td>Divinópolis-MG</td><td>Caravana AMM "Ouvir os municípios para propor soluções"</td><td>2</td><td>R$ 1.360,00</td></tr>
-                                            <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>03/09/2025</td><td>Divinópolis-MG</td><td>Caravana AMM "Ouvir os municípios para propor soluções"</td><td>2</td><td>R$ 1.360,00</td></tr>
-                                            <tr class="linha-dado"><td>ANTONIO JOSE DE MORAIS FILHO</td><td>03/09/2025</td><td>Divinópolis-MG</td><td>Caravana AMM "Ouvir os municípios para propor soluções"</td><td>2</td><td>R$ 1.360,00</td></tr>
-                                            <tr class="linha-dado"><td>HUMBERTO SOARES BUENO</td><td>11/09/2025</td><td>Alterosa-MG</td><td>Evento junto ao deputado Emidinho Madeira (Programa Mais Genética)</td><td>1</td><td>R$ 680,00</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>11/09/2025</td><td>Alterosa-MG</td><td>Evento junto ao deputado Emidinho Madeira (Programa Mais Genética)</td><td>1</td><td>R$ 680,00</td></tr>
-                                            <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>11/09/2025</td><td>Alterosa-MG</td><td>Evento junto ao deputado Emidinho Madeira (Programa Mais Genética)</td><td>1</td><td>R$ 680,00</td></tr>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>11/09/2025</td><td>Alterosa-MG</td><td>Evento junto ao deputado Emidinho Madeira (Programa Mais Genética)</td><td>1</td><td>R$ 680,00</td></tr>
-                                            <tr class="tabela-total">
-                                                <td colspan="5">TOTAL LISTADO - SETEMBRO</td>
-                                                <td>R$ 12.920,00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </details>
-
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    Outubro
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Período / Referência</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>15/10/2025</td><td>Belo Horizonte-MG</td><td>Curso de capacitação sobre LGPD</td><td>1</td><td>R$ 547,50</td></tr>
-                                            <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>15/10/2025</td><td>Belo Horizonte-MG</td><td>Curso de capacitação sobre LGPD</td><td>1</td><td>R$ 547,50</td></tr>
-                                            <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>31/10/2025</td><td>Belo Horizonte-MG</td><td>Evento "O impacto da reforma política nas eleições 2026/2028"</td><td>1</td><td>R$ 547,50</td></tr>
-                                            <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>31/10/2025</td><td>Belo Horizonte-MG</td><td>Evento "O impacto da reforma política nas eleições 2026/2028"</td><td>1</td><td>R$ 547,50</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>31/10/2025</td><td>Passos-MG</td><td>Encontro com o Prefeito e Dep. Federal Emidinho Madeira</td><td>1</td><td>R$ 337,50</td></tr>
-                                            <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>31/10/2025</td><td>Passos-MG</td><td>Encontro com o Prefeito e Dep. Federal Emidinho Madeira</td><td>1</td><td>R$ 337,50</td></tr>
-                                            <tr class="tabela-total">
-                                                <td colspan="5">TOTAL LISTADO - OUTUBRO</td>
-                                                <td>R$ 2.865,00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </details>
-
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    Novembro
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Período / Referência</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>04/11/2025</td><td>Belo Horizonte-MG</td><td>Encontro com o deputado Marquinho Durval</td><td>1</td><td>R$ 547,50</td></tr>
-                                            <tr class="linha-dado"><td>HUMBERTO SOARES BUENO</td><td>04/11/2025</td><td>Belo Horizonte-MG</td><td>Encontro com o deputado Marquinho Durval</td><td>1</td><td>R$ 547,50</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>04/11/2025</td><td>Belo Horizonte-MG</td><td>Encontro com o deputado Marquinho Durval</td><td>1</td><td>R$ 547,50</td></tr>
-                                            <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>04/11/2025</td><td>Belo Horizonte-MG</td><td>Encontro com o deputado Marquinho Durval</td><td>1</td><td>R$ 547,50</td></tr>
-                                            <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>07/11/2025</td><td>Passos-MG</td><td>Entrega de sementes (Programa Mais Produção)</td><td>1</td><td>R$ 225,00</td></tr>
-                                            <tr class="linha-dado"><td>HUMBERTO SOARES BUENO</td><td>07/11/2025</td><td>Passos-MG</td><td>Entrega de sementes (Programa Mais Produção)</td><td>1</td><td>R$ 225,00</td></tr>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>07/11/2025</td><td>Passos-MG</td><td>Entrega de sementes (Programa Mais Produção)</td><td>1</td><td>R$ 225,00</td></tr>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>11/11/2025</td><td>Belo Horizonte-MG</td><td>11º Congresso Mineiro de Municípios de Vereadores (AMM)</td><td>1</td><td>R$ 547,50</td></tr>
-                                            <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>11/11/2025</td><td>Belo Horizonte-MG</td><td>11º Congresso Mineiro de Municípios de Vereadores (AMM)</td><td>1</td><td>R$ 547,50</td></tr>
-                                            <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>11/11/2025</td><td>Belo Horizonte-MG</td><td>11º Congresso Mineiro de Municípios de Vereadores (AMM)</td><td>1</td><td>R$ 547,50</td></tr>
-                                            <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>11/11/2025</td><td>Belo Horizonte-MG</td><td>11º Congresso Mineiro de Municípios de Vereadores (AMM) - Complementar</td><td>1</td><td>R$ 730,00</td></tr>
-                                            <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>11/11/2025</td><td>Belo Horizonte-MG</td><td>11º Congresso Mineiro de Municípios de Vereadores (AMM) - Complementar</td><td>1</td><td>R$ 730,00</td></tr>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>11/11/2025</td><td>Belo Horizonte-MG</td><td>11º Congresso Mineiro de Municípios de Vereadores (AMM) - Complementar</td><td>1</td><td>R$ 730,00</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>11/11/2025</td><td>Belo Horizonte-MG</td><td>11º Congresso Mineiro de Municípios de Vereadores (AMM)</td><td>2</td><td>R$ 1.277,50</td></tr>
-                                            <tr class="linha-dado"><td>ANTONIO VICTOR DA SILVA</td><td>13/11/2025</td><td>Divinópolis-MG</td><td>2º Encontro de Lideranças da Região Centro Oeste</td><td>1</td><td>R$ 340,00</td></tr>
-                                            <tr class="linha-dado"><td>ANTONIO JOSE DE MORAIS FILHO</td><td>13/11/2025</td><td>Divinópolis-MG</td><td>2º Encontro de Lideranças da Região Centro Oeste</td><td>1</td><td>R$ 340,00</td></tr>
-                                            <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>24/11/2025</td><td>Nova Resende-MG</td><td>Discutir assuntos sobre o Circuito Mineiro de Rodeio</td><td>1</td><td>R$ 510,00</td></tr>
-                                            <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>24/11/2025</td><td>Nova Resende-MG</td><td>Discutir assuntos sobre o Circuito Mineiro de Rodeio</td><td>1</td><td>R$ 510,00</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>24/11/2025</td><td>Nova Resende-MG</td><td>Discutir assuntos sobre o Circuito Mineiro de Rodeio</td><td>1</td><td>R$ 510,00</td></tr>
-                                            <tr class="linha-dado"><td>ANTONIO JOSE DE MORAIS FILHO</td><td>27/11/2025</td><td>Uberaba-MG</td><td>Reunião junto ao deputado federal Zé Silva</td><td>1</td><td>R$ 510,00</td></tr>
-                                            <tr class="tabela-total">
-                                                <td colspan="5">TOTAL LISTADO - NOVEMBRO</td>
-                                                <td>R$ 10.695,00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </details>
-
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    Dezembro
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Período / Referência</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="linha-dado"><td>HUMBERTO SOARES BUENO</td><td>04/12/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao deputado Marquinho Lemos</td><td>1</td><td>R$ 547,50</td></tr>
-                                            <tr class="linha-dado"><td>HUMBERTO SOARES BUENO</td><td>09/12/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao deputado federal Miguel Angelo</td><td>1</td><td>R$ 547,50</td></tr>
-                                            <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>09/12/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao deputado federal Miguel Angelo</td><td>1</td><td>R$ 547,50</td></tr>
-                                            <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>09/12/2025</td><td>Passos-MG</td><td>Treinamento SEDESE sobre elaboração de projetos de lei</td><td>1</td><td>R$ 225,00</td></tr>
-                                            <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>09/12/2025</td><td>Passos-MG</td><td>Treinamento SEDESE sobre elaboração de projetos de lei</td><td>1</td><td>R$ 225,00</td></tr>
-                                            <tr class="tabela-total">
-                                                <td colspan="5">TOTAL LISTADO - DEZEMBRO</td>
-                                                <td>R$ 2.092,50</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </details>
-                    </div>
-                </details>
-
-                <details>
-                    <summary class="topico-titulo">
-                        <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                        2023
-                    </summary>
-                    <div class="topico-conteudo">
-                        
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    Janeiro
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Período de Afastamento</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="linha-dado">
-                                                <td>ALESSANDRO MOREIRA SIMOES</td>
-                                                <td>27/01/2023</td>
-                                                <td>Piumhi-MG</td>
-                                                <td>Resolver assuntos administrativos da câmara municipal</td>
-                                                <td>1</td>
-                                                <td>R$ 207,85</td>
-                                            </tr>
-                                            <tr class="tabela-total">
-                                                <td colspan="5">TOTAL LISTADO - JANEIRO</td>
-                                                <td>R$ 207,85</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </details>
-
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    Fevereiro
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Período de Afastamento</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="linha-dado">
-                                                <td>ALESSANDRO MOREIRA SIMOES</td>
-                                                <td>17/02/2023</td>
-                                                <td>Piumhi-MG</td>
-                                                <td>Resolver assuntos administrativos da câmara municipal</td>
-                                                <td>1</td>
-                                                <td>R$ 44,15</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>ALESSANDRO MOREIRA SIMOES</td>
-                                                <td>17/02/2023</td>
-                                                <td>Piumhi-MG</td>
-                                                <td>Resolver assuntos administrativos da câmara municipal</td>
-                                                <td>1</td>
-                                                <td>R$ 69,70</td>
-                                            </tr>
-                                            <tr class="tabela-total">
-                                                <td colspan="5">TOTAL LISTADO - FEVEREIRO</td>
-                                                <td>R$ 113,85</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </details>
-
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    Novembro
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Período de Afastamento</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="linha-dado">
-                                                <td>THAIS RAFAELA NAVEGA ANDRADE</td>
-                                                <td>10/11/2023</td>
-                                                <td>(Correios)</td>
-                                                <td>Reembolso referente despesas pagas ao correio para envio de contrato administrativo (Serviços Memory)</td>
-                                                <td>-</td>
-                                                <td>R$ 34,71</td>
-                                            </tr>
-                                            <tr class="tabela-total">
-                                                <td colspan="5">TOTAL LISTADO - NOVEMBRO</td>
-                                                <td>R$ 34,71</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </details>
-                    </div>
-                </details>
+                <div class="msg-loading">Conectando ao banco de dados e carregando viagens...</div>
             </div>
 
             <div class="avisos-container">
                 <div class="alerta alerta-aviso">
                     <div class="alerta-icone">!</div>
-                    <div>Não são permitidas viagens ou diárias internacionais.</div>
-                </div>
+                    <div>Para Baixar os dados CSV é nescessário expandir o mês desejado.</div>
+                   </div>
                 <div class="alerta alerta-info">
                     <div class="alerta-icone">i</div>
                     <div>
                         <ul>
                             <li>As informações refletem a realidade atual, pois foram atualizadas em tempo real através de busca em banco de dados.</li>
-                            <li>Não há período inicial/final de busca, ou seja, foi pesquisado todo o histórico existente no banco de dados.</li>
-                            <li>Não há informações anteriores ou posteriores às que estão sendo exibidas na página atual quando não filtrado.</li>
-                            <li>A regulamentação que trata sobre viagens e diárias é recente e, anteriormente, elas eram vedadas.</li>
+                      
                         </ul>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
     <script>
+        // ====================================================================
+        const URL_PLANILHA_GOOGLE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZFfD3-GCVUkHA7MwCWobcTDKcdsWK3-WHiZpLXurvYjNve-S4BMSDfyhZ6Vyk-3Vp8wKoWMeG94pu/pub?output=csv'; 
+        // ====================================================================
+
         document.addEventListener('DOMContentLoaded', () => {
-            // Data Dinâmica no cabeçalho
             const dataAtual = new Date();
             const opcoes = { day: '2-digit', month: '2-digit', year: 'numeric' };
             document.querySelectorAll('.data-dinamica').forEach(elemento => {
                 elemento.textContent = dataAtual.toLocaleDateString('pt-BR', opcoes);
             });
 
-            // Lógica do Filtro de Pesquisa
-            const btnFiltrar = document.getElementById('btn-filtrar');
-            const btnLimpar = document.getElementById('btn-limpar');
-            
-            btnFiltrar.addEventListener('click', () => {
-                const nomeFiltro = document.getElementById('filtro-nome').value.toLowerCase().trim();
-                const dataInicioInput = document.getElementById('filtro-data-inicio').value; // Formato YYYY-MM-DD
-                const dataFimInput = document.getElementById('filtro-data-fim').value; // Formato YYYY-MM-DD
+            carregarDadosDaPlanilha();
 
-                const dataInicioNum = dataInicioInput ? parseInt(dataInicioInput.replace(/-/g, '')) : 0;
-                const dataFimNum = dataFimInput ? parseInt(dataFimInput.replace(/-/g, '')) : 99999999;
-
-                const linhas = document.querySelectorAll('.linha-dado');
-                const totais = document.querySelectorAll('.tabela-total');
-                const msgVazio = document.getElementById('msg-vazio');
-                
-                const painelResumo = document.getElementById('resumo-filtro');
-                const textoValorTotal = document.getElementById('valor-total-filtrado');
-
-                let encontrouAlgo = false;
-                let somaTotal = 0;
-
-                let filtroAtivo = nomeFiltro !== '' || dataInicioInput !== '' || dataFimInput !== '';
-                
-                totais.forEach(t => t.style.display = filtroAtivo ? 'none' : '');
-
-                linhas.forEach(linha => {
-                    const nomeTexto = linha.cells[0].textContent.toLowerCase() + linha.cells[1].textContent.toLowerCase();
-                    const textoLinha = linha.innerHTML;
-
-                    let bateNome = nomeFiltro === '' || nomeTexto.includes(nomeFiltro);
-                    
-                    const regexData = /(\d{2})\/(\d{2})\/(\d{4})/g;
-                    let match;
-                    let dataDentroDoPeriodo = false;
-                    let possuiData = false;
-
-                    while ((match = regexData.exec(textoLinha)) !== null) {
-                        possuiData = true;
-                        const dia = match[1];
-                        const mes = match[2];
-                        const ano = match[3];
-                        const dataLinhaNum = parseInt(`${ano}${mes}${dia}`); 
-
-                        if (dataLinhaNum >= dataInicioNum && dataLinhaNum <= dataFimNum) {
-                            dataDentroDoPeriodo = true;
-                            break; 
-                        }
-                    }
-
-                    let bateData = (!dataInicioInput && !dataFimInput) || (possuiData && dataDentroDoPeriodo);
-
-                    if (bateNome && bateData) {
-                        linha.style.display = '';
-                        encontrouAlgo = true;
-
-                        let valorString = "";
-                        for (let i = 0; i < linha.cells.length; i++) {
-                            if (linha.cells[i].textContent.includes('R$')) {
-                                valorString = linha.cells[i].textContent;
-                                break;
-                            }
-                        }
-
-                        if (valorString !== "") {
-                            let limpo = valorString.replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
-                            let numerico = parseFloat(limpo);
-                            if (!isNaN(numerico)) {
-                                somaTotal += numerico;
-                            }
-                        }
-
-                    } else {
-                        linha.style.display = 'none';
-                    }
-                });
-
-                if (filtroAtivo && encontrouAlgo) {
-                    painelResumo.style.display = 'block';
-                    textoValorTotal.textContent = somaTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-                    document.querySelectorAll('details').forEach(d => d.open = true);
-                } else {
-                    painelResumo.style.display = 'none';
-                }
-
-                if (!encontrouAlgo && filtroAtivo) {
-                    msgVazio.style.display = 'block';
-                } else {
-                    msgVazio.style.display = 'none';
-                }
-            });
-
-            btnLimpar.addEventListener('click', () => {
-                document.getElementById('filtro-nome').value = '';
-                document.getElementById('filtro-data-inicio').value = '';
-                document.getElementById('filtro-data-fim').value = '';
-                btnFiltrar.click();
-                document.querySelectorAll('details').forEach(d => d.open = false);
-            });
+            document.getElementById('btn-filtrar').addEventListener('click', executarFiltro);
+            document.getElementById('btn-limpar').addEventListener('click', limparFiltro);
         });
 
-        // FUNÇÃO PARA EXPORTAR CSV
-        function baixarCSV(evento, botao) {
-            // Impede que o clique no botão abra/feche a aba (details)
-            evento.stopPropagation();
-            evento.preventDefault();
-
-            // Encontra a tabela dentro deste elemento 'details'
-            const detalhes = botao.closest('details');
-            const tabela = detalhes.querySelector('table');
-            
-            // Monta o nome do arquivo pegando o Ano e o Mês
-            // O ano está na aba principal que engloba este mês
-            const topicoAnoElement = detalhes.closest('.topico-conteudo').previousElementSibling;
-            const topicoAno = topicoAnoElement ? topicoAnoElement.textContent.trim() : 'ano';
-            const mesTexto = detalhes.querySelector('.subtopico-titulo-texto').textContent.trim();
-            const nomeArquivo = `diarias_cm_doresopolis_${topicoAno}_${mesTexto}.csv`.replace(/\s+/g, '_').toLowerCase();
-
-            // Constrói o CSV
-            let csv = [];
-            const linhas = tabela.querySelectorAll('tr');
-            
-            for (let i = 0; i < linhas.length; i++) {
-                // Ignora linhas ocultas pelo filtro de pesquisa
-                if (linhas[i].style.display === 'none') continue;
-
-                let linha = [];
-                const celulas = linhas[i].querySelectorAll('th, td');
-                
-                for (let j = 0; j < celulas.length; j++) {
-                    // Pega o texto e escapa aspas duplas internas
-                    let dado = celulas[j].innerText.replace(/"/g, '""');
-                    // Envolve o texto em aspas duplas
-                    linha.push('"' + dado + '"');
+        async function carregarDadosDaPlanilha() {
+            try {
+                let textoCSV = "";
+                if (URL_PLANILHA_GOOGLE.trim() !== '') {
+                    // Anti-cache para sempre pegar a versão atualizada da planilha
+                    const urlSemCache = URL_PLANILHA_GOOGLE + '&nocache=' + new Date().getTime();
+                    const resposta = await fetch(urlSemCache, { cache: "no-store" });
+                    textoCSV = await resposta.text();
                 }
-                // Une as colunas com ponto e vírgula (Padrão Excel PT-BR)
-                csv.push(linha.join(';'));
-            }
 
-            // \uFEFF é o BOM (Byte Order Mark) - Força o Excel a reconhecer os acentos UTF-8
-            const csvString = "\uFEFF" + csv.join('\n'); 
-            
-            // Cria o arquivo e força o download
-            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            
-            if (link.download !== undefined) {
-                const url = URL.createObjectURL(blob);
-                link.setAttribute("href", url);
-                link.setAttribute("download", nomeArquivo);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                if (!textoCSV || textoCSV.trim() === '') {
+                    throw new Error("A planilha retornou vazia.");
+                }
+
+                const matrizDados = converterCSVParaMatriz(textoCSV);
+                construirInterfaceHTML(matrizDados);
+
+            } catch (erro) {
+                console.error("Erro ao carregar a planilha:", erro);
+                document.getElementById('container-dados').innerHTML = `<div class="msg-loading" style="color:red; border-color:red;">Erro ao tentar conectar à planilha do Google.</div>`;
             }
         }
-    </script>
 
+        function converterCSVParaMatriz(str) {
+            const arr = [];
+            let quote = false;
+            for (let row = 0, col = 0, c = 0; c < str.length; c++) {
+                let cc = str[c], nc = str[c+1];
+                arr[row] = arr[row] || [];
+                arr[row][col] = arr[row][col] || '';
+                if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+                if (cc == '"') { quote = !quote; continue; }
+                if (cc == ',' && !quote) { ++col; continue; }
+                if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; continue; }
+                if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+                if (cc == '\r' && !quote) { ++row; col = 0; continue; }
+                arr[row][col] += cc;
+            }
+            return arr;
+        }
+
+        function construirInterfaceHTML(linhas) {
+            const container = document.getElementById('container-dados');
+            linhas.shift(); // Remove cabeçalho do CSV
+
+            const dadosAgrupados = {};
+            linhas.forEach(linha => {
+                if(linha.length < 2 || !linha[0] || linha[0].trim() === '') return;
+                const ano = linha[0].trim();
+                const mes = linha[1].trim();
+                if(!dadosAgrupados[ano]) dadosAgrupados[ano] = {};
+                if(!dadosAgrupados[ano][mes]) dadosAgrupados[ano][mes] = [];
+                dadosAgrupados[ano][mes].push(linha);
+            });
+
+            let htmlFinal = `
+                <details>
+                    <summary class="topico-titulo">
+                        <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                        Regulamentações
+                    </summary>
+                    <div class="topico-conteudo">
+                        <a href="https://www.doresopolis.mg.leg.br/atividade-legislativa/projetos-de-resolucoes/ano-2026/projeto-de-resolucao-n-001-sem-sancao-pareceres-e-oficio/resolucao-no-011-2026-dispoe-sobre-o-pagamento-de-diarias-de-viagem-aos-vereadores-da-camara-municipal-de-doresopolis-e-da-outras-providencias.pdf/view" class="topico-link">Resolução Nº 011-2026 Dispõe sobre Diárias</a>
+                    </div>
+                </details>`;
+
+            const ordemAnos = Object.keys(dadosAgrupados);
+            if (!ordemAnos.includes('2024')) ordemAnos.push('2024'); // Garante que 2024 apareça
+            ordemAnos.sort((a,b) => b - a);
+
+            const ordemMeses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+            ordemAnos.forEach(ano => {
+                htmlFinal += `
+                <details>
+                    <summary class="topico-titulo">
+                        <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                        ${ano}
+                    </summary>
+                    <div class="topico-conteudo">`;
+
+                if (ano === '2024' && (!dadosAgrupados[ano] || Object.keys(dadosAgrupados[ano]).length === 0)) {
+                    htmlFinal += `<p style="padding: 10px 0; color: var(--texto-medio); font-weight: 500;">Declaramos que no ano de 2024 não houve registros de diárias de viagem na Câmara Municipal.</p>`;
+                } else if (dadosAgrupados[ano]) {
+                    const mesesDoAno = Object.keys(dadosAgrupados[ano]).sort((a, b) => ordemMeses.indexOf(a) - ordemMeses.indexOf(b));
+                    mesesDoAno.forEach(mes => {
+                        htmlFinal += `
+                            <details>
+                                <summary class="subtopico-titulo">
+                                    <div class="subtopico-titulo-texto">
+                                        <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                        ${mes}
+                                    </div>
+                                    <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                        CSV
+                                    </button>
+                                </summary>
+                                <div class="subtopico-conteudo">
+                                    <div class="table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Nome Beneficiário</th>
+                                                    <th>Cargo/Função Beneficiário</th>
+                                                    <th>Data de Saída</th>
+                                                    <th>Data de Chegada</th>
+                                                    <th>Destino</th>
+                                                    <th class="col-justificativa">Justificativa Afastamento</th>
+                                                    <th>Qtd Diárias</th>
+                                                    <th>Valor Recebido</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>`;
+                        let somaMes = 0;
+                        dadosAgrupados[ano][mes].forEach(linha => {
+                            htmlFinal += `
+                                <tr class="linha-dado">
+                                    <td>${linha[2]||''}</td>
+                                    <td>${linha[3]||''}</td>
+                                    <td>${linha[4]||''}</td>
+                                    <td>${linha[5]||''}</td>
+                                    <td>${linha[6]||''}</td>
+                                    <td>${linha[7]||''}</td>
+                                    <td>${linha[8]||''}</td>
+                                    <td>${linha[9]||''}</td>
+                                </tr>`;
+                            // Agora o Valor Recebido está na posição 9 (letra J da planilha)
+                            let valStr = linha[9] || '';
+                            if (valStr.includes('R$')) {
+                                let num = parseFloat(valStr.replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
+                                if (!isNaN(num)) somaMes += num;
+                            }
+                        });
+                        htmlFinal += `
+                                        <tr class="tabela-total">
+                                            <td colspan="7">TOTAL LISTADO - ${mes.toUpperCase()}</td>
+                                            <td>${somaMes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                                        </tr>
+                                    </tbody></table></div></div></details>`;
+                    });
+                }
+                htmlFinal += `</div></details>`;
+            });
+            container.innerHTML = htmlFinal;
+        }
+
+        function executarFiltro() {
+            const nomeF = document.getElementById('filtro-nome').value.toLowerCase().trim();
+            const dInicio = document.getElementById('filtro-data-inicio').value; 
+            const dFim = document.getElementById('filtro-data-fim').value;
+            const diNum = dInicio ? parseInt(dInicio.replace(/-/g, '')) : 0;
+            const dfNum = dFim ? parseInt(dFim.replace(/-/g, '')) : 99999999;
+            const linhas = document.querySelectorAll('.linha-dado');
+            const totais = document.querySelectorAll('.tabela-total');
+            const msgV = document.getElementById('msg-vazio');
+            const painelR = document.getElementById('resumo-filtro');
+            const txtVT = document.getElementById('valor-total-filtrado');
+            
+            let encontrou = false, somaT = 0;
+            let fAtivo = nomeF !== '' || dInicio !== '' || dFim !== '';
+            
+            totais.forEach(t => t.style.display = fAtivo ? 'none' : '');
+            
+            linhas.forEach(linha => {
+                // A posição do nome na tabela agora é a célula 0 e o cargo é a 1
+                const nomeT = linha.cells[0].textContent.toLowerCase() + linha.cells[1].textContent.toLowerCase();
+                const textoL = linha.innerHTML;
+                let bateN = nomeF === '' || nomeT.includes(nomeF);
+                
+                const regexD = /(\d{2})\/(\d{2})\/(\d{4})/g;
+                let match, dDentro = false, pData = false;
+                
+                while ((match = regexD.exec(textoL)) !== null) {
+                    pData = true;
+                    const dNum = parseInt(`${match[3]}${match[2]}${match[1]}`); 
+                    if (dNum >= diNum && dNum <= dfNum) { dDentro = true; break; }
+                }
+                
+                let bateD = (!dInicio && !dFim) || (pData && dDentro);
+                
+                if (bateN && bateD) {
+                    linha.style.display = ''; 
+                    encontrou = true;
+                    let valStr = "";
+                    for (let i = 0; i < linha.cells.length; i++) { 
+                        if (linha.cells[i].textContent.includes('R$')) { 
+                            valStr = linha.cells[i].textContent; 
+                            break; 
+                        } 
+                    }
+                    if (valStr !== "") {
+                        let num = parseFloat(valStr.replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
+                        if (!isNaN(num)) somaT += num;
+                    }
+                } else { 
+                    linha.style.display = 'none'; 
+                }
+            });
+            
+            if (fAtivo && encontrou) {
+                painelR.style.display = 'block'; 
+                txtVT.textContent = somaT.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                document.querySelectorAll('details').forEach(d => d.open = true);
+            } else { 
+                painelR.style.display = 'none'; 
+            }
+            msgV.style.display = (!encontrou && fAtivo) ? 'block' : 'none';
+        }
+
+        function limparFiltro() {
+            document.getElementById('filtro-nome').value = '';
+            document.getElementById('filtro-data-inicio').value = '';
+            document.getElementById('filtro-data-fim').value = '';
+            executarFiltro();
+            document.querySelectorAll('details').forEach(d => d.open = false);
+        }
+
+        function baixarCSV(e, btn) {
+            e.stopPropagation(); e.preventDefault();
+            const det = btn.closest('details');
+            const tab = det.querySelector('table');
+            const topAn = det.closest('.topico-conteudo').previousElementSibling.textContent.trim();
+            const mesT = det.querySelector('.subtopico-titulo-texto').textContent.trim();
+            const nArq = `diarias_cm_doresopolis_${topAn}_${mesT}.csv`.replace(/\s+/g, '_').toLowerCase();
+            let csv = [];
+            const lins = tab.querySelectorAll('tr');
+            for (let i = 0; i < lins.length; i++) {
+                if (lins[i].style.display === 'none') continue;
+                let l = []; const cels = lins[i].querySelectorAll('th, td');
+                for (let j = 0; j < cels.length; j++) { l.push('"' + cels[j].innerText.replace(/"/g, '""') + '"'); }
+                csv.push(l.join(';'));
+            }
+            const blob = new Blob(["\uFEFF" + csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.setAttribute("href", URL.createObjectURL(blob));
+            link.setAttribute("download", nArq);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
+        }
+    </script>
 </body>
 </html>
