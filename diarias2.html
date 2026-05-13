@@ -288,7 +288,6 @@
                                         <table>
                                             <thead>
                                                 <tr>
-                                                    <th>Nº</th>
                                                     <th>Nome Beneficiário</th>
                                                     <th>Cargo/Função Beneficiário</th>
                                                     <th>Data de Saída</th>
@@ -312,10 +311,9 @@
                                     <td>${linha[7]||''}</td>
                                     <td>${linha[8]||''}</td>
                                     <td>${linha[9]||''}</td>
-                                    <td>${linha[10]||''}</td>
                                 </tr>`;
-                            // No novo layout, Valor Recebido está no índice 10 (Coluna K)
-                            let valStr = linha[10] || '';
+                            // Agora o Valor Recebido está na posição 9 (letra J da planilha)
+                            let valStr = linha[9] || '';
                             if (valStr.includes('R$')) {
                                 let num = parseFloat(valStr.replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
                                 if (!isNaN(num)) somaMes += num;
@@ -323,7 +321,7 @@
                         });
                         htmlFinal += `
                                         <tr class="tabela-total">
-                                            <td colspan="8">TOTAL LISTADO - ${mes.toUpperCase()}</td>
+                                            <td colspan="7">TOTAL LISTADO - ${mes.toUpperCase()}</td>
                                             <td>${somaMes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                                         </tr>
                                     </tbody></table></div></div></details>`;
@@ -352,7 +350,8 @@
             totais.forEach(t => t.style.display = fAtivo ? 'none' : '');
             
             linhas.forEach(linha => {
-                const nomeT = linha.cells[1].textContent.toLowerCase() + linha.cells[2].textContent.toLowerCase();
+                // A posição do nome na tabela agora é a célula 0 e o cargo é a 1
+                const nomeT = linha.cells[0].textContent.toLowerCase() + linha.cells[1].textContent.toLowerCase();
                 const textoL = linha.innerHTML;
                 let bateN = nomeF === '' || nomeT.includes(nomeF);
                 
