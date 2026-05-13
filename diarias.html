@@ -61,35 +61,39 @@
         .btn-secundario { background-color: var(--cor-fundo); color: var(--texto-escuro); border: 1px solid var(--borda); }
         .btn-secundario:hover { background-color: #e5e7eb; }
 
-        /* Painel de Resumo Total */
-        .resumo-filtro {
-            background-color: var(--cor-primaria-bg);
-            border: 2px dashed var(--cor-primaria);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 30px;
-            text-align: center;
-            animation: fadeIn 0.4s ease-in-out;
-        }
-        .resumo-conteudo {
-            display: flex;
-            flex-direction: column;
+        /* Botão Exportar CSV */
+        .btn-download-csv {
+            display: inline-flex;
             align-items: center;
-            gap: 4px;
-        }
-        .resumo-label {
-            font-size: 0.9rem;
-            color: var(--texto-escuro);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .resumo-valor {
-            font-size: 2.5rem;
+            gap: 6px;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
             color: var(--cor-primaria);
-            font-weight: 800;
-            line-height: 1;
+            background-color: var(--cor-primaria-bg);
+            border: 1px solid rgba(2, 93, 59, 0.2);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transicao);
+            text-transform: none; /* Ignora o uppercase do summary */
+            letter-spacing: normal;
         }
+        .btn-download-csv:hover {
+            background-color: var(--cor-primaria);
+            color: var(--branco);
+            border-color: var(--cor-primaria);
+        }
+        .btn-download-csv svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+        }
+
+        /* Painel de Resumo Total */
+        .resumo-filtro { background-color: var(--cor-primaria-bg); border: 2px dashed var(--cor-primaria); border-radius: 12px; padding: 24px; margin-bottom: 30px; text-align: center; animation: fadeIn 0.4s ease-in-out; }
+        .resumo-conteudo { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .resumo-label { font-size: 0.9rem; color: var(--texto-escuro); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .resumo-valor { font-size: 2.5rem; color: var(--cor-primaria); font-weight: 800; line-height: 1; }
 
         /* Menus Expansíveis */
         details { margin-bottom: 20px; }
@@ -104,10 +108,21 @@
         .topico-link { color: var(--texto-medio); text-decoration: none; display: inline-block; font-size: 1rem; transition: var(--transicao); }
         .topico-link:hover { color: var(--cor-primaria); text-decoration: underline; }
 
-        .subtopico-titulo { font-size: 1rem; color: var(--texto-escuro); font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 8px; padding: 8px 0; }
+        /* Modificação no subtítulo para suportar o botão à direita */
+        .subtopico-titulo { 
+            font-size: 1rem; 
+            color: var(--texto-escuro); 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            display: flex; 
+            justify-content: space-between; /* Espalha título e botão */
+            align-items: center; 
+            padding: 8px 0; 
+        }
         .subtopico-titulo:hover { color: var(--cor-primaria); }
-        .subtopico-titulo .icone-seta { width: 16px; height: 16px; fill: var(--texto-escuro); }
-        details[open] > .subtopico-titulo .icone-seta { fill: var(--cor-primaria); }
+        .subtopico-titulo-texto { display: flex; align-items: center; gap: 8px; }
+        .subtopico-titulo-texto .icone-seta { width: 16px; height: 16px; fill: var(--texto-escuro); }
+        details[open] > .subtopico-titulo .subtopico-titulo-texto .icone-seta { fill: var(--cor-primaria); }
         .subtopico-conteudo { padding-top: 16px; animation: fadeIn 0.4s ease-in-out; }
 
         /* Estilização da Tabela */
@@ -175,7 +190,7 @@
             <div class="filtro-grid">
                 <div class="filtro-item">
                     <label for="filtro-nome">Nome do Beneficiário</label>
-                    <input type="text" id="filtro-nome" placeholder="Ex: Nome">
+                    <input type="text" id="filtro-nome" placeholder="Ex: Nome...">
                 </div>
                 <div class="filtro-item">
                     <label for="filtro-data-inicio">Data Início</label>
@@ -223,8 +238,14 @@
                     <div class="topico-conteudo">
                         <details>
                             <summary class="subtopico-titulo">
-                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Janeiro
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    Janeiro
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -264,8 +285,14 @@
 
                         <details>
                             <summary class="subtopico-titulo">
-                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Fevereiro
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    Fevereiro
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -310,8 +337,14 @@
 
                         <details>
                             <summary class="subtopico-titulo">
-                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Março
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    Março
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -369,8 +402,14 @@
                         
                         <details>
                             <summary class="subtopico-titulo">
-                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Março
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    Março
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -421,8 +460,14 @@
 
                         <details>
                             <summary class="subtopico-titulo">
-                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Abril
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    Abril
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -458,8 +503,14 @@
 
                         <details>
                             <summary class="subtopico-titulo">
-                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Maio
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    Maio
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -494,8 +545,14 @@
 
                         <details>
                             <summary class="subtopico-titulo">
-                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Junho
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    Junho
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -537,8 +594,14 @@
 
                         <details>
                             <summary class="subtopico-titulo">
-                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Agosto
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    Agosto
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -571,8 +634,14 @@
 
                         <details>
                             <summary class="subtopico-titulo">
-                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Setembro
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    Setembro
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -612,8 +681,14 @@
 
                         <details>
                             <summary class="subtopico-titulo">
-                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Outubro
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    Outubro
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -647,8 +722,14 @@
 
                         <details>
                             <summary class="subtopico-titulo">
-                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Novembro
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    Novembro
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -696,8 +777,14 @@
 
                         <details>
                             <summary class="subtopico-titulo">
-                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Dezembro
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    Dezembro
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -739,8 +826,14 @@
                         
                         <details>
                             <summary class="subtopico-titulo">
-                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Janeiro
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    Janeiro
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -776,8 +869,14 @@
 
                         <details>
                             <summary class="subtopico-titulo">
-                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Fevereiro
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    Fevereiro
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -821,8 +920,14 @@
 
                         <details>
                             <summary class="subtopico-titulo">
-                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Novembro
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    Novembro
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -898,7 +1003,6 @@
                 const dataInicioInput = document.getElementById('filtro-data-inicio').value; // Formato YYYY-MM-DD
                 const dataFimInput = document.getElementById('filtro-data-fim').value; // Formato YYYY-MM-DD
 
-                // Converte as datas do input para números (YYYYMMDD) para facilitar a comparação matemática
                 const dataInicioNum = dataInicioInput ? parseInt(dataInicioInput.replace(/-/g, '')) : 0;
                 const dataFimNum = dataFimInput ? parseInt(dataFimInput.replace(/-/g, '')) : 99999999;
 
@@ -914,7 +1018,6 @@
 
                 let filtroAtivo = nomeFiltro !== '' || dataInicioInput !== '' || dataFimInput !== '';
                 
-                // Esconde as linhas de total estáticas das tabelas originais
                 totais.forEach(t => t.style.display = filtroAtivo ? 'none' : '');
 
                 linhas.forEach(linha => {
@@ -923,7 +1026,6 @@
 
                     let bateNome = nomeFiltro === '' || nomeTexto.includes(nomeFiltro);
                     
-                    // Extrai todas as datas no formato DD/MM/YYYY que estiverem na linha
                     const regexData = /(\d{2})\/(\d{2})\/(\d{4})/g;
                     let match;
                     let dataDentroDoPeriodo = false;
@@ -934,23 +1036,20 @@
                         const dia = match[1];
                         const mes = match[2];
                         const ano = match[3];
-                        const dataLinhaNum = parseInt(`${ano}${mes}${dia}`); // Converte para YYYYMMDD
+                        const dataLinhaNum = parseInt(`${ano}${mes}${dia}`); 
 
-                        // Verifica se alguma data da linha está dentro do período selecionado
                         if (dataLinhaNum >= dataInicioNum && dataLinhaNum <= dataFimNum) {
                             dataDentroDoPeriodo = true;
                             break; 
                         }
                     }
 
-                    // Se não tiver filtro de data, a condição é aprovada. Se tiver, depende se caiu no período.
                     let bateData = (!dataInicioInput && !dataFimInput) || (possuiData && dataDentroDoPeriodo);
 
                     if (bateNome && bateData) {
                         linha.style.display = '';
                         encontrouAlgo = true;
 
-                        // Encontra a célula que contém o valor (que sempre possui "R$")
                         let valorString = "";
                         for (let i = 0; i < linha.cells.length; i++) {
                             if (linha.cells[i].textContent.includes('R$')) {
@@ -959,7 +1058,6 @@
                             }
                         }
 
-                        // Converte o texto "R$ X.XXX,XX" para float e soma
                         if (valorString !== "") {
                             let limpo = valorString.replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
                             let numerico = parseFloat(limpo);
@@ -973,18 +1071,14 @@
                     }
                 });
 
-                // Se houver filtro ativo e encontrou resultados, exibe o painel de soma
                 if (filtroAtivo && encontrouAlgo) {
                     painelResumo.style.display = 'block';
                     textoValorTotal.textContent = somaTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-                    
-                    // Expande as abas para mostrar os resultados filtrados
                     document.querySelectorAll('details').forEach(d => d.open = true);
                 } else {
                     painelResumo.style.display = 'none';
                 }
 
-                // Exibe a mensagem de vazio caso nada seja encontrado
                 if (!encontrouAlgo && filtroAtivo) {
                     msgVazio.style.display = 'block';
                 } else {
@@ -997,11 +1091,65 @@
                 document.getElementById('filtro-data-inicio').value = '';
                 document.getElementById('filtro-data-fim').value = '';
                 btnFiltrar.click();
-                
-                // Fecha as abas ao limpar
                 document.querySelectorAll('details').forEach(d => d.open = false);
             });
         });
+
+        // FUNÇÃO PARA EXPORTAR CSV
+        function baixarCSV(evento, botao) {
+            // Impede que o clique no botão abra/feche a aba (details)
+            evento.stopPropagation();
+            evento.preventDefault();
+
+            // Encontra a tabela dentro deste elemento 'details'
+            const detalhes = botao.closest('details');
+            const tabela = detalhes.querySelector('table');
+            
+            // Monta o nome do arquivo pegando o Ano e o Mês
+            // O ano está na aba principal que engloba este mês
+            const topicoAnoElement = detalhes.closest('.topico-conteudo').previousElementSibling;
+            const topicoAno = topicoAnoElement ? topicoAnoElement.textContent.trim() : 'ano';
+            const mesTexto = detalhes.querySelector('.subtopico-titulo-texto').textContent.trim();
+            const nomeArquivo = `diarias_cm_doresopolis_${topicoAno}_${mesTexto}.csv`.replace(/\s+/g, '_').toLowerCase();
+
+            // Constrói o CSV
+            let csv = [];
+            const linhas = tabela.querySelectorAll('tr');
+            
+            for (let i = 0; i < linhas.length; i++) {
+                // Ignora linhas ocultas pelo filtro de pesquisa
+                if (linhas[i].style.display === 'none') continue;
+
+                let linha = [];
+                const celulas = linhas[i].querySelectorAll('th, td');
+                
+                for (let j = 0; j < celulas.length; j++) {
+                    // Pega o texto e escapa aspas duplas internas
+                    let dado = celulas[j].innerText.replace(/"/g, '""');
+                    // Envolve o texto em aspas duplas
+                    linha.push('"' + dado + '"');
+                }
+                // Une as colunas com ponto e vírgula (Padrão Excel PT-BR)
+                csv.push(linha.join(';'));
+            }
+
+            // \uFEFF é o BOM (Byte Order Mark) - Força o Excel a reconhecer os acentos UTF-8
+            const csvString = "\uFEFF" + csv.join('\n'); 
+            
+            // Cria o arquivo e força o download
+            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", nomeArquivo);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
     </script>
 
 </body>
