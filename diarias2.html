@@ -270,7 +270,7 @@
                     <div class="topico-conteudo">`;
 
                 if (ano === '2024' && (!dadosAgrupados[ano] || Object.keys(dadosAgrupados[ano]).length === 0)) {
-                    htmlFinal += `<p style="padding: 10px 0; color: var(--texto-medio); font-weight: 500;">No ano de 2024 não houve registros de diárias de viagem na Câmara Municipal.</p>`;
+                    htmlFinal += `<p style="padding: 10px 0; color: var(--texto-medio); font-weight: 500;">Declaramos que no ano de 2024 não houve registros de diárias de viagem na Câmara Municipal.</p>`;
                 } else if (dadosAgrupados[ano]) {
                     const mesesDoAno = Object.keys(dadosAgrupados[ano]).sort((a, b) => ordemMeses.indexOf(a) - ordemMeses.indexOf(b));
                     mesesDoAno.forEach(mes => {
