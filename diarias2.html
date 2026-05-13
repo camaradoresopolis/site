@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viagens e Diárias | Câmara Municipal de Doresópolis</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --cor-fundo: #f2f2f2; --cor-primaria: #025d3b; --cor-primaria-hover: #01472c; --cor-primaria-bg: rgba(2, 93, 59, 0.08); --branco: #ffffff; --texto-escuro: #1f2937; --texto-medio: #4b5563; --texto-claro: #6b7280; --borda: #e5e7eb; --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); --alerta-amarelo-bg: #fff3cd; --alerta-amarelo-texto: #856404; --alerta-azul-bg: #d1ecf1; --alerta-azul-texto: #0c5460; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--cor-fundo); color: var(--texto-escuro); line-height: 1.6; padding: 40px 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .btn-voltar { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--texto-medio); font-size: 0.9rem; font-weight: 600; margin-bottom: 30px; transition: var(--transicao); padding: 8px 16px; border-radius: 8px; background-color: transparent; }
+        .btn-voltar:hover { color: var(--cor-primaria); background-color: var(--cor-primaria-bg); transform: translateX(-4px); }
+        .btn-voltar svg { width: 20px; height: 20px; fill: currentColor; }
+        .header-transparencia { text-align: center; margin-bottom: 40px; animation: fadeIn 0.6s ease-out; }
+        .header-transparencia svg { width: 40px; height: 40px; fill: var(--cor-primaria); margin-bottom: 10px; }
+        .header-transparencia h1 { font-size: 2.5rem; color: var(--texto-escuro); font-weight: 700; margin-bottom: 15px; }
+        .info-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--borda); margin-bottom: 30px; font-size: 0.9rem; color: var(--texto-claro); }
+        .conteudo-box, .filtro-box { background-color: var(--branco); border-radius: 16px; padding: 32px; border: 1px solid var(--borda); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); animation: slideUp 0.8s ease-out; margin-bottom: 30px; }
+        .filtro-titulo { font-size: 1.1rem; color: var(--cor-primaria); font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .filtro-titulo svg { width: 20px; height: 20px; fill: var(--cor-primaria); }
+        .filtro-grid { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 16px; align-items: end; }
+        .filtro-item { display: flex; flex-direction: column; gap: 6px; }
+        .filtro-item label { font-size: 0.85rem; font-weight: 600; color: var(--texto-medio); }
+        .filtro-item input { width: 100%; padding: 10px 12px; border: 1px solid var(--borda); border-radius: 8px; font-size: 0.9rem; color: var(--texto-escuro); font-family: inherit; transition: var(--transicao); outline: none; }
+        .filtro-item input:focus { border-color: var(--cor-primaria); box-shadow: 0 0 0 3px var(--cor-primaria-bg); }
+        .filtro-acoes { display: flex; gap: 10px; }
+        .btn { padding: 10px 16px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; border: none; transition: var(--transicao); display: inline-flex; align-items: center; gap: 6px; font-family: inherit; }
+        .btn-primario { background-color: var(--cor-primaria); color: var(--branco); }
+        .btn-primario:hover { background-color: var(--cor-primaria-hover); transform: translateY(-2px); }
+        .btn-secundario { background-color: var(--cor-fundo); color: var(--texto-escuro); border: 1px solid var(--borda); }
+        .btn-secundario:hover { background-color: #e5e7eb; }
+        .btn-download-csv { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8rem; font-weight: 600; color: var(--cor-primaria); background-color: var(--cor-primaria-bg); border: 1px solid rgba(2, 93, 59, 0.2); border-radius: 6px; cursor: pointer; transition: var(--transicao); text-transform: none; letter-spacing: normal; }
+        .btn-download-csv:hover { background-color: var(--cor-primaria); color: var(--branco); border-color: var(--cor-primaria); }
+        .btn-download-csv svg { width: 14px; height: 14px; stroke: currentColor; }
+        .resumo-filtro { background-color: var(--cor-primaria-bg); border: 2px dashed var(--cor-primaria); border-radius: 12px; padding: 24px; margin-bottom: 30px; text-align: center; animation: fadeIn 0.4s ease-in-out; }
+        .resumo-conteudo { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .resumo-label { font-size: 0.9rem; color: var(--texto-escuro); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .resumo-valor { font-size: 2.5rem; color: var(--cor-primaria); font-weight: 800; line-height: 1; }
+        details { margin-bottom: 20px; }
+        summary { list-style: none; cursor: pointer; user-select: none; transition: var(--transicao); outline: none; }
+        summary::-webkit-details-marker { display: none; }
+        .icone-seta { width: 18px; height: 18px; fill: var(--cor-primaria); transition: transform 0.3s ease; }
+        .topico-titulo { font-size: 1.2rem; color: var(--cor-primaria); font-weight: 600; display: flex; align-items: center; gap: 10px; padding: 8px 0; }
+        .topico-titulo:hover { color: var(--cor-primaria-hover); }
+        details[open] > summary .icone-seta { transform: rotate(180deg); }
+        .topico-conteudo { padding-left: 28px; margin-top: 10px; margin-bottom: 20px; animation: fadeIn 0.4s ease-in-out; }
+        .topico-link { color: var(--texto-medio); text-decoration: none; display: inline-block; font-size: 1rem; transition: var(--transicao); }
+        .topico-link:hover { color: var(--cor-primaria); text-decoration: underline; }
+        .subtopico-titulo { font-size: 1rem; color: var(--texto-escuro); font-weight: 600; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; padding: 8px 0; }
+        .subtopico-titulo:hover { color: var(--cor-primaria); }
+        .subtopico-titulo-texto { display: flex; align-items: center; gap: 8px; }
+        .subtopico-titulo-texto .icone-seta { width: 16px; height: 16px; fill: var(--texto-escuro); }
+        details[open] > .subtopico-titulo .subtopico-titulo-texto .icone-seta { fill: var(--cor-primaria); }
+        .subtopico-conteudo { padding-top: 16px; animation: fadeIn 0.4s ease-in-out; }
+        .table-responsive { width: 100%; overflow-x: auto; border-radius: 8px; border: 1px solid var(--borda); margin-bottom: 24px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; min-width: 1400px; }
+        thead { background-color: var(--cor-primaria); color: var(--branco); }
+        th { padding: 12px 14px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+        td { padding: 12px 14px; border-bottom: 1px solid var(--borda); font-size: 0.85rem; color: var(--texto-escuro); vertical-align: middle; }
+        tbody tr:hover { background-color: var(--cor-fundo); }
+        .tabela-total { background-color: #e5e7eb !important; font-weight: 700; }
+        .tabela-total td { font-size: 0.9rem; }
+        .col-justificativa { min-width: 300px; }
+        .msg-vazio, .msg-loading { padding: 20px; text-align: center; color: var(--texto-claro); font-weight: 600; background: var(--cor-fundo); border-radius: 8px; margin-bottom: 20px; border: 1px dashed var(--borda); }
+        .msg-vazio { display: none; }
+        .avisos-container { margin-top: 40px; }
+        .alerta { display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px; border-radius: 8px; margin-bottom: 16px; font-size: 0.95rem; }
+        .alerta-icone { display: flex; justify-content: center; align-items: center; width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; font-weight: bold; font-size: 1.2rem; }
+        .alerta-aviso { background-color: var(--alerta-amarelo-bg); color: var(--alerta-amarelo-texto); border-left: 5px solid #ffc107; }
+        .alerta-aviso .alerta-icone { border: 2px solid var(--alerta-amarelo-texto); color: var(--alerta-amarelo-texto); }
+        .alerta-info { background-color: var(--alerta-azul-bg); color: var(--alerta-azul-texto); border-left: 5px solid #17a2b8; }
+        .alerta-info .alerta-icone { border: 2px solid var(--alerta-azul-texto); color: var(--alerta-azul-texto); }
+        .alerta ul { list-style: none; margin-left: 0; }
+        .alerta ul li { margin-bottom: 4px; }
+        .alerta ul li::before { content: "- "; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 768px) {
+            .header-transparencia h1 { font-size: 2rem; }
+            .info-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .conteudo-box, .filtro-box { padding: 20px; }
+            .filtro-grid { grid-template-columns: 1fr; }
+            .filtro-acoes { width: 100%; }
+            .filtro-acoes .btn { flex: 1; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <a href="https://www.doresopolis.mg.leg.br/transparencia" class="btn-voltar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+            Voltar para Transparência
+        </a>
+
+        <div class="header-transparencia">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M241.24,103.54l-57.19-21.44L143.14,12.56A16,16,0,0,0,128,0h-8a16,16,0,0,0-15.65,12.67l-15,70.18-50,21.4-23.9-15A16,16,0,0,0,0,102.82v10.45a16,16,0,0,0,10.27,14.93L49.4,143.19l19.55,68.4a16,16,0,0,0,15.38,11.6H96a16,16,0,0,0,15.36-11.6L135,147l62.4-26.74,27-10.1A16,16,0,0,0,241.24,103.54Z"></path></svg>
+            <h1>Viagens e Diárias</h1>
+        </div>
+
+        <div class="info-bar">
+            <span>Atualizado em tempo real - acesso em <span class="data-dinamica"></span></span>
+        </div>
+
+        <div class="filtro-box">
+            <h3 class="filtro-titulo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
+                Filtro de Pesquisa
+            </h3>
+            <div class="filtro-grid">
+                <div class="filtro-item">
+                    <label for="filtro-nome">Nome do Beneficiário</label>
+                    <input type="text" id="filtro-nome" placeholder="Ex: Rodrigo, Mara...">
+                </div>
+                <div class="filtro-item">
+                    <label for="filtro-data-inicio">Data Início</label>
+                    <input type="date" id="filtro-data-inicio">
+                </div>
+                <div class="filtro-item">
+                    <label for="filtro-data-fim">Data Final</label>
+                    <input type="date" id="filtro-data-fim">
+                </div>
+                <div class="filtro-acoes">
+                    <button id="btn-filtrar" class="btn btn-primario">Pesquisar</button>
+                    <button id="btn-limpar" class="btn btn-secundario">Limpar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="resumo-filtro" class="resumo-filtro" style="display: none;">
+            <div class="resumo-conteudo">
+                <span class="resumo-label">Soma Total do Filtro</span>
+                <span id="valor-total-filtrado" class="resumo-valor">R$ 0,00</span>
+            </div>
+        </div>
+
+        <div class="conteudo-box">
+            
+            <div id="msg-vazio" class="msg-vazio">Nenhum registro encontrado para os filtros selecionados.</div>
+
+            <div id="container-dados">
+                <div class="msg-loading">Conectando ao banco de dados e carregando viagens...</div>
+            </div>
+
+            <div class="avisos-container">
+                <div class="alerta alerta-aviso">
+                    <div class="alerta-icone">!</div>
+                    <div>Não são permitidas viagens ou diárias internacionais.</div>
+                </div>
+                <div class="alerta alerta-info">
+                    <div class="alerta-icone">i</div>
+                    <div>
+                        <ul>
+                            <li>As informações refletem a realidade atual, pois foram atualizadas em tempo real através de busca em banco de dados.</li>
+                            <li>Não há período inicial/final de busca, ou seja, foi pesquisado todo o histórico existente no banco de dados.</li>
+                            <li>A regulamentação que trata sobre viagens e diárias é recente e, anteriormente, elas eram vedadas.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // ====================================================================
+        // LINK DA SUA PLANILHA GOOGLE JÁ INSERIDO AQUI:
+        const URL_PLANILHA_GOOGLE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZFfD3-GCVUkHA7MwCWobcTDKcdsWK3-WHiZpLXurvYjNve-S4BMSDfyhZ6Vyk-3Vp8wKoWMeG94pu/pub?output=csv'; 
+        // ====================================================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const dataAtual = new Date();
+            const opcoes = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            document.querySelectorAll('.data-dinamica').forEach(elemento => {
+                elemento.textContent = dataAtual.toLocaleDateString('pt-BR', opcoes);
+            });
+
+            // Dispara o download dos dados na inicialização
+            carregarDadosDaPlanilha();
+
+            document.getElementById('btn-filtrar').addEventListener('click', executarFiltro);
+            document.getElementById('btn-limpar').addEventListener('click', limparFiltro);
+        });
+
+        async function carregarDadosDaPlanilha() {
+            try {
+                let textoCSV = "";
+                if (URL_PLANILHA_GOOGLE.trim() !== '') {
+                    const resposta = await fetch(URL_PLANILHA_GOOGLE);
+                    textoCSV = await resposta.text();
+                }
+
+                if (!textoCSV || textoCSV.trim() === '') {
+                    throw new Error("A planilha retornou vazia.");
+                }
+
+                const matrizDados = converterCSVParaMatriz(textoCSV);
+                construirInterfaceHTML(matrizDados);
+
+            } catch (erro) {
+                console.error("Erro ao carregar a planilha:", erro);
+                document.getElementById('container-dados').innerHTML = `<div class="msg-loading" style="color:red; border-color:red;">Erro ao tentar conectar à planilha do Google.</div>`;
+            }
+        }
+
+        // Função inteligente para ler o arquivo CSV gerado pelo Google
+        function converterCSVParaMatriz(str) {
+            const arr = [];
+            let quote = false;
+            for (let row = 0, col = 0, c = 0; c < str.length; c++) {
+                let cc = str[c], nc = str[c+1];
+                arr[row] = arr[row] || [];
+                arr[row][col] = arr[row][col] || '';
+                if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+                if (cc == '"') { quote = !quote; continue; }
+                if (cc == ',' && !quote) { ++col; continue; }
+                if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; continue; }
+                if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+                if (cc == '\r' && !quote) { ++row; col = 0; continue; }
+                arr[row][col] += cc;
+            }
+            return arr;
+        }
+
+        function construirInterfaceHTML(linhas) {
+            const container = document.getElementById('container-dados');
+            
+            // Remove a linha 1 (Cabeçalhos: Ano, Mês, Nome...)
+            linhas.shift();
+
+            const dadosAgrupados = {};
+            linhas.forEach(linha => {
+                // Só processa linhas que tenham pelo menos a informação de Ano
+                if(linha.length < 2 || !linha[0] || linha[0].trim() === '') return;
+
+                const ano = linha[0].trim();
+                const mes = linha[1].trim();
+
+                if(!dadosAgrupados[ano]) dadosAgrupados[ano] = {};
+                if(!dadosAgrupados[ano][mes]) dadosAgrupados[ano][mes] = [];
+
+                dadosAgrupados[ano][mes].push(linha);
+            });
+
+            // Adiciona a seção de Regulamentações no topo
+            let htmlFinal = `
+                <details>
+                    <summary class="topico-titulo">
+                        <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                        Regulamentações
+                    </summary>
+                    <div class="topico-conteudo">
+                        <a href="#" class="topico-link">Resolução Nº 2.873, de 14 de outubro de 2025</a>
+                    </div>
+                </details>`;
+
+            const ordemAnos = Object.keys(dadosAgrupados).sort((a,b) => b - a); // 2026, 2025...
+            const ordemMeses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+            ordemAnos.forEach(ano => {
+                htmlFinal += `
+                <details>
+                    <summary class="topico-titulo">
+                        <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                        ${ano}
+                    </summary>
+                    <div class="topico-conteudo">`;
+
+                const mesesDoAno = Object.keys(dadosAgrupados[ano]).sort((a, b) => {
+                    let indiceA = ordemMeses.findIndex(m => m.toLowerCase() === a.toLowerCase());
+                    let indiceB = ordemMeses.findIndex(m => m.toLowerCase() === b.toLowerCase());
+                    if(indiceA === -1) indiceA = 99;
+                    if(indiceB === -1) indiceB = 99;
+                    return indiceA - indiceB;
+                });
+
+                mesesDoAno.forEach(mes => {
+                    htmlFinal += `
+                        <details>
+                            <summary class="subtopico-titulo">
+                                <div class="subtopico-titulo-texto">
+                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                    ${mes}
+                                </div>
+                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    CSV
+                                </button>
+                            </summary>
+                            <div class="subtopico-conteudo">
+                                <div class="table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nº</th>
+                                                <th>Nome Beneficiário</th>
+                                                <th>Cargo/Função Beneficiário</th>
+                                                <th>Período de Afastamento</th>
+                                                <th>Destino</th>
+                                                <th class="col-justificativa">Justificativa Afastamento</th>
+                                                <th>Qtd Diárias</th>
+                                                <th>Valor Recebido</th>
+                                                <th>Apontamentos</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>`;
+
+                    let somaMes = 0;
+
+                    dadosAgrupados[ano][mes].forEach(linha => {
+                        htmlFinal += `
+                            <tr class="linha-dado">
+                                <td>${linha[2] || ''}</td>
+                                <td>${linha[3] || ''}</td>
+                                <td>${linha[4] || ''}</td>
+                                <td>${linha[5] || ''}</td>
+                                <td>${linha[6] || ''}</td>
+                                <td>${linha[7] || ''}</td>
+                                <td>${linha[8] || ''}</td>
+                                <td>${linha[9] || ''}</td>
+                                <td>${linha[10] || ''}</td>
+                            </tr>`;
+
+                        let valorString = linha[9] || '';
+                        if (valorString.includes('R$')) {
+                            let limpo = valorString.replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
+                            let numerico = parseFloat(limpo);
+                            if (!isNaN(numerico)) { somaMes += numerico; }
+                        }
+                    });
+
+                    htmlFinal += `
+                                    <tr class="tabela-total">
+                                        <td colspan="7">TOTAL LISTADO - ${mes.toUpperCase()}</td>
+                                        <td colspan="2">${somaMes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </details>`;
+                });
+
+                htmlFinal += `</div></details>`;
+            });
+
+            container.innerHTML = htmlFinal;
+        }
+
+        // Lógica de Filtro Atualizada com Calendário (Data Início e Fim)
+        function executarFiltro() {
+            const nomeFiltro = document.getElementById('filtro-nome').value.toLowerCase().trim();
+            const dataInicioInput = document.getElementById('filtro-data-inicio').value; 
+            const dataFimInput = document.getElementById('filtro-data-fim').value;
+
+            const dataInicioNum = dataInicioInput ? parseInt(dataInicioInput.replace(/-/g, '')) : 0;
+            const dataFimNum = dataFimInput ? parseInt(dataFimInput.replace(/-/g, '')) : 99999999;
+
+            const linhas = document.querySelectorAll('.linha-dado');
+            const totais = document.querySelectorAll('.tabela-total');
+            const msgVazio = document.getElementById('msg-vazio');
+            const painelResumo = document.getElementById('resumo-filtro');
+            const textoValorTotal = document.getElementById('valor-total-filtrado');
+
+            let encontrouAlgo = false;
+            let somaTotal = 0;
+            let filtroAtivo = nomeFiltro !== '' || dataInicioInput !== '' || dataFimInput !== '';
+            
+            totais.forEach(t => t.style.display = filtroAtivo ? 'none' : '');
+
+            linhas.forEach(linha => {
+                const nomeTexto = linha.cells[1].textContent.toLowerCase() + linha.cells[2].textContent.toLowerCase();
+                const textoLinha = linha.innerHTML;
+
+                let bateNome = nomeFiltro === '' || nomeTexto.includes(nomeFiltro);
+                
+                const regexData = /(\d{2})\/(\d{2})\/(\d{4})/g;
+                let match;
+                let dataDentroDoPeriodo = false;
+                let possuiData = false;
+
+                while ((match = regexData.exec(textoLinha)) !== null) {
+                    possuiData = true;
+                    const dia = match[1];
+                    const mes = match[2];
+                    const ano = match[3];
+                    const dataLinhaNum = parseInt(`${ano}${mes}${dia}`); 
+
+                    if (dataLinhaNum >= dataInicioNum && dataLinhaNum <= dataFimNum) {
+                        dataDentroDoPeriodo = true;
+                        break; 
+                    }
+                }
+
+                let bateData = (!dataInicioInput && !dataFimInput) || (possuiData && dataDentroDoPeriodo);
+
+                if (bateNome && bateData) {
+                    linha.style.display = '';
+                    encontrouAlgo = true;
+
+                    let valorString = "";
+                    for (let i = 0; i < linha.cells.length; i++) {
+                        if (linha.cells[i].textContent.includes('R$')) {
+                            valorString = linha.cells[i].textContent;
+                            break;
+                        }
+                    }
+
+                    if (valorString !== "") {
+                        let limpo = valorString.replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
+                        let numerico = parseFloat(limpo);
+                        if (!isNaN(numerico)) { somaTotal += numerico; }
+                    }
+
+                } else {
+                    linha.style.display = 'none';
+                }
+            });
+
+            if (filtroAtivo && encontrouAlgo) {
+                painelResumo.style.display = 'block';
+                textoValorTotal.textContent = somaTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                document.querySelectorAll('details').forEach(d => d.open = true);
+            } else {
+                painelResumo.style.display = 'none';
+            }
+
+            msgVazio.style.display = (!encontrouAlgo && filtroAtivo) ? 'block' : 'none';
+        }
+
+        function limparFiltro() {
+            document.getElementById('filtro-nome').value = '';
+            document.getElementById('filtro-data-inicio').value = '';
+            document.getElementById('filtro-data-fim').value = '';
+            executarFiltro();
+            document.querySelectorAll('details').forEach(d => d.open = false);
+        }
+
+        function baixarCSV(evento, botao) {
+            evento.stopPropagation();
+            evento.preventDefault();
+
+            const detalhes = botao.closest('details');
+            const tabela = detalhes.querySelector('table');
+            
+            const topicoAnoElement = detalhes.closest('.topico-conteudo').previousElementSibling;
+            const topicoAno = topicoAnoElement ? topicoAnoElement.textContent.trim() : 'ano';
+            const mesTexto = detalhes.querySelector('.subtopico-titulo-texto').textContent.trim();
+            const nomeArquivo = `diarias_cm_doresopolis_${topicoAno}_${mesTexto}.csv`.replace(/\s+/g, '_').toLowerCase();
+
+            let csv = [];
+            const linhas = tabela.querySelectorAll('tr');
+            
+            for (let i = 0; i < linhas.length; i++) {
+                if (linhas[i].style.display === 'none') continue;
+                let linha = [];
+                const celulas = linhas[i].querySelectorAll('th, td');
+                
+                for (let j = 0; j < celulas.length; j++) {
+                    let dado = celulas[j].innerText.replace(/"/g, '""');
+                    linha.push('"' + dado + '"');
+                }
+                csv.push(linha.join(';'));
+            }
+
+            const csvString = "\uFEFF" + csv.join('\n'); 
+            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", nomeArquivo);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    </script>
+</body>
+</html>
