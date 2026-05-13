@@ -164,7 +164,7 @@
         </div>
 
         <div class="info-bar">
-            <span>Atualizado em <span class="data-dinamica"></span></span>
+            <span>Atualizado em tempo real - acesso em <span class="data-dinamica"></span></span>
         </div>
 
         <div class="filtro-box">
@@ -175,35 +175,15 @@
             <div class="filtro-grid">
                 <div class="filtro-item">
                     <label for="filtro-nome">Nome do Beneficiário</label>
-                    <input type="text" id="filtro-nome" placeholder="Ex: Nome">
+                    <input type="text" id="filtro-nome" placeholder="Ex: Rodrigo, Mara...">
                 </div>
                 <div class="filtro-item">
-                    <label for="filtro-mes">Mês</label>
-                    <select id="filtro-mes">
-                        <option value="">Todos</option>
-                        <option value="01">Janeiro</option>
-                        <option value="02">Fevereiro</option>
-                        <option value="03">Março</option>
-                        <option value="04">Abril</option>
-                        <option value="05">Maio</option>
-                        <option value="06">Junho</option>
-                        <option value="07">Julho</option>
-                        <option value="08">Agosto</option>
-                        <option value="09">Setembro</option>
-                        <option value="10">Outubro</option>
-                        <option value="11">Novembro</option>
-                        <option value="12">Dezembro</option>
-                    </select>
+                    <label for="filtro-data-inicio">Data Início</label>
+                    <input type="date" id="filtro-data-inicio">
                 </div>
                 <div class="filtro-item">
-                    <label for="filtro-ano">Ano</label>
-                    <select id="filtro-ano">
-                        <option value="">Todos</option>
-                        <option value="2026">2026</option>
-                        <option value="2025">2025</option>
-                        <option value="2024">2024</option>
-                        <option value="2023">2023</option>
-                    </select>
+                    <label for="filtro-data-fim">Data Final</label>
+                    <input type="date" id="filtro-data-fim">
                 </div>
                 <div class="filtro-acoes">
                     <button id="btn-filtrar" class="btn btn-primario">Pesquisar</button>
@@ -241,7 +221,6 @@
                     </summary>
                     
                     <div class="topico-conteudo">
-                        
                         <details>
                             <summary class="subtopico-titulo">
                                 <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
@@ -264,105 +243,15 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="linha-dado">
-                                                <td>1</td>
-                                                <td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td>
-                                                <td>VEREADOR</td>
-                                                <td>28/01/2026</td>
-                                                <td>Lagoa da Prata-MG</td>
-                                                <td>Viagem a Lagoa da Prata conforme relatório em anexo</td>
-                                                <td>1</td>
-                                                <td>R$ 225,00</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>2</td>
-                                                <td>HUGO OLIVEIRA LEÃO</td>
-                                                <td>VEREADOR</td>
-                                                <td>28/01/2026</td>
-                                                <td>Passos-MG</td>
-                                                <td>Viagem a Passos conforme relatório em anexo</td>
-                                                <td>1</td>
-                                                <td>R$ 225,00</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>3</td>
-                                                <td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td>
-                                                <td>VEREADOR</td>
-                                                <td>28/01/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Viagem a Belo Horizonte conforme relatório em anexo</td>
-                                                <td>1</td>
-                                                <td>R$ 730,00</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>4</td>
-                                                <td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td>
-                                                <td>VEREADOR</td>
-                                                <td>28/01/2026</td>
-                                                <td>Passos-MG</td>
-                                                <td>Viagem a Passos conforme relatório em anexo</td>
-                                                <td>1</td>
-                                                <td>R$ 225,00</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>5</td>
-                                                <td>GERALDO FERREIRA PEDROSA JUNIOR</td>
-                                                <td>VEREADOR</td>
-                                                <td>28/01/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Viagem a Belo Horizonte conforme relatório em anexo</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>6</td>
-                                                <td>REINALDO DE SOUZA LOPES</td>
-                                                <td>VEREADOR</td>
-                                                <td>28/01/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Viagem a Belo Horizonte conforme relatório em anexo</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>7</td>
-                                                <td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td>
-                                                <td>VEREADOR</td>
-                                                <td>28/01/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Viagem a Belo Horizonte conforme relatório em anexo</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>8</td>
-                                                <td>KEYLA MARIA PAIM</td>
-                                                <td>VEREADOR</td>
-                                                <td>28/01/2026</td>
-                                                <td>Passos-MG</td>
-                                                <td>Viagem a Passos conforme relatório em anexo</td>
-                                                <td>1</td>
-                                                <td>R$ 225,00</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>9</td>
-                                                <td>MARA GOMES FREIRE</td>
-                                                <td>PRESIDENTE</td>
-                                                <td>28/01/2026</td>
-                                                <td>Passos-MG</td>
-                                                <td>Viagem a Passos conforme relatório de viagem</td>
-                                                <td>1</td>
-                                                <td>R$ 225,00</td>
-                                                <td></td>
-                                            </tr>
+                                            <tr class="linha-dado"><td>1</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>28/01/2026</td><td>Lagoa da Prata-MG</td><td>Viagem a Lagoa da Prata conforme relatório em anexo</td><td>1</td><td>R$ 225,00</td><td></td></tr>
+                                            <tr class="linha-dado"><td>2</td><td>HUGO OLIVEIRA LEÃO</td><td>VEREADOR</td><td>28/01/2026</td><td>Passos-MG</td><td>Viagem a Passos conforme relatório em anexo</td><td>1</td><td>R$ 225,00</td><td></td></tr>
+                                            <tr class="linha-dado"><td>3</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>28/01/2026</td><td>Belo Horizonte-MG</td><td>Viagem a Belo Horizonte conforme relatório em anexo</td><td>1</td><td>R$ 730,00</td><td></td></tr>
+                                            <tr class="linha-dado"><td>4</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>28/01/2026</td><td>Passos-MG</td><td>Viagem a Passos conforme relatório em anexo</td><td>1</td><td>R$ 225,00</td><td></td></tr>
+                                            <tr class="linha-dado"><td>5</td><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>VEREADOR</td><td>28/01/2026</td><td>Belo Horizonte-MG</td><td>Viagem a Belo Horizonte conforme relatório em anexo</td><td>1</td><td>R$ 547,50</td><td></td></tr>
+                                            <tr class="linha-dado"><td>6</td><td>REINALDO DE SOUZA LOPES</td><td>VEREADOR</td><td>28/01/2026</td><td>Belo Horizonte-MG</td><td>Viagem a Belo Horizonte conforme relatório em anexo</td><td>1</td><td>R$ 547,50</td><td></td></tr>
+                                            <tr class="linha-dado"><td>7</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>28/01/2026</td><td>Belo Horizonte-MG</td><td>Viagem a Belo Horizonte conforme relatório em anexo</td><td>1</td><td>R$ 547,50</td><td></td></tr>
+                                            <tr class="linha-dado"><td>8</td><td>KEYLA MARIA PAIM</td><td>VEREADOR</td><td>28/01/2026</td><td>Passos-MG</td><td>Viagem a Passos conforme relatório em anexo</td><td>1</td><td>R$ 225,00</td><td></td></tr>
+                                            <tr class="linha-dado"><td>9</td><td>MARA GOMES FREIRE</td><td>PRESIDENTE</td><td>28/01/2026</td><td>Passos-MG</td><td>Viagem a Passos conforme relatório de viagem</td><td>1</td><td>R$ 225,00</td><td></td></tr>
                                             <tr class="tabela-total">
                                                 <td colspan="7">TOTAL LISTADO - JANEIRO</td>
                                                 <td colspan="2">R$ 3.497,50</td>
@@ -395,160 +284,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="linha-dado">
-                                                <td>1</td>
-                                                <td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td>
-                                                <td>VEREADOR</td>
-                                                <td>04/02/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Encontro com Deputado Estadual Marcos Joseraldo Lemos (Marquinho Lemos) para tratar assuntos de ineteresse público</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>2</td>
-                                                <td>KEYLA MARIA PAIM</td>
-                                                <td>VEREADOR</td>
-                                                <td>09/02/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Reunião com Deputado Marcelo Álvaro e Deputada Amanda Teixeira para tratar de assuntos de interesse público</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>3</td>
-                                                <td>MARA GOMES FREIRE</td>
-                                                <td>PRESIDENTE</td>
-                                                <td>09/02/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Reunião com Deputado Marcelo Álvaro e Deputada Amanda Teixeira para tratar de assuntos de interesse público</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>4</td>
-                                                <td>HUGO OLIVEIRA LEÃO</td>
-                                                <td>VEREADOR</td>
-                                                <td>09/02/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Reunião com Deputado Marcelo Álvaro e Deputada Amanda Teixeira para tratar de assuntos de interesse público</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>5</td>
-                                                <td>GERALDO FERREIRA PEDROSA JUNIOR</td>
-                                                <td>VEREADOR</td>
-                                                <td>09/02/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Encontro com Deputado Antônio Carlos Arantes para tratar de assuntos de interesse público</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>6</td>
-                                                <td>KEYLA MARIA PAIM</td>
-                                                <td>VEREADOR</td>
-                                                <td>26/02/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Reunião no DER-MG para tratar de assuntos de interesse público</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>7</td>
-                                                <td>MARA GOMES FREIRE</td>
-                                                <td>PRESIDENTE</td>
-                                                <td>26/02/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Reunião no DER-MG para tratar de assuntos de interesse público</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>8</td>
-                                                <td>HUGO OLIVEIRA LEÃO</td>
-                                                <td>VEREADOR</td>
-                                                <td>26/02/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Reunião no DER-MG para tratar de assuntos de interesse público</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>9</td>
-                                                <td>ANTONIO JOSE DE MORAIS FILHO</td>
-                                                <td>VEREADOR</td>
-                                                <td>26/02/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Reunião no DER-MG para tratar de assuntos de interesse público</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>10</td>
-                                                <td>HIGOR ALVES BORGES</td>
-                                                <td>SERVIDOR</td>
-                                                <td>26/02/2026 a 27/02/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Realização de curso de capacitação relacionado ao cargo que ocupa</td>
-                                                <td>1,75</td>
-                                                <td>R$ 1.277,50</td>
-                                                <td>REEMBOLSO JUSTIFICADO</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>11</td>
-                                                <td>GERALDO FERREIRA PEDROSA JUNIOR</td>
-                                                <td>VEREADOR</td>
-                                                <td>27/02/2026</td>
-                                                <td>Passos-MG</td>
-                                                <td>Viagem a cidade de passos para participação da 2ª remessa de sementes de feijão com o deputado Emidinho Madeira</td>
-                                                <td>1</td>
-                                                <td>R$ 225,00</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>12</td>
-                                                <td>HUMBERTO SOARES BUENO</td>
-                                                <td>VEREADOR</td>
-                                                <td>27/02/2026</td>
-                                                <td>Passos-MG</td>
-                                                <td>Viagem a cidade de passos para participação da 2ª remessa de sementes de feijão com o deputado Emidinho Madeira</td>
-                                                <td>1</td>
-                                                <td>R$ 225,00</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>13</td>
-                                                <td>REINALDO DE SOUZA LOPES</td>
-                                                <td>VEREADOR</td>
-                                                <td>27/02/2026</td>
-                                                <td>Passos-MG</td>
-                                                <td>Viagem a cidade de passos para participação da 2ª remessa de sementes de feijão com o deputado Emidinho Madeira</td>
-                                                <td>1</td>
-                                                <td>R$ 225,00</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>14</td>
-                                                <td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td>
-                                                <td>VEREADOR</td>
-                                                <td>27/02/2026</td>
-                                                <td>Passos-MG</td>
-                                                <td>Viagem a cidade de passos para participação da 2ª remessa de sementes de feijão com o deputado Emidinho Madeira</td>
-                                                <td>1</td>
-                                                <td>R$ 225,00</td>
-                                                <td></td>
-                                            </tr>
+                                            <tr class="linha-dado"><td>1</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>04/02/2026</td><td>Belo Horizonte-MG</td><td>Encontro com Deputado Estadual Marcos Joseraldo Lemos (Marquinho Lemos) para tratar assuntos de ineteresse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
+                                            <tr class="linha-dado"><td>2</td><td>KEYLA MARIA PAIM</td><td>VEREADOR</td><td>09/02/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Marcelo Álvaro e Deputada Amanda Teixeira para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
+                                            <tr class="linha-dado"><td>3</td><td>MARA GOMES FREIRE</td><td>PRESIDENTE</td><td>09/02/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Marcelo Álvaro e Deputada Amanda Teixeira para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
+                                            <tr class="linha-dado"><td>4</td><td>HUGO OLIVEIRA LEÃO</td><td>VEREADOR</td><td>09/02/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Marcelo Álvaro e Deputada Amanda Teixeira para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
+                                            <tr class="linha-dado"><td>5</td><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>VEREADOR</td><td>09/02/2026</td><td>Belo Horizonte-MG</td><td>Encontro com Deputado Antônio Carlos Arantes para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
+                                            <tr class="linha-dado"><td>6</td><td>KEYLA MARIA PAIM</td><td>VEREADOR</td><td>26/02/2026</td><td>Belo Horizonte-MG</td><td>Reunião no DER-MG para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
+                                            <tr class="linha-dado"><td>7</td><td>MARA GOMES FREIRE</td><td>PRESIDENTE</td><td>26/02/2026</td><td>Belo Horizonte-MG</td><td>Reunião no DER-MG para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
+                                            <tr class="linha-dado"><td>8</td><td>HUGO OLIVEIRA LEÃO</td><td>VEREADOR</td><td>26/02/2026</td><td>Belo Horizonte-MG</td><td>Reunião no DER-MG para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
+                                            <tr class="linha-dado"><td>9</td><td>ANTONIO JOSE DE MORAIS FILHO</td><td>VEREADOR</td><td>26/02/2026</td><td>Belo Horizonte-MG</td><td>Reunião no DER-MG para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td></td></tr>
+                                            <tr class="linha-dado"><td>10</td><td>HIGOR ALVES BORGES</td><td>SERVIDOR</td><td>26/02/2026 a 27/02/2026</td><td>Belo Horizonte-MG</td><td>Realização de curso de capacitação relacionado ao cargo que ocupa</td><td>1,75</td><td>R$ 1.277,50</td><td>REEMBOLSO JUSTIFICADO</td></tr>
+                                            <tr class="linha-dado"><td>11</td><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>VEREADOR</td><td>27/02/2026</td><td>Passos-MG</td><td>Viagem a cidade de passos para participação da 2ª remessa de sementes de feijão com o deputado Emidinho Madeira</td><td>1</td><td>R$ 225,00</td><td></td></tr>
+                                            <tr class="linha-dado"><td>12</td><td>HUMBERTO SOARES BUENO</td><td>VEREADOR</td><td>27/02/2026</td><td>Passos-MG</td><td>Viagem a cidade de passos para participação da 2ª remessa de sementes de feijão com o deputado Emidinho Madeira</td><td>1</td><td>R$ 225,00</td><td></td></tr>
+                                            <tr class="linha-dado"><td>13</td><td>REINALDO DE SOUZA LOPES</td><td>VEREADOR</td><td>27/02/2026</td><td>Passos-MG</td><td>Viagem a cidade de passos para participação da 2ª remessa de sementes de feijão com o deputado Emidinho Madeira</td><td>1</td><td>R$ 225,00</td><td></td></tr>
+                                            <tr class="linha-dado"><td>14</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>27/02/2026</td><td>Passos-MG</td><td>Viagem a cidade de passos para participação da 2ª remessa de sementes de feijão com o deputado Emidinho Madeira</td><td>1</td><td>R$ 225,00</td><td></td></tr>
                                             <tr class="tabela-total">
                                                 <td colspan="7">TOTAL LISTADO - FEVEREIRO</td>
                                                 <td colspan="2">R$ 7.105,00</td>
@@ -581,204 +330,24 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="linha-dado">
-                                                <td>1</td>
-                                                <td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td>
-                                                <td>VEREADOR</td>
-                                                <td>03/03/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Reunião com Deputado Marquinho Lemos para tratar de assuntos de interesse público</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td>RES 09</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>2</td>
-                                                <td>REINALDO DE SOUZA LOPES</td>
-                                                <td>VEREADOR</td>
-                                                <td>03/03/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Reunião com Deputado Marquinho Lemos para tratar de assuntos de interesse público</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td>RES 09</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>3</td>
-                                                <td>GERALDO FERREIRA PEDROSA JUNIOR</td>
-                                                <td>VEREADOR</td>
-                                                <td>03/03/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Reunião com Deputado Marquinho Lemos para tratar de assuntos de interesse público</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td>RES 09, REEMBOLSO JUSTIFICADO</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>4</td>
-                                                <td>HUMBERTO SOARES BUENO</td>
-                                                <td>VEREADOR</td>
-                                                <td>03/03/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Reunião com Deputado Marquinho Lemos para tratar de assuntos de interesse público</td>
-                                                <td>1</td>
-                                                <td>R$ 547,50</td>
-                                                <td>RES 09</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>5</td>
-                                                <td>MARA GOMES FREIRE</td>
-                                                <td>PRESIDENTE</td>
-                                                <td>09/03/2026 a 12/03/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Participação no Evento Mulheres que Governam e Evento 1º Marcha dos Vereadores de Minas Gerais</td>
-                                                <td>3,75</td>
-                                                <td>R$ 2.737,50</td>
-                                                <td>RES 09</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>6</td>
-                                                <td>KEYLA MARIA PAIM</td>
-                                                <td>VEREADOR</td>
-                                                <td>09/03/2026 a 12/03/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Participação no Evento Mulheres que Governam e Evento 1º Marcha dos Vereadores de Minas Gerais</td>
-                                                <td>3,75</td>
-                                                <td>R$ 2.737,50</td>
-                                                <td>RES 09</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>7</td>
-                                                <td>HUGO OLIVEIRA LEÃO</td>
-                                                <td>VEREADOR</td>
-                                                <td>09/03/2026 a 12/03/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Participação no Evento Mulheres que Governam e Evento 1º Marcha dos Vereadores de Minas Gerais</td>
-                                                <td>3,75</td>
-                                                <td>R$ 2.737,50</td>
-                                                <td>RES 09</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>8</td>
-                                                <td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td>
-                                                <td>VEREADOR</td>
-                                                <td>12/03/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Reunião com Deputado Miguel Ângelo e Presidente do TCE-MG Durval Angelo para tratar de assuntos de interesse público</td>
-                                                <td>1</td>
-                                                <td>R$ 700,00</td>
-                                                <td>RES 11-26</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>9</td>
-                                                <td>GERALDO FERREIRA PEDROSA JUNIOR</td>
-                                                <td>VEREADOR</td>
-                                                <td>12/03/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Reunião com Deputado Miguel Ângelo e Presidente do TCE-MG Durval Angelo para tratar de assuntos de interesse público</td>
-                                                <td>1</td>
-                                                <td>R$ 700,00</td>
-                                                <td>RES 11-26</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>10</td>
-                                                <td>REINALDO DE SOUZA LOPES</td>
-                                                <td>VEREADOR</td>
-                                                <td>12/03/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Reunião com Deputado Miguel Ângelo e Presidente do TCE-MG Durval Angelo para tratar de assuntos de interesse público</td>
-                                                <td>1</td>
-                                                <td>R$ 700,00</td>
-                                                <td>RES 11-26</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>11</td>
-                                                <td>REINALDO DE SOUZA LOPES</td>
-                                                <td>VEREADOR</td>
-                                                <td>17/03/2026 a 19/03/2026</td>
-                                                <td>Lavras-MG</td>
-                                                <td>Participação no 1º Encontro Estadual de Prefeitos, Vereadores e Gestores Públicos</td>
-                                                <td>3</td>
-                                                <td>R$ 2.100,00</td>
-                                                <td>RES 11-26</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>12</td>
-                                                <td>GERALDO FERREIRA PEDROSA JUNIOR</td>
-                                                <td>VEREADOR</td>
-                                                <td>17/03/2026 a 19/03/2026</td>
-                                                <td>Lavras-MG</td>
-                                                <td>Participação no 1º Encontro Estadual de Prefeitos, Vereadores e Gestores Públicos</td>
-                                                <td>3</td>
-                                                <td>R$ 2.100,00</td>
-                                                <td>RES 11-26</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>13</td>
-                                                <td>ANTONIO JOSE DE MORAIS FILHO</td>
-                                                <td>VEREADOR</td>
-                                                <td>21/03/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Participação no Evento de filiação do Deputado Zé Silva</td>
-                                                <td>1</td>
-                                                <td>R$ 700,00</td>
-                                                <td>RES 11-26</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>14</td>
-                                                <td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td>
-                                                <td>VEREADOR</td>
-                                                <td>27/03/2026</td>
-                                                <td>Nova Resende-MG</td>
-                                                <td>Participação no 5º Encontro Anual de Prestação de Contas do Mandato do Deputado Federal Emidinho Madeira</td>
-                                                <td>1</td>
-                                                <td>R$ 700,00</td>
-                                                <td>RES 11-26</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>15</td>
-                                                <td>REINALDO DE SOUZA LOPES</td>
-                                                <td>VEREADOR</td>
-                                                <td>27/03/2026</td>
-                                                <td>Nova Resende-MG</td>
-                                                <td>Participação no 5º Encontro Anual de Prestação de Contas do Mandato do Deputado Federal Emidinho Madeira</td>
-                                                <td>1</td>
-                                                <td>R$ 700,00</td>
-                                                <td>RES 11-26</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>16</td>
-                                                <td>GERALDO FERREIRA PEDROSA JUNIOR</td>
-                                                <td>VEREADOR</td>
-                                                <td>27/03/2026</td>
-                                                <td>Nova Resende-MG</td>
-                                                <td>Participação no 5º Encontro Anual de Prestação de Contas do Mandato do Deputado Federal Emidinho Madeira</td>
-                                                <td>1</td>
-                                                <td>R$ 700,00</td>
-                                                <td>RES 11-26</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>17</td>
-                                                <td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td>
-                                                <td>VEREADOR</td>
-                                                <td>30/03/2026 a 31/03/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Reunião com o Deputado Miguel Ângelo e com o Deputado Marquinho Lemos</td>
-                                                <td>2</td>
-                                                <td>R$ 1.400,00</td>
-                                                <td>RES 11-26</td>
-                                            </tr>
-                                            <tr class="linha-dado">
-                                                <td>18</td>
-                                                <td>HIGOR ALVES BORGES</td>
-                                                <td>SERVIDOR</td>
-                                                <td>30/03/2026 a 31/03/2026</td>
-                                                <td>Belo Horizonte-MG</td>
-                                                <td>Participação do 2º Encontro Nacional de Inteligência Artificial dos Tribunais de Contas</td>
-                                                <td>2</td>
-                                                <td>R$ 1.400,00</td>
-                                                <td>RES 11-26</td>
-                                            </tr>
+                                            <tr class="linha-dado"><td>1</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>03/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Marquinho Lemos para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td>RES 09</td></tr>
+                                            <tr class="linha-dado"><td>2</td><td>REINALDO DE SOUZA LOPES</td><td>VEREADOR</td><td>03/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Marquinho Lemos para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td>RES 09</td></tr>
+                                            <tr class="linha-dado"><td>3</td><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>VEREADOR</td><td>03/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Marquinho Lemos para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td>RES 09, REEMBOLSO JUSTIFICADO</td></tr>
+                                            <tr class="linha-dado"><td>4</td><td>HUMBERTO SOARES BUENO</td><td>VEREADOR</td><td>03/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Marquinho Lemos para tratar de assuntos de interesse público</td><td>1</td><td>R$ 547,50</td><td>RES 09</td></tr>
+                                            <tr class="linha-dado"><td>5</td><td>MARA GOMES FREIRE</td><td>PRESIDENTE</td><td>09/03/2026 a 12/03/2026</td><td>Belo Horizonte-MG</td><td>Participação no Evento Mulheres que Governam e Evento 1º Marcha dos Vereadores de Minas Gerais</td><td>3,75</td><td>R$ 2.737,50</td><td>RES 09</td></tr>
+                                            <tr class="linha-dado"><td>6</td><td>KEYLA MARIA PAIM</td><td>VEREADOR</td><td>09/03/2026 a 12/03/2026</td><td>Belo Horizonte-MG</td><td>Participação no Evento Mulheres que Governam e Evento 1º Marcha dos Vereadores de Minas Gerais</td><td>3,75</td><td>R$ 2.737,50</td><td>RES 09</td></tr>
+                                            <tr class="linha-dado"><td>7</td><td>HUGO OLIVEIRA LEÃO</td><td>VEREADOR</td><td>09/03/2026 a 12/03/2026</td><td>Belo Horizonte-MG</td><td>Participação no Evento Mulheres que Governam e Evento 1º Marcha dos Vereadores de Minas Gerais</td><td>3,75</td><td>R$ 2.737,50</td><td>RES 09</td></tr>
+                                            <tr class="linha-dado"><td>8</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>12/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Miguel Ângelo e Presidente do TCE-MG Durval Angelo para tratar de assuntos de interesse público</td><td>1</td><td>R$ 700,00</td><td>RES 11-26</td></tr>
+                                            <tr class="linha-dado"><td>9</td><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>VEREADOR</td><td>12/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Miguel Ângelo e Presidente do TCE-MG Durval Angelo para tratar de assuntos de interesse público</td><td>1</td><td>R$ 700,00</td><td>RES 11-26</td></tr>
+                                            <tr class="linha-dado"><td>10</td><td>REINALDO DE SOUZA LOPES</td><td>VEREADOR</td><td>12/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com Deputado Miguel Ângelo e Presidente do TCE-MG Durval Angelo para tratar de assuntos de interesse público</td><td>1</td><td>R$ 700,00</td><td>RES 11-26</td></tr>
+                                            <tr class="linha-dado"><td>11</td><td>REINALDO DE SOUZA LOPES</td><td>VEREADOR</td><td>17/03/2026 a 19/03/2026</td><td>Lavras-MG</td><td>Participação no 1º Encontro Estadual de Prefeitos, Vereadores e Gestores Públicos</td><td>3</td><td>R$ 2.100,00</td><td>RES 11-26</td></tr>
+                                            <tr class="linha-dado"><td>12</td><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>VEREADOR</td><td>17/03/2026 a 19/03/2026</td><td>Lavras-MG</td><td>Participação no 1º Encontro Estadual de Prefeitos, Vereadores e Gestores Públicos</td><td>3</td><td>R$ 2.100,00</td><td>RES 11-26</td></tr>
+                                            <tr class="linha-dado"><td>13</td><td>ANTONIO JOSE DE MORAIS FILHO</td><td>VEREADOR</td><td>21/03/2026</td><td>Belo Horizonte-MG</td><td>Participação no Evento de filiação do Deputado Zé Silva</td><td>1</td><td>R$ 700,00</td><td>RES 11-26</td></tr>
+                                            <tr class="linha-dado"><td>14</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>27/03/2026</td><td>Nova Resende-MG</td><td>Participação no 5º Encontro Anual de Prestação de Contas do Mandato do Deputado Federal Emidinho Madeira</td><td>1</td><td>R$ 700,00</td><td>RES 11-26</td></tr>
+                                            <tr class="linha-dado"><td>15</td><td>REINALDO DE SOUZA LOPES</td><td>VEREADOR</td><td>27/03/2026</td><td>Nova Resende-MG</td><td>Participação no 5º Encontro Anual de Prestação de Contas do Mandato do Deputado Federal Emidinho Madeira</td><td>1</td><td>R$ 700,00</td><td>RES 11-26</td></tr>
+                                            <tr class="linha-dado"><td>16</td><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>VEREADOR</td><td>27/03/2026</td><td>Nova Resende-MG</td><td>Participação no 5º Encontro Anual de Prestação de Contas do Mandato do Deputado Federal Emidinho Madeira</td><td>1</td><td>R$ 700,00</td><td>RES 11-26</td></tr>
+                                            <tr class="linha-dado"><td>17</td><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>VEREADOR</td><td>30/03/2026 a 31/03/2026</td><td>Belo Horizonte-MG</td><td>Reunião com o Deputado Miguel Ângelo e com o Deputado Marquinho Lemos</td><td>2</td><td>R$ 1.400,00</td><td>RES 11-26</td></tr>
+                                            <tr class="linha-dado"><td>18</td><td>HIGOR ALVES BORGES</td><td>SERVIDOR</td><td>30/03/2026 a 31/03/2026</td><td>Belo Horizonte-MG</td><td>Participação do 2º Encontro Nacional de Inteligência Artificial dos Tribunais de Contas</td><td>2</td><td>R$ 1.400,00</td><td>RES 11-26</td></tr>
                                             <tr class="tabela-total">
                                                 <td colspan="7">TOTAL LISTADO - MARÇO</td>
                                                 <td colspan="2">R$ 22.302,50</td>
@@ -801,7 +370,7 @@
                         <details>
                             <summary class="subtopico-titulo">
                                 <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Resumo Anual (2025)
+                                Março
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -840,7 +409,35 @@
                                             <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>17/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Deputado Federal Marcelo Alvaro Antonio</td><td>1</td><td>R$ 700,00</td></tr>
                                             <tr class="linha-dado"><td>ANTONIO JOSE DE MORAIS FILHO</td><td>21/03/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao Deputado Federal Marcelo Alvaro Antonio</td><td>1</td><td>R$ 700,00</td></tr>
                                             <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>31/03/2025</td><td>Belo Horizonte-MG</td><td>Tratar de assuntos de interesse do município junto ao Dep. Marcelo Alvaro Antonio</td><td>1</td><td>R$ 700,00</td></tr>
-                                            
+                                            <tr class="tabela-total">
+                                                <td colspan="5">TOTAL LISTADO - MARÇO</td>
+                                                <td>R$ 16.100,00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </details>
+
+                        <details>
+                            <summary class="subtopico-titulo">
+                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                Abril
+                            </summary>
+                            <div class="subtopico-conteudo">
+                                <div class="table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nome Beneficiário</th>
+                                                <th>Período / Referência</th>
+                                                <th>Destino</th>
+                                                <th class="col-justificativa">Justificativa Afastamento</th>
+                                                <th>Qtd Diárias</th>
+                                                <th>Valor Recebido</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>03/04/2025</td><td>Lavras-MG</td><td>Participar do 1º encontro de prefeitos, vereadores e secretários (UNIVES)</td><td>1</td><td>R$ 700,00</td></tr>
                                             <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>03/04/2025</td><td>Lavras-MG</td><td>Participar do 1º encontro de prefeitos, vereadores e secretários (UNIVES)</td><td>1</td><td>R$ 700,00</td></tr>
                                             <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>03/04/2025</td><td>Nova Resende-MG</td><td>Reunião junto à diretoria da CEMIG para tratar de assuntos de interesse do município</td><td>1</td><td>R$ 700,00</td></tr>
@@ -849,7 +446,35 @@
                                             <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>16/04/2025</td><td>Belo Horizonte-MG</td><td>Participação no I Encontro Estadual de Gestoras</td><td>1</td><td>R$ 700,00</td></tr>
                                             <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>16/04/2025</td><td>Belo Horizonte-MG</td><td>Participação no I Encontro Estadual de Gestoras</td><td>1</td><td>R$ 700,00</td></tr>
                                             <tr class="linha-dado"><td>ANTONIO JOSE DE MORAIS FILHO</td><td>16/04/2025</td><td>Belo Horizonte-MG</td><td>Reunião com o deputado estadual Wendel Mesquita</td><td>1</td><td>R$ 700,00</td></tr>
-                                            
+                                            <tr class="tabela-total">
+                                                <td colspan="5">TOTAL LISTADO - ABRIL</td>
+                                                <td>R$ 5.600,00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </details>
+
+                        <details>
+                            <summary class="subtopico-titulo">
+                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                Maio
+                            </summary>
+                            <div class="subtopico-conteudo">
+                                <div class="table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nome Beneficiário</th>
+                                                <th>Período / Referência</th>
+                                                <th>Destino</th>
+                                                <th class="col-justificativa">Justificativa Afastamento</th>
+                                                <th>Qtd Diárias</th>
+                                                <th>Valor Recebido</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>16/05/2025</td><td>Passos-MG</td><td>Levar o veículo placa TCO-8I28 da câmara municipal para realizar revisão</td><td>1</td><td>R$ 300,00</td></tr>
                                             <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>19/05/2025</td><td>Brasília-DF</td><td>Participar da XXVI Marcha em Defesa dos Municípios</td><td>5</td><td>R$ 6.000,00</td></tr>
                                             <tr class="linha-dado"><td>ANTONIO VICTOR DA SILVA</td><td>19/05/2025</td><td>Brasília-DF</td><td>Participar da XXVI Marcha em Defesa dos Municípios</td><td>5</td><td>R$ 6.000,00</td></tr>
@@ -857,7 +482,35 @@
                                             <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>20/05/2025</td><td>Brasília-DF</td><td>Participar da XXVI Marcha em Defesa dos Municípios</td><td>5</td><td>R$ 6.000,00</td></tr>
                                             <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>19/05/2025</td><td>Brasília-DF</td><td>Participar da XXVI Marcha em Defesa dos Municípios</td><td>5</td><td>R$ 6.000,00</td></tr>
                                             <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>19/05/2025</td><td>Brasília-DF</td><td>Participar da XXVI Marcha em Defesa dos Municípios</td><td>5</td><td>R$ 6.000,00</td></tr>
+                                            <tr class="tabela-total">
+                                                <td colspan="5">TOTAL LISTADO - MAIO</td>
+                                                <td>R$ 36.300,00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </details>
 
+                        <details>
+                            <summary class="subtopico-titulo">
+                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                Junho
+                            </summary>
+                            <div class="subtopico-conteudo">
+                                <div class="table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nome Beneficiário</th>
+                                                <th>Período / Referência</th>
+                                                <th>Destino</th>
+                                                <th class="col-justificativa">Justificativa Afastamento</th>
+                                                <th>Qtd Diárias</th>
+                                                <th>Valor Recebido</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>03/06/2025</td><td>Belo Horizonte-MG</td><td>Seminário de Combate à Desinformação</td><td>2</td><td>R$ 1.400,00</td></tr>
                                             <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>23/06/2025</td><td>Divinópolis-MG</td><td>Encontro com o deputado estadual Wendel Mesquita</td><td>1</td><td>R$ 700,00</td></tr>
                                             <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>23/06/2025</td><td>Divinópolis-MG</td><td>Encontro com o deputado estadual Wendel Mesquita</td><td>1</td><td>R$ 700,00</td></tr>
@@ -872,13 +525,69 @@
                                             <tr class="linha-dado"><td>HUGO OLIVEIRA LEÃO</td><td>30/06/2025</td><td>Belo Horizonte-MG</td><td>Participar do grande encontro do PL de Minas Gerais</td><td>1</td><td>R$ 700,00</td></tr>
                                             <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>30/06/2025</td><td>Belo Horizonte-MG</td><td>Participar do grande encontro do PL de Minas Gerais</td><td>1</td><td>R$ 700,00</td></tr>
                                             <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>30/06/2025</td><td>Belo Horizonte-MG</td><td>Participar do grande encontro do PL de Minas Gerais</td><td>1</td><td>R$ 700,00</td></tr>
+                                            <tr class="tabela-total">
+                                                <td colspan="5">TOTAL LISTADO - JUNHO</td>
+                                                <td>R$ 8.900,00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </details>
 
+                        <details>
+                            <summary class="subtopico-titulo">
+                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                Agosto
+                            </summary>
+                            <div class="subtopico-conteudo">
+                                <div class="table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nome Beneficiário</th>
+                                                <th>Período / Referência</th>
+                                                <th>Destino</th>
+                                                <th class="col-justificativa">Justificativa Afastamento</th>
+                                                <th>Qtd Diárias</th>
+                                                <th>Valor Recebido</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>11/08/2025</td><td>Passos-MG</td><td>Reunião junto com o diretor geral do DER e secretário de governo na sede da AMEG</td><td>1</td><td>R$ 300,00</td></tr>
                                             <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>14/08/2025</td><td>Nova Resende-MG</td><td>Encontro técnico sobre os programas Cuidar e Cirurgias Eletivas</td><td>1</td><td>R$ 700,00</td></tr>
                                             <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>14/08/2025</td><td>Nova Resende-MG</td><td>Encontro técnico sobre os programas Cuidar e Cirurgias Eletivas</td><td>1</td><td>R$ 700,00</td></tr>
                                             <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>14/08/2025</td><td>Nova Resende-MG</td><td>Encontro técnico sobre os programas Cuidar e Cirurgias Eletivas</td><td>1</td><td>R$ 700,00</td></tr>
                                             <tr class="linha-dado"><td>ANTONIO VICTOR DA SILVA</td><td>14/08/2025</td><td>Nova Resende-MG</td><td>Encontro técnico sobre os programas Cuidar e Cirurgias Eletivas</td><td>1</td><td>R$ 700,00</td></tr>
+                                            <tr class="tabela-total">
+                                                <td colspan="5">TOTAL LISTADO - AGOSTO</td>
+                                                <td>R$ 3.100,00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </details>
 
+                        <details>
+                            <summary class="subtopico-titulo">
+                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                Setembro
+                            </summary>
+                            <div class="subtopico-conteudo">
+                                <div class="table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nome Beneficiário</th>
+                                                <th>Período / Referência</th>
+                                                <th>Destino</th>
+                                                <th class="col-justificativa">Justificativa Afastamento</th>
+                                                <th>Qtd Diárias</th>
+                                                <th>Valor Recebido</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             <tr class="linha-dado"><td>HUMBERTO SOARES BUENO</td><td>03/09/2025</td><td>Divinópolis-MG</td><td>Caravana AMM "Ouvir os municípios para propor soluções"</td><td>1</td><td>R$ 680,00</td></tr>
                                             <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>03/09/2025</td><td>Divinópolis-MG</td><td>Caravana AMM "Ouvir os municípios para propor soluções"</td><td>2</td><td>R$ 1.360,00</td></tr>
                                             <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>03/09/2025</td><td>Divinópolis-MG</td><td>Caravana AMM "Ouvir os municípios para propor soluções"</td><td>2</td><td>R$ 1.360,00</td></tr>
@@ -891,14 +600,70 @@
                                             <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>11/09/2025</td><td>Alterosa-MG</td><td>Evento junto ao deputado Emidinho Madeira (Programa Mais Genética)</td><td>1</td><td>R$ 680,00</td></tr>
                                             <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>11/09/2025</td><td>Alterosa-MG</td><td>Evento junto ao deputado Emidinho Madeira (Programa Mais Genética)</td><td>1</td><td>R$ 680,00</td></tr>
                                             <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>11/09/2025</td><td>Alterosa-MG</td><td>Evento junto ao deputado Emidinho Madeira (Programa Mais Genética)</td><td>1</td><td>R$ 680,00</td></tr>
+                                            <tr class="tabela-total">
+                                                <td colspan="5">TOTAL LISTADO - SETEMBRO</td>
+                                                <td>R$ 12.920,00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </details>
 
+                        <details>
+                            <summary class="subtopico-titulo">
+                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                Outubro
+                            </summary>
+                            <div class="subtopico-conteudo">
+                                <div class="table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nome Beneficiário</th>
+                                                <th>Período / Referência</th>
+                                                <th>Destino</th>
+                                                <th class="col-justificativa">Justificativa Afastamento</th>
+                                                <th>Qtd Diárias</th>
+                                                <th>Valor Recebido</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>15/10/2025</td><td>Belo Horizonte-MG</td><td>Curso de capacitação sobre LGPD</td><td>1</td><td>R$ 547,50</td></tr>
                                             <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>15/10/2025</td><td>Belo Horizonte-MG</td><td>Curso de capacitação sobre LGPD</td><td>1</td><td>R$ 547,50</td></tr>
                                             <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>31/10/2025</td><td>Belo Horizonte-MG</td><td>Evento "O impacto da reforma política nas eleições 2026/2028"</td><td>1</td><td>R$ 547,50</td></tr>
                                             <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>31/10/2025</td><td>Belo Horizonte-MG</td><td>Evento "O impacto da reforma política nas eleições 2026/2028"</td><td>1</td><td>R$ 547,50</td></tr>
                                             <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>31/10/2025</td><td>Passos-MG</td><td>Encontro com o Prefeito e Dep. Federal Emidinho Madeira</td><td>1</td><td>R$ 337,50</td></tr>
                                             <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>31/10/2025</td><td>Passos-MG</td><td>Encontro com o Prefeito e Dep. Federal Emidinho Madeira</td><td>1</td><td>R$ 337,50</td></tr>
+                                            <tr class="tabela-total">
+                                                <td colspan="5">TOTAL LISTADO - OUTUBRO</td>
+                                                <td>R$ 2.865,00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </details>
 
+                        <details>
+                            <summary class="subtopico-titulo">
+                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                Novembro
+                            </summary>
+                            <div class="subtopico-conteudo">
+                                <div class="table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nome Beneficiário</th>
+                                                <th>Período / Referência</th>
+                                                <th>Destino</th>
+                                                <th class="col-justificativa">Justificativa Afastamento</th>
+                                                <th>Qtd Diárias</th>
+                                                <th>Valor Recebido</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             <tr class="linha-dado"><td>RODRIGO CESAR DOS SANTOS OLIVEIRA</td><td>04/11/2025</td><td>Belo Horizonte-MG</td><td>Encontro com o deputado Marquinho Durval</td><td>1</td><td>R$ 547,50</td></tr>
                                             <tr class="linha-dado"><td>HUMBERTO SOARES BUENO</td><td>04/11/2025</td><td>Belo Horizonte-MG</td><td>Encontro com o deputado Marquinho Durval</td><td>1</td><td>R$ 547,50</td></tr>
                                             <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>04/11/2025</td><td>Belo Horizonte-MG</td><td>Encontro com o deputado Marquinho Durval</td><td>1</td><td>R$ 547,50</td></tr>
@@ -919,16 +684,43 @@
                                             <tr class="linha-dado"><td>GERALDO FERREIRA PEDROSA JUNIOR</td><td>24/11/2025</td><td>Nova Resende-MG</td><td>Discutir assuntos sobre o Circuito Mineiro de Rodeio</td><td>1</td><td>R$ 510,00</td></tr>
                                             <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>24/11/2025</td><td>Nova Resende-MG</td><td>Discutir assuntos sobre o Circuito Mineiro de Rodeio</td><td>1</td><td>R$ 510,00</td></tr>
                                             <tr class="linha-dado"><td>ANTONIO JOSE DE MORAIS FILHO</td><td>27/11/2025</td><td>Uberaba-MG</td><td>Reunião junto ao deputado federal Zé Silva</td><td>1</td><td>R$ 510,00</td></tr>
+                                            <tr class="tabela-total">
+                                                <td colspan="5">TOTAL LISTADO - NOVEMBRO</td>
+                                                <td>R$ 10.695,00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </details>
 
+                        <details>
+                            <summary class="subtopico-titulo">
+                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                Dezembro
+                            </summary>
+                            <div class="subtopico-conteudo">
+                                <div class="table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nome Beneficiário</th>
+                                                <th>Período / Referência</th>
+                                                <th>Destino</th>
+                                                <th class="col-justificativa">Justificativa Afastamento</th>
+                                                <th>Qtd Diárias</th>
+                                                <th>Valor Recebido</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             <tr class="linha-dado"><td>HUMBERTO SOARES BUENO</td><td>04/12/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao deputado Marquinho Lemos</td><td>1</td><td>R$ 547,50</td></tr>
                                             <tr class="linha-dado"><td>HUMBERTO SOARES BUENO</td><td>09/12/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao deputado federal Miguel Angelo</td><td>1</td><td>R$ 547,50</td></tr>
                                             <tr class="linha-dado"><td>REINALDO DE SOUZA LOPES</td><td>09/12/2025</td><td>Belo Horizonte-MG</td><td>Reunião junto ao deputado federal Miguel Angelo</td><td>1</td><td>R$ 547,50</td></tr>
                                             <tr class="linha-dado"><td>KEYLA MARIA PAIM</td><td>09/12/2025</td><td>Passos-MG</td><td>Treinamento SEDESE sobre elaboração de projetos de lei</td><td>1</td><td>R$ 225,00</td></tr>
                                             <tr class="linha-dado"><td>MARA GOMES FREIRE</td><td>09/12/2025</td><td>Passos-MG</td><td>Treinamento SEDESE sobre elaboração de projetos de lei</td><td>1</td><td>R$ 225,00</td></tr>
-
                                             <tr class="tabela-total">
-                                                <td colspan="5">TOTAL GERAL - 2025</td>
-                                                <td>R$ 98.447,50</td>
+                                                <td colspan="5">TOTAL LISTADO - DEZEMBRO</td>
+                                                <td>R$ 2.092,50</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -944,10 +736,11 @@
                         2023
                     </summary>
                     <div class="topico-conteudo">
+                        
                         <details>
                             <summary class="subtopico-titulo">
                                 <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                Resumo Anual (2023)
+                                Janeiro
                             </summary>
                             <div class="subtopico-conteudo">
                                 <div class="table-responsive">
@@ -971,6 +764,35 @@
                                                 <td>1</td>
                                                 <td>R$ 207,85</td>
                                             </tr>
+                                            <tr class="tabela-total">
+                                                <td colspan="5">TOTAL LISTADO - JANEIRO</td>
+                                                <td>R$ 207,85</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </details>
+
+                        <details>
+                            <summary class="subtopico-titulo">
+                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                Fevereiro
+                            </summary>
+                            <div class="subtopico-conteudo">
+                                <div class="table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nome Beneficiário</th>
+                                                <th>Período de Afastamento</th>
+                                                <th>Destino</th>
+                                                <th class="col-justificativa">Justificativa Afastamento</th>
+                                                <th>Qtd Diárias</th>
+                                                <th>Valor Recebido</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             <tr class="linha-dado">
                                                 <td>ALESSANDRO MOREIRA SIMOES</td>
                                                 <td>17/02/2023</td>
@@ -987,6 +809,35 @@
                                                 <td>1</td>
                                                 <td>R$ 69,70</td>
                                             </tr>
+                                            <tr class="tabela-total">
+                                                <td colspan="5">TOTAL LISTADO - FEVEREIRO</td>
+                                                <td>R$ 113,85</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </details>
+
+                        <details>
+                            <summary class="subtopico-titulo">
+                                <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                Novembro
+                            </summary>
+                            <div class="subtopico-conteudo">
+                                <div class="table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nome Beneficiário</th>
+                                                <th>Período de Afastamento</th>
+                                                <th>Destino</th>
+                                                <th class="col-justificativa">Justificativa Afastamento</th>
+                                                <th>Qtd Diárias</th>
+                                                <th>Valor Recebido</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             <tr class="linha-dado">
                                                 <td>THAIS RAFAELA NAVEGA ANDRADE</td>
                                                 <td>10/11/2023</td>
@@ -996,8 +847,8 @@
                                                 <td>R$ 34,71</td>
                                             </tr>
                                             <tr class="tabela-total">
-                                                <td colspan="5">TOTAL GERAL - 2023</td>
-                                                <td>R$ 356,41</td>
+                                                <td colspan="5">TOTAL LISTADO - NOVEMBRO</td>
+                                                <td>R$ 34,71</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1044,8 +895,12 @@
             
             btnFiltrar.addEventListener('click', () => {
                 const nomeFiltro = document.getElementById('filtro-nome').value.toLowerCase().trim();
-                const mesFiltro = document.getElementById('filtro-mes').value;
-                const anoFiltro = document.getElementById('filtro-ano').value;
+                const dataInicioInput = document.getElementById('filtro-data-inicio').value; // Formato YYYY-MM-DD
+                const dataFimInput = document.getElementById('filtro-data-fim').value; // Formato YYYY-MM-DD
+
+                // Converte as datas do input para números (YYYYMMDD) para facilitar a comparação matemática
+                const dataInicioNum = dataInicioInput ? parseInt(dataInicioInput.replace(/-/g, '')) : 0;
+                const dataFimNum = dataFimInput ? parseInt(dataFimInput.replace(/-/g, '')) : 99999999;
 
                 const linhas = document.querySelectorAll('.linha-dado');
                 const totais = document.querySelectorAll('.tabela-total');
@@ -1057,20 +912,41 @@
                 let encontrouAlgo = false;
                 let somaTotal = 0;
 
-                let filtroAtivo = nomeFiltro !== '' || mesFiltro !== '' || anoFiltro !== '';
+                let filtroAtivo = nomeFiltro !== '' || dataInicioInput !== '' || dataFimInput !== '';
                 
                 // Esconde as linhas de total estáticas das tabelas originais
                 totais.forEach(t => t.style.display = filtroAtivo ? 'none' : '');
 
                 linhas.forEach(linha => {
                     const nomeTexto = linha.cells[0].textContent.toLowerCase() + linha.cells[1].textContent.toLowerCase();
-                    const dataTexto = linha.innerHTML;
+                    const textoLinha = linha.innerHTML;
 
                     let bateNome = nomeFiltro === '' || nomeTexto.includes(nomeFiltro);
-                    let bateMes = mesFiltro === '' || dataTexto.includes(`/${mesFiltro}/`);
-                    let bateAno = anoFiltro === '' || dataTexto.includes(`/${anoFiltro}`);
+                    
+                    // Extrai todas as datas no formato DD/MM/YYYY que estiverem na linha
+                    const regexData = /(\d{2})\/(\d{2})\/(\d{4})/g;
+                    let match;
+                    let dataDentroDoPeriodo = false;
+                    let possuiData = false;
 
-                    if (bateNome && bateMes && bateAno) {
+                    while ((match = regexData.exec(textoLinha)) !== null) {
+                        possuiData = true;
+                        const dia = match[1];
+                        const mes = match[2];
+                        const ano = match[3];
+                        const dataLinhaNum = parseInt(`${ano}${mes}${dia}`); // Converte para YYYYMMDD
+
+                        // Verifica se alguma data da linha está dentro do período selecionado
+                        if (dataLinhaNum >= dataInicioNum && dataLinhaNum <= dataFimNum) {
+                            dataDentroDoPeriodo = true;
+                            break; 
+                        }
+                    }
+
+                    // Se não tiver filtro de data, a condição é aprovada. Se tiver, depende se caiu no período.
+                    let bateData = (!dataInicioInput && !dataFimInput) || (possuiData && dataDentroDoPeriodo);
+
+                    if (bateNome && bateData) {
                         linha.style.display = '';
                         encontrouAlgo = true;
 
@@ -1118,8 +994,8 @@
 
             btnLimpar.addEventListener('click', () => {
                 document.getElementById('filtro-nome').value = '';
-                document.getElementById('filtro-mes').value = '';
-                document.getElementById('filtro-ano').value = '';
+                document.getElementById('filtro-data-inicio').value = '';
+                document.getElementById('filtro-data-fim').value = '';
                 btnFiltrar.click();
                 
                 // Fecha as abas ao limpar
