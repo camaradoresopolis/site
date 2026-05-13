@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viagens e Diárias | Câmara Municipal de Doresópolis</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
     <style>
         :root { --cor-fundo: #f2f2f2; --cor-primaria: #025d3b; --cor-primaria-hover: #01472c; --cor-primaria-bg: rgba(2, 93, 59, 0.08); --branco: #ffffff; --texto-escuro: #1f2937; --texto-medio: #4b5563; --texto-claro: #6b7280; --borda: #e5e7eb; --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); --alerta-amarelo-bg: #fff3cd; --alerta-amarelo-texto: #856404; --alerta-azul-bg: #d1ecf1; --alerta-azul-texto: #0c5460; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,7 +39,7 @@
         .resumo-label { font-size: 0.9rem; color: var(--texto-escuro); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .resumo-valor { font-size: 2.5rem; color: var(--cor-primaria); font-weight: 800; line-height: 1; }
         details { margin-bottom: 20px; }
-        summary { list-style: none; cursor: pointer; user-select: none; transition: var(--transicao); outline: none; }
+        summary { list-style: none; cursor: pointer; user-select: none; outline: none; }
         summary::-webkit-details-marker { display: none; }
         .icone-seta { width: 18px; height: 18px; fill: var(--cor-primaria); transition: transform 0.3s ease; }
         .topico-titulo { font-size: 1.2rem; color: var(--cor-primaria); font-weight: 600; display: flex; align-items: center; gap: 10px; padding: 8px 0; }
@@ -140,7 +138,6 @@
         </div>
 
         <div class="conteudo-box">
-            
             <div id="msg-vazio" class="msg-vazio">Nenhum registro encontrado para os filtros selecionados.</div>
 
             <div id="container-dados">
@@ -158,20 +155,17 @@
                         <ul>
                             <li>As informações refletem a realidade atual, pois foram atualizadas em tempo real através de busca em banco de dados.</li>
                             <li>Não há período inicial/final de busca, ou seja, foi pesquisado todo o histórico existente no banco de dados.</li>
+                            <li>Não há informações anteriores ou posteriores às que estão sendo exibidas na página atual quando não filtrado.</li>
                             <li>A regulamentação que trata sobre viagens e diárias é recente e, anteriormente, elas eram vedadas.</li>
                         </ul>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
     <script>
-        // ====================================================================
-        // LINK DA SUA PLANILHA GOOGLE JÁ INSERIDO AQUI:
         const URL_PLANILHA_GOOGLE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZFfD3-GCVUkHA7MwCWobcTDKcdsWK3-WHiZpLXurvYjNve-S4BMSDfyhZ6Vyk-3Vp8wKoWMeG94pu/pub?output=csv'; 
-        // ====================================================================
 
         document.addEventListener('DOMContentLoaded', () => {
             const dataAtual = new Date();
@@ -180,7 +174,6 @@
                 elemento.textContent = dataAtual.toLocaleDateString('pt-BR', opcoes);
             });
 
-            // Dispara o download dos dados na inicialização
             carregarDadosDaPlanilha();
 
             document.getElementById('btn-filtrar').addEventListener('click', executarFiltro);
@@ -208,7 +201,6 @@
             }
         }
 
-        // Função inteligente para ler o arquivo CSV gerado pelo Google
         function converterCSVParaMatriz(str) {
             const arr = [];
             let quote = false;
@@ -229,25 +221,18 @@
 
         function construirInterfaceHTML(linhas) {
             const container = document.getElementById('container-dados');
-            
-            // Remove a linha 1 (Cabeçalhos: Ano, Mês, Nome...)
-            linhas.shift();
+            linhas.shift(); // Remove cabeçalho
 
             const dadosAgrupados = {};
             linhas.forEach(linha => {
-                // Só processa linhas que tenham pelo menos a informação de Ano
                 if(linha.length < 2 || !linha[0] || linha[0].trim() === '') return;
-
                 const ano = linha[0].trim();
                 const mes = linha[1].trim();
-
                 if(!dadosAgrupados[ano]) dadosAgrupados[ano] = {};
                 if(!dadosAgrupados[ano][mes]) dadosAgrupados[ano][mes] = [];
-
                 dadosAgrupados[ano][mes].push(linha);
             });
 
-            // Adiciona a seção de Regulamentações no topo
             let htmlFinal = `
                 <details>
                     <summary class="topico-titulo">
@@ -259,7 +244,10 @@
                     </div>
                 </details>`;
 
-            const ordemAnos = Object.keys(dadosAgrupados).sort((a,b) => b - a); // 2026, 2025...
+            const ordemAnos = Object.keys(dadosAgrupados);
+            if (!ordemAnos.includes('2024')) ordemAnos.push('2024'); // Garante que 2024 apareça
+            ordemAnos.sort((a,b) => b - a);
+
             const ordemMeses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
             ordemAnos.forEach(ano => {
@@ -271,166 +259,90 @@
                     </summary>
                     <div class="topico-conteudo">`;
 
-                const mesesDoAno = Object.keys(dadosAgrupados[ano]).sort((a, b) => {
-                    let indiceA = ordemMeses.findIndex(m => m.toLowerCase() === a.toLowerCase());
-                    let indiceB = ordemMeses.findIndex(m => m.toLowerCase() === b.toLowerCase());
-                    if(indiceA === -1) indiceA = 99;
-                    if(indiceB === -1) indiceB = 99;
-                    return indiceA - indiceB;
-                });
-
-                mesesDoAno.forEach(mes => {
-                    htmlFinal += `
-                        <details>
-                            <summary class="subtopico-titulo">
-                                <div class="subtopico-titulo-texto">
-                                    <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
-                                    ${mes}
-                                </div>
-                                <button class="btn-download-csv" onclick="baixarCSV(event, this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    CSV
-                                </button>
-                            </summary>
-                            <div class="subtopico-conteudo">
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nº</th>
-                                                <th>Nome Beneficiário</th>
-                                                <th>Cargo/Função Beneficiário</th>
-                                                <th>Período de Afastamento</th>
-                                                <th>Destino</th>
-                                                <th class="col-justificativa">Justificativa Afastamento</th>
-                                                <th>Qtd Diárias</th>
-                                                <th>Valor Recebido</th>
-                                                <th>Apontamentos</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>`;
-
-                    let somaMes = 0;
-
-                    dadosAgrupados[ano][mes].forEach(linha => {
+                if (ano === '2024' && (!dadosAgrupados[ano] || Object.keys(dadosAgrupados[ano]).length === 0)) {
+                    htmlFinal += `<p style="padding: 10px 0; color: var(--texto-medio); font-weight: 500;">No ano de 2024 não houve registros de diárias de viagem na Câmara Municipal.</p>`;
+                } else if (dadosAgrupados[ano]) {
+                    const mesesDoAno = Object.keys(dadosAgrupados[ano]).sort((a, b) => ordemMeses.indexOf(a) - ordemMeses.indexOf(b));
+                    mesesDoAno.forEach(mes => {
                         htmlFinal += `
-                            <tr class="linha-dado">
-                                <td>${linha[2] || ''}</td>
-                                <td>${linha[3] || ''}</td>
-                                <td>${linha[4] || ''}</td>
-                                <td>${linha[5] || ''}</td>
-                                <td>${linha[6] || ''}</td>
-                                <td>${linha[7] || ''}</td>
-                                <td>${linha[8] || ''}</td>
-                                <td>${linha[9] || ''}</td>
-                                <td>${linha[10] || ''}</td>
-                            </tr>`;
-
-                        let valorString = linha[9] || '';
-                        if (valorString.includes('R$')) {
-                            let limpo = valorString.replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
-                            let numerico = parseFloat(limpo);
-                            if (!isNaN(numerico)) { somaMes += numerico; }
-                        }
+                            <details>
+                                <summary class="subtopico-titulo">
+                                    <div class="subtopico-titulo-texto">
+                                        <svg class="icone-seta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path></svg>
+                                        ${mes}
+                                    </div>
+                                    <button class="btn-download-csv" onclick="baixarCSV(event, this)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                        CSV
+                                    </button>
+                                </summary>
+                                <div class="subtopico-conteudo">
+                                    <div class="table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr><th>Nº</th><th>Nome Beneficiário</th><th>Cargo/Função Beneficiário</th><th>Período de Afastamento</th><th>Destino</th><th class="col-justificativa">Justificativa Afastamento</th><th>Qtd Diárias</th><th>Valor Recebido</th><th>Apontamentos</th></tr>
+                                            </thead>
+                                            <tbody>`;
+                        let somaMes = 0;
+                        dadosAgrupados[ano][mes].forEach(linha => {
+                            htmlFinal += `<tr class="linha-dado"><td>${linha[2]||''}</td><td>${linha[3]||''}</td><td>${linha[4]||''}</td><td>${linha[5]||''}</td><td>${linha[6]||''}</td><td>${linha[7]||''}</td><td>${linha[8]||''}</td><td>${linha[9]||''}</td><td>${linha[10]||''}</td></tr>`;
+                            let valStr = linha[9] || '';
+                            if (valStr.includes('R$')) {
+                                let num = parseFloat(valStr.replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
+                                if (!isNaN(num)) somaMes += num;
+                            }
+                        });
+                        htmlFinal += `
+                                        <tr class="tabela-total"><td colspan="7">TOTAL LISTADO - ${mes.toUpperCase()}</td><td colspan="2">${somaMes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td></tr>
+                                    </tbody></table></div></div></details>`;
                     });
-
-                    htmlFinal += `
-                                    <tr class="tabela-total">
-                                        <td colspan="7">TOTAL LISTADO - ${mes.toUpperCase()}</td>
-                                        <td colspan="2">${somaMes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </details>`;
-                });
-
+                }
                 htmlFinal += `</div></details>`;
             });
-
             container.innerHTML = htmlFinal;
         }
 
-        // Lógica de Filtro Atualizada com Calendário (Data Início e Fim)
         function executarFiltro() {
-            const nomeFiltro = document.getElementById('filtro-nome').value.toLowerCase().trim();
-            const dataInicioInput = document.getElementById('filtro-data-inicio').value; 
-            const dataFimInput = document.getElementById('filtro-data-fim').value;
-
-            const dataInicioNum = dataInicioInput ? parseInt(dataInicioInput.replace(/-/g, '')) : 0;
-            const dataFimNum = dataFimInput ? parseInt(dataFimInput.replace(/-/g, '')) : 99999999;
-
+            const nomeF = document.getElementById('filtro-nome').value.toLowerCase().trim();
+            const dInicio = document.getElementById('filtro-data-inicio').value; 
+            const dFim = document.getElementById('filtro-data-fim').value;
+            const diNum = dInicio ? parseInt(dInicio.replace(/-/g, '')) : 0;
+            const dfNum = dFim ? parseInt(dFim.replace(/-/g, '')) : 99999999;
             const linhas = document.querySelectorAll('.linha-dado');
             const totais = document.querySelectorAll('.tabela-total');
-            const msgVazio = document.getElementById('msg-vazio');
-            const painelResumo = document.getElementById('resumo-filtro');
-            const textoValorTotal = document.getElementById('valor-total-filtrado');
-
-            let encontrouAlgo = false;
-            let somaTotal = 0;
-            let filtroAtivo = nomeFiltro !== '' || dataInicioInput !== '' || dataFimInput !== '';
-            
-            totais.forEach(t => t.style.display = filtroAtivo ? 'none' : '');
-
+            const msgV = document.getElementById('msg-vazio');
+            const painelR = document.getElementById('resumo-filtro');
+            const txtVT = document.getElementById('valor-total-filtrado');
+            let encontrou = false, somaT = 0;
+            let fAtivo = nomeF !== '' || dInicio !== '' || dFim !== '';
+            totais.forEach(t => t.style.display = fAtivo ? 'none' : '');
             linhas.forEach(linha => {
-                const nomeTexto = linha.cells[1].textContent.toLowerCase() + linha.cells[2].textContent.toLowerCase();
-                const textoLinha = linha.innerHTML;
-
-                let bateNome = nomeFiltro === '' || nomeTexto.includes(nomeFiltro);
-                
-                const regexData = /(\d{2})\/(\d{2})\/(\d{4})/g;
-                let match;
-                let dataDentroDoPeriodo = false;
-                let possuiData = false;
-
-                while ((match = regexData.exec(textoLinha)) !== null) {
-                    possuiData = true;
-                    const dia = match[1];
-                    const mes = match[2];
-                    const ano = match[3];
-                    const dataLinhaNum = parseInt(`${ano}${mes}${dia}`); 
-
-                    if (dataLinhaNum >= dataInicioNum && dataLinhaNum <= dataFimNum) {
-                        dataDentroDoPeriodo = true;
-                        break; 
-                    }
+                const nomeT = linha.cells[1].textContent.toLowerCase() + linha.cells[2].textContent.toLowerCase();
+                const textoL = linha.innerHTML;
+                let bateN = nomeF === '' || nomeT.includes(nomeF);
+                const regexD = /(\d{2})\/(\d{2})\/(\d{4})/g;
+                let match, dDentro = false, pData = false;
+                while ((match = regexD.exec(textoL)) !== null) {
+                    pData = true;
+                    const dNum = parseInt(`${match[3]}${match[2]}${match[1]}`); 
+                    if (dNum >= diNum && dNum <= dfNum) { dDentro = true; break; }
                 }
-
-                let bateData = (!dataInicioInput && !dataFimInput) || (possuiData && dataDentroDoPeriodo);
-
-                if (bateNome && bateData) {
-                    linha.style.display = '';
-                    encontrouAlgo = true;
-
-                    let valorString = "";
-                    for (let i = 0; i < linha.cells.length; i++) {
-                        if (linha.cells[i].textContent.includes('R$')) {
-                            valorString = linha.cells[i].textContent;
-                            break;
-                        }
+                let bateD = (!dInicio && !dFim) || (pData && dDentro);
+                if (bateN && bateD) {
+                    linha.style.display = ''; encontrou = true;
+                    let valStr = "";
+                    for (let i = 0; i < linha.cells.length; i++) { if (linha.cells[i].textContent.includes('R$')) { valStr = linha.cells[i].textContent; break; } }
+                    if (valStr !== "") {
+                        let num = parseFloat(valStr.replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
+                        if (!isNaN(num)) somaT += num;
                     }
-
-                    if (valorString !== "") {
-                        let limpo = valorString.replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
-                        let numerico = parseFloat(limpo);
-                        if (!isNaN(numerico)) { somaTotal += numerico; }
-                    }
-
-                } else {
-                    linha.style.display = 'none';
-                }
+                } else { linha.style.display = 'none'; }
             });
-
-            if (filtroAtivo && encontrouAlgo) {
-                painelResumo.style.display = 'block';
-                textoValorTotal.textContent = somaTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            if (fAtivo && encontrou) {
+                painelR.style.display = 'block'; txtVT.textContent = somaT.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                 document.querySelectorAll('details').forEach(d => d.open = true);
-            } else {
-                painelResumo.style.display = 'none';
-            }
-
-            msgVazio.style.display = (!encontrouAlgo && filtroAtivo) ? 'block' : 'none';
+            } else { painelR.style.display = 'none'; }
+            msgV.style.display = (!encontrou && fAtivo) ? 'block' : 'none';
         }
 
         function limparFiltro() {
@@ -441,46 +353,27 @@
             document.querySelectorAll('details').forEach(d => d.open = false);
         }
 
-        function baixarCSV(evento, botao) {
-            evento.stopPropagation();
-            evento.preventDefault();
-
-            const detalhes = botao.closest('details');
-            const tabela = detalhes.querySelector('table');
-            
-            const topicoAnoElement = detalhes.closest('.topico-conteudo').previousElementSibling;
-            const topicoAno = topicoAnoElement ? topicoAnoElement.textContent.trim() : 'ano';
-            const mesTexto = detalhes.querySelector('.subtopico-titulo-texto').textContent.trim();
-            const nomeArquivo = `diarias_cm_doresopolis_${topicoAno}_${mesTexto}.csv`.replace(/\s+/g, '_').toLowerCase();
-
+        function baixarCSV(e, btn) {
+            e.stopPropagation(); e.preventDefault();
+            const det = btn.closest('details');
+            const tab = det.querySelector('table');
+            const topAn = det.closest('.topico-conteudo').previousElementSibling.textContent.trim();
+            const mesT = det.querySelector('.subtopico-titulo-texto').textContent.trim();
+            const nArq = `diarias_cm_doresopolis_${topAn}_${mesT}.csv`.replace(/\s+/g, '_').toLowerCase();
             let csv = [];
-            const linhas = tabela.querySelectorAll('tr');
-            
-            for (let i = 0; i < linhas.length; i++) {
-                if (linhas[i].style.display === 'none') continue;
-                let linha = [];
-                const celulas = linhas[i].querySelectorAll('th, td');
-                
-                for (let j = 0; j < celulas.length; j++) {
-                    let dado = celulas[j].innerText.replace(/"/g, '""');
-                    linha.push('"' + dado + '"');
-                }
-                csv.push(linha.join(';'));
+            const lins = tab.querySelectorAll('tr');
+            for (let i = 0; i < lins.length; i++) {
+                if (lins[i].style.display === 'none') continue;
+                let l = []; const cels = lins[i].querySelectorAll('th, td');
+                for (let j = 0; j < cels.length; j++) { l.push('"' + cels[j].innerText.replace(/"/g, '""') + '"'); }
+                csv.push(l.join(';'));
             }
-
-            const csvString = "\uFEFF" + csv.join('\n'); 
-            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob(["\uFEFF" + csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement("a");
-            
-            if (link.download !== undefined) {
-                const url = URL.createObjectURL(blob);
-                link.setAttribute("href", url);
-                link.setAttribute("download", nomeArquivo);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
+            link.setAttribute("href", URL.createObjectURL(blob));
+            link.setAttribute("download", nArq);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
     </script>
 </body>
