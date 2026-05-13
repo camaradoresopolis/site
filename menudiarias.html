@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu de Diárias | Câmara Municipal</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Variáveis de Cores */
+        :root {
+            --cor-fundo: #f2f2f2;
+            --cor-primaria: #025d3b; 
+            --cor-primaria-hover: #01472c;
+            --cor-primaria-bg: rgba(2, 93, 59, 0.08);
+            --branco: #ffffff;
+            --texto-escuro: #1f2937;
+            --texto-medio: #4b5563;
+            --texto-claro: #6b7280;
+            --borda: #e5e7eb;
+            --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--texto-escuro);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Estilo do Botão Voltar */
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--texto-medio);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: var(--transicao);
+            padding: 8px 16px;
+            border-radius: 8px;
+            background-color: transparent;
+        }
+
+        .btn-voltar:hover {
+            color: var(--cor-primaria);
+            background-color: var(--cor-primaria-bg);
+            transform: translateX(-4px);
+        }
+
+        .btn-voltar svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Cabeçalho da Página */
+        .header-transparencia {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .badge-titulo {
+            display: inline-block;
+            background-color: var(--cor-primaria-bg);
+            color: var(--cor-primaria);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .header-transparencia h1 {
+            font-size: 2.5rem;
+            color: var(--texto-escuro);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .header-transparencia p {
+            font-size: 1.1rem;
+            color: var(--texto-medio);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Grid de Cartões */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .card-item {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--branco);
+            border-radius: 16px;
+            padding: 24px;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid var(--borda);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transicao);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--cor-primaria);
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.4s ease;
+        }
+
+        .card-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(2, 93, 59, 0.1);
+            border-color: transparent;
+        }
+
+        .card-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .icone-box {
+            width: 48px;
+            height: 48px;
+            background-color: var(--cor-fundo);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            transition: var(--transicao);
+        }
+
+        .icone-box svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--cor-primaria);
+            transition: var(--transicao);
+        }
+
+        .card-item:hover .icone-box {
+            background-color: var(--cor-primaria);
+        }
+
+        .card-item:hover .icone-box svg {
+            fill: var(--branco);
+            transform: scale(1.1);
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--texto-escuro);
+            transition: color 0.3s ease;
+        }
+
+        .card-item:hover .card-title {
+            color: var(--cor-primaria);
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--texto-medio);
+            flex-grow: 1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .header-transparencia h1 { font-size: 2rem; }
+            .grid-cards { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <a href="https://www.doresopolis.mg.leg.br/transparencia" class="btn-voltar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+            Voltar para Transparência
+        </a>
+
+        <div class="header-transparencia">
+            <span class="badge-titulo">Despesas e Afastamentos</span>
+            <h1>Viagens e Diárias</h1>
+            <p>Acesse de forma transparente as informações sobre o pagamento de diárias e a regulamentação dos valores concedidos.</p>
+        </div>
+
+        <div class="grid-cards">
+
+            <a href="https://site-five-sand-34.vercel.app/diarias.html" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M240,104a8,8,0,0,1-8,8H175.76l-31.52,78.81A16,16,0,0,1,129.38,200H88a8,8,0,0,1-7.43-11l20.86-52H63.15L45.48,154.6A8,8,0,0,1,38,160H16a8,8,0,0,1-6.3-12.92l25.68-32a8,8,0,0,1,0-10.16l-25.68-32A8,8,0,0,1,16,64H38a8,8,0,0,1,7.5,5.4L63.15,88h38.28L80.57,36A8,8,0,0,1,88,24h41.38a16,16,0,0,1,14.86,10.05L175.76,112H232A8,8,0,0,1,240,104Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Diárias</h3>
+                </div>
+                <p class="card-desc">Consulte o histórico detalhado, justificativas e valores de todas as diárias concedidas a vereadores e servidores.</p>
+            </a>
+            
+            <a href="#" class="card-item">
+                <div class="card-header">
+                    <div class="icone-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM40,112H88v32H40Zm64,0h48v32H104Zm64,0h48v32H168ZM40,64H216v32H40ZM40,160H88v32H40Zm64,32V160h48v32Zm64,0V160h48v32Z"></path></svg>
+                    </div>
+                    <h3 class="card-title">Tabela de Valores das Diárias</h3>
+                </div>
+                <p class="card-desc">Confira os valores regulamentados das diárias para viagens dentro e fora do Estado, conforme as resoluções em vigor.</p>
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>
