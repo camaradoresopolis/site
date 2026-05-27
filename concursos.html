@@ -332,12 +332,16 @@
         function atualizarContador() {
             const dataAtual = new Date();
             
-            // Define uma data base estável no passado (ex: 01 de Janeiro de 2025)
-            const dataBase = new Date('2025-01-01T00:00:00');
+            // Define a data base cravada como 27 de Maio de 2026.
+            // Utilizando o formato padrão com horário zerado para evitar variação de fuso.
+            const dataBase = new Date('2026-05-27T00:00:00');
             
-            // Calcula a diferença em milissegundos e converte para dias
-            const diferencaTempo = dataAtual - dataBase;
-            const diferencaDias = Math.floor(diferencaTempo / (1000 * 60 * 60 * 24));
+            // Usando .getTime() para calcular os milissegundos com precisão
+            const diferencaTempo = dataAtual.getTime() - dataBase.getTime();
+            
+            // Previne falhas caso a data do sistema do usuário esteja atrasada
+            let diferencaDias = Math.floor(diferencaTempo / (1000 * 60 * 60 * 24));
+            if (diferencaDias < 0) diferencaDias = 0; 
             
             // Encontra quantos ciclos completos de 29 dias se passaram
             const ciclosPassados = Math.floor(diferencaDias / 29);
