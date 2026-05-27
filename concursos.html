@@ -339,12 +339,12 @@
             const diferencaTempo = dataAtual - dataBase;
             const diferencaDias = Math.floor(diferencaTempo / (1000 * 60 * 60 * 24));
             
-            // Encontra quantos ciclos completos de 30 dias se passaram
-            const ciclosPassados = Math.floor(diferencaDias / 30);
+            // Encontra quantos ciclos completos de 29 dias se passaram
+            const ciclosPassados = Math.floor(diferencaDias / 29);
             
-            // Calcula a exata data do último ciclo de 30 dias concluído
+            // Calcula a exata data do último ciclo de 29 dias concluído
             const dataUltimaAtualizacao = new Date(dataBase);
-            dataUltimaAtualizacao.setDate(dataBase.getDate() + (ciclosPassados * 30));
+            dataUltimaAtualizacao.setDate(dataBase.getDate() + (ciclosPassados * 29));
             
             // Formata a data para o padrão brasileiro (DD/MM/AAAA)
             const opcoes = { day: '2-digit', month: '2-digit', year: 'numeric' };
