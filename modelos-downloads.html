@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelos de Proposta | Downloads</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Variáveis de Cores (Padrão da Câmara) */
+        :root {
+            --cor-fundo: #f2f2f2;
+            --cor-primaria: #025d3b; 
+            --cor-primaria-hover: #01472c;
+            --cor-primaria-bg: rgba(2, 93, 59, 0.08);
+            --branco: #ffffff;
+            --texto-escuro: #1f2937;
+            --texto-medio: #4b5563;
+            --texto-claro: #6b7280;
+            --borda: #e5e7eb;
+            --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--texto-escuro);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Botão Voltar */
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--texto-medio);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: var(--transicao);
+            padding: 8px 16px;
+            border-radius: 8px;
+            background-color: transparent;
+        }
+
+        .btn-voltar:hover {
+            color: var(--cor-primaria);
+            background-color: var(--cor-primaria-bg);
+            transform: translateX(-4px);
+        }
+
+        .btn-voltar svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Cabeçalho */
+        .header-transparencia {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .header-transparencia h1 {
+            font-size: 2.5rem;
+            color: var(--texto-escuro);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header-transparencia p {
+            font-size: 1.1rem;
+            color: var(--texto-medio);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Título da Seção */
+        .titulo-secao {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--texto-escuro);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--borda);
+            display: inline-block;
+        }
+
+        /* Lista de Downloads */
+        .lista-downloads {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .download-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--branco);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--borda);
+            text-decoration: none;
+            color: var(--texto-escuro);
+            transition: var(--transicao);
+        }
+
+        .download-item:hover {
+            border-color: var(--cor-primaria);
+            box-shadow: 0 4px 12px rgba(2, 93, 59, 0.08);
+            transform: translateX(4px);
+        }
+
+        .download-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .icone-doc {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(43, 87, 154, 0.1); /* Azul sutil do Word */
+            color: #2b579a; /* Azul característico do Word */
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .icone-doc svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .nome-arquivo {
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: color 0.3s;
+        }
+
+        .download-item:hover .nome-arquivo {
+            color: var(--cor-primaria);
+        }
+
+        .btn-baixar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--cor-primaria);
+            background-color: var(--cor-primaria-bg);
+            padding: 8px 16px;
+            border-radius: 50px;
+            transition: var(--transicao);
+        }
+
+        .download-item:hover .btn-baixar {
+            background-color: var(--cor-primaria);
+            color: var(--branco);
+        }
+
+        .btn-baixar svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .header-transparencia h1 { font-size: 2rem; }
+            .download-item { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .btn-baixar { align-self: flex-start; margin-left: 56px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <a href="servicos-digitais.html" class="btn-voltar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+            Voltar para Sugira um Projeto
+        </a>
+
+        <div class="header-transparencia">
+            <h1>Modelos de Proposta</h1>
+            <p>Faça o download dos arquivos em formato Word (.doc) estruturados e formatados adequadamente para auxiliar na elaboração de seus projetos e requerimentos.</p>
+        </div>
+
+        <div class="lista-downloads">
+
+            <a href="#" class="download-item" download>
+                <div class="download-info">
+                    <div class="icone-doc">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <span class="nome-arquivo">Formulário de Encaminhamento de Sugestão</span>
+                </div>
+                <div class="btn-baixar">
+                    Baixar
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0V152Zm-85.66-42.34a8,8,0,0,1,0,11.32l-32,32a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32L120,132.69V40a8,8,0,0,1,16,0v92.69l24.34-24.35A8,8,0,0,1,138.34,109.66Z"></path></svg>
+                </div>
+            </a>
+
+            <a href="#" class="download-item" download>
+                <div class="download-info">
+                    <div class="icone-doc">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <span class="nome-arquivo">Projeto de Decreto Legislativo</span>
+                </div>
+                <div class="btn-baixar">
+                    Baixar
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0V152Zm-85.66-42.34a8,8,0,0,1,0,11.32l-32,32a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32L120,132.69V40a8,8,0,0,1,16,0v92.69l24.34-24.35A8,8,0,0,1,138.34,109.66Z"></path></svg>
+                </div>
+            </a>
+
+            <a href="modelo-de-Projeto-de-Lei-Ordinaria-versao-final.doc" class="download-item" download>
+                <div class="download-info">
+                    <div class="icone-doc">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <span class="nome-arquivo">Projeto de Lei Ordinária</span>
+                </div>
+                <div class="btn-baixar">
+                    Baixar
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0V152Zm-85.66-42.34a8,8,0,0,1,0,11.32l-32,32a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32L120,132.69V40a8,8,0,0,1,16,0v92.69l24.34-24.35A8,8,0,0,1,138.34,109.66Z"></path></svg>
+                </div>
+            </a>
+
+            <a href="modelo-projeto-de-lei-complementar-versao-final.doc" class="download-item" download>
+                <div class="download-info">
+                    <div class="icone-doc">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <span class="nome-arquivo">Projeto de Lei Complementar</span>
+                </div>
+                <div class="btn-baixar">
+                    Baixar
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0V152Zm-85.66-42.34a8,8,0,0,1,0,11.32l-32,32a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32L120,132.69V40a8,8,0,0,1,16,0v92.69l24.34-24.35A8,8,0,0,1,138.34,109.66Z"></path></svg>
+                </div>
+            </a>
+
+            <a href="modelo-de-Projeto-de-Resolucao-versao-final.doc" class="download-item" download>
+                <div class="download-info">
+                    <div class="icone-doc">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <span class="nome-arquivo">Projeto de Resolução</span>
+                </div>
+                <div class="btn-baixar">
+                    Baixar
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0V152Zm-85.66-42.34a8,8,0,0,1,0,11.32l-32,32a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32L120,132.69V40a8,8,0,0,1,16,0v92.69l24.34-24.35A8,8,0,0,1,138.34,109.66Z"></path></svg>
+                </div>
+            </a>
+
+            <a href="modeLo-de-requerimento-de-audiencia-publica-versao.doc" class="download-item" download>
+                <div class="download-info">
+                    <div class="icone-doc">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <span class="nome-arquivo">Requerimento de Audiência Pública</span>
+                </div>
+                <div class="btn-baixar">
+                    Baixar
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0V152Zm-85.66-42.34a8,8,0,0,1,0,11.32l-32,32a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32L120,132.69V40a8,8,0,0,1,16,0v92.69l24.34-24.35A8,8,0,0,1,138.34,109.66Z"></path></svg>
+                </div>
+            </a>
+
+            <a href="modelo-de-Requerimento-de-Depoimento-versao-final.doc" class="download-item" download>
+                <div class="download-info">
+                    <div class="icone-doc">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <span class="nome-arquivo">Requerimento de Depoimento</span>
+                </div>
+                <div class="btn-baixar">
+                    Baixar
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0V152Zm-85.66-42.34a8,8,0,0,1,0,11.32l-32,32a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32L120,132.69V40a8,8,0,0,1,16,0v92.69l24.34-24.35A8,8,0,0,1,138.34,109.66Z"></path></svg>
+                </div>
+            </a>
+
+            <a href="modelo-de-Requerimento-de-Convocacao-versao-final.doc" class="download-item" download>
+                <div class="download-info">
+                    <div class="icone-doc">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <span class="nome-arquivo">Requerimento de Convocação</span>
+                </div>
+                <div class="btn-baixar">
+                    Baixar
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0V152Zm-85.66-42.34a8,8,0,0,1,0,11.32l-32,32a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32L120,132.69V40a8,8,0,0,1,16,0v92.69l24.34-24.35A8,8,0,0,1,138.34,109.66Z"></path></svg>
+                </div>
+            </a>
+
+            <a href="modelo-de-Requerimento-de-Informacao-versao-final.doc" class="download-item" download>
+                <div class="download-info">
+                    <div class="icone-doc">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <span class="nome-arquivo">Requerimento de Informação</span>
+                </div>
+                <div class="btn-baixar">
+                    Baixar
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0V152Zm-85.66-42.34a8,8,0,0,1,0,11.32l-32,32a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32L120,132.69V40a8,8,0,0,1,16,0v92.69l24.34-24.35A8,8,0,0,1,138.34,109.66Z"></path></svg>
+                </div>
+            </a>
+
+            <a href="modelo-de-requerimento-de-indicacao-versao-final.doc" class="download-item" download>
+                <div class="download-info">
+                    <div class="icone-doc">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <span class="nome-arquivo">Requerimento de Indicação</span>
+                </div>
+                <div class="btn-baixar">
+                    Baixar
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0V152Zm-85.66-42.34a8,8,0,0,1,0,11.32l-32,32a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32L120,132.69V40a8,8,0,0,1,16,0v92.69l24.34-24.35A8,8,0,0,1,138.34,109.66Z"></path></svg>
+                </div>
+            </a>
+
+            <a href="modelo-de-Emenda-versao-final.doc" class="download-item" download>
+                <div class="download-info">
+                    <div class="icone-doc">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <span class="nome-arquivo">Emendas a projetos de lei em geral</span>
+                </div>
+                <div class="btn-baixar">
+                    Baixar
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0V152Zm-85.66-42.34a8,8,0,0,1,0,11.32l-32,32a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32L120,132.69V40a8,8,0,0,1,16,0v92.69l24.34-24.35A8,8,0,0,1,138.34,109.66Z"></path></svg>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>

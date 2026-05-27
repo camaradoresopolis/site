@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sugira um Projeto | Serviços Digitais da Câmara</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Variáveis de Cores (Padrão da Câmara) */
+        :root {
+            --cor-fundo: #f2f2f2;
+            --cor-primaria: #025d3b; 
+            --cor-primaria-hover: #01472c;
+            --cor-primaria-bg: rgba(2, 93, 59, 0.08);
+            --branco: #ffffff;
+            --texto-escuro: #1f2937;
+            --texto-medio: #4b5563;
+            --texto-claro: #6b7280;
+            --borda: #e5e7eb;
+            --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--texto-escuro);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Botão Voltar */
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--texto-medio);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: var(--transicao);
+            padding: 8px 16px;
+            border-radius: 8px;
+            background-color: transparent;
+        }
+
+        .btn-voltar:hover {
+            color: var(--cor-primaria);
+            background-color: var(--cor-primaria-bg);
+            transform: translateX(-4px);
+        }
+
+        .btn-voltar svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Cabeçalho */
+        .header-transparencia {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .badge-titulo {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: var(--cor-primaria-bg);
+            color: var(--cor-primaria);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .badge-titulo svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .header-transparencia h1 {
+            font-size: 2.5rem;
+            color: var(--texto-escuro);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .header-transparencia p {
+            font-size: 1.1rem;
+            color: var(--texto-medio);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Container de Serviços */
+        .servicos-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        /* Estilo dos Blocos de Serviço */
+        .servico-card {
+            background-color: var(--branco);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid var(--borda);
+            display: flex;
+            gap: 24px;
+            transition: var(--transicao);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .servico-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--cor-primaria);
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.4s ease;
+        }
+
+        .servico-card:hover {
+            box-shadow: 0 15px 30px rgba(2, 93, 59, 0.1);
+            border-color: transparent;
+        }
+
+        .servico-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .icone-lateral {
+            width: 64px;
+            height: 64px;
+            background-color: var(--cor-primaria-bg);
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .icone-lateral svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--cor-primaria);
+        }
+
+        .conteudo-servico {
+            flex-grow: 1;
+        }
+
+        .conteudo-servico h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--texto-escuro);
+            margin-bottom: 12px;
+        }
+
+        .conteudo-servico p {
+            font-size: 1rem;
+            color: var(--texto-medio);
+            margin-bottom: 20px;
+        }
+
+        .info-requisitos {
+            background-color: var(--cor-fundo);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--texto-claro);
+            margin-bottom: 20px;
+            border-left: 3px solid #cbd5e1;
+        }
+
+        /* Botão de Ação Primária */
+        .btn-acessar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--cor-primaria);
+            color: var(--branco);
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transicao);
+        }
+
+        .btn-acessar:hover {
+            background-color: var(--cor-primaria-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(2, 93, 59, 0.2);
+        }
+
+        .btn-acessar svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Botão Secundário */
+        .btn-secundario {
+            background-color: transparent;
+            color: var(--cor-primaria);
+            border: 1px solid var(--cor-primaria);
+        }
+
+        .btn-secundario:hover {
+            background-color: var(--cor-primaria-bg);
+            color: var(--cor-primaria-hover);
+            transform: translateY(-2px);
+            box-shadow: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .header-transparencia h1 { font-size: 2rem; }
+            .servico-card { flex-direction: column; gap: 16px; padding: 24px; }
+            .icone-lateral { width: 56px; height: 56px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <a href="index.html" class="btn-voltar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+            Voltar ao Início
+        </a>
+
+        <div class="header-transparencia">
+            <span class="badge-titulo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z" transform="rotate(180 128 128)"></path></svg>
+                Serviços Digitais 100% Online
+            </span>
+            <h1>Sugira um Projeto</h1>
+            <p>O Poder Legislativo municipal disponibiliza canais diretos e totalmente digitais para que a população participe ativamente da criação de leis, sem a necessidade de solicitar atendimento presencial.</p>
+        </div>
+
+        <div class="servicos-lista">
+
+            <div class="servico-card">
+                <div class="icone-lateral">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M244.24,138.83a8,8,0,0,0-10.74-2.5A44,44,0,0,1,164,101.4a8,8,0,1,0-15.53-3.8A60,60,0,0,0,222.18,148.9,8,8,0,0,0,244.24,138.83ZM160,152a56.06,56.06,0,0,0-45.71-55A48,48,0,1,0,65.71,97,56,56,0,0,0,16,152a8,8,0,0,0,16,0,40,40,0,0,1,80,0,8,8,0,0,0,16,0,40,40,0,0,1,80,0,8,8,0,0,0,16,0ZM96,48A32,32,0,1,1,64,80,32,32,0,0,1,96,48Z"></path></svg>
+                </div>
+                <div class="conteudo-servico">
+                    <h2>Projeto de lei de iniciativa popular</h2>
+                    <p>A população pode redigir e enviar projetos de lei de iniciativa popular diretamente para a Câmara Municipal. Para que o projeto comece a tramitar formalmente, a legislação exige a coleta de assinaturas de um percentual mínimo dos eleitores do município.</p>
+                    
+                    <div class="info-requisitos">
+                        <strong>Nota:</strong> É necessário realizar um cadastro e anexar o documento com a proposta de lei, além da lista de assinaturas eletrônicas ou digitalizadas dos eleitores em conformidade com a Lei Orgânica Municipal.
+                    </div>
+
+                    <a href="#" class="btn-acessar">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z" transform="rotate(180 128 128)"></path></svg>
+                        Enviar Projeto de Lei
+                    </a>
+                </div>
+            </div>
+
+            <div class="servico-card">
+                <div class="icone-lateral">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-40-80a8,8,0,0,1-8,8H104a8,8,0,0,1,0-16h48A8,8,0,0,1,160,136Zm0,32a8,8,0,0,1-8,8H104a8,8,0,0,1,0-16h48A8,8,0,0,1,160,168Z"></path></svg>
+                </div>
+                <div class="conteudo-servico">
+                    <h2>Conheça os modelos de proposta</h2>
+                    <p>Acesse a nossa página exclusiva de modelos estruturados para download. Disponibilizamos arquivos padrão em formato Word (.docx) configurados de acordo com a técnica legislativa para ajudar na redação correta do seu projeto de iniciativa popular.</p>
+                    
+                    <div class="info-requisitos">
+                        <strong>Formatos disponíveis:</strong> Arquivos editáveis (.docx) contendo a estrutura padrão de justificativa, artigos, parágrafos e folhas de assinaturas.
+                    </div>
+
+                    <a href="modelos-downloads.html" class="btn-acessar btn-secundario">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0V152Zm-85.66-42.34a8,8,0,0,1,0,11.32l-32,32a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32L120,132.69V40a8,8,0,0,1,16,0v92.69l24.34-24.35A8,8,0,0,1,138.34,109.66Z"></path></svg>
+                        Acessar Modelos de Proposta
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
