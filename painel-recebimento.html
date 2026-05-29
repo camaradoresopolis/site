@@ -7,6 +7,8 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <style>
         /* Variáveis de Cores */
         :root { 
@@ -79,7 +81,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         
         .stat-card {
@@ -107,6 +109,70 @@
         
         .stat-info h3 { font-size: 0.9rem; color: var(--texto-claro); font-weight: 600; text-transform: uppercase; margin-bottom: 4px; }
         .stat-info .valor { font-size: 2rem; color: var(--texto-escuro); font-weight: 700; line-height: 1; }
+
+        /* FILTROS */
+        .filtro-box {
+            background-color: var(--branco);
+            padding: 20px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--borda);
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .filtro-grid {
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .filtro-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex: 1;
+            min-width: 150px;
+        }
+        .filtro-item label {
+            font-size: 0.85rem;
+            color: var(--texto-medio);
+            font-weight: 600;
+        }
+        .filtro-item input, .filtro-item select {
+            padding: 10px 12px;
+            border: 1px solid var(--borda);
+            border-radius: 6px;
+            font-family: inherit;
+            color: var(--texto-escuro);
+            outline: none;
+        }
+        .filtro-item input:focus, .filtro-item select:focus {
+            border-color: var(--cor-primaria);
+            box-shadow: 0 0 0 3px var(--cor-primaria-bg);
+        }
+        .filtro-acoes {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transicao);
+        }
+        .btn-primario { background-color: var(--cor-primaria); color: var(--branco); }
+        .btn-primario:hover { background-color: var(--cor-primaria-hover); }
+        .btn-secundario { background-color: var(--cor-fundo); color: var(--texto-escuro); border: 1px solid var(--borda); }
+        .btn-secundario:hover { background-color: #e2e8f0; }
+        .btn-pdf { background-color: #ef4444; color: var(--branco); }
+        .btn-pdf:hover { background-color: #dc2626; }
+        .btn svg { width: 16px; height: 16px; fill: currentColor; }
 
         /* Abas de Navegação (Tabs) */
         .tabs-container {
@@ -197,7 +263,7 @@
         .modal-box {
             background-color: var(--branco);
             border-radius: 12px;
-            width: 90%; max-width: 600px; max-height: 90vh;
+            width: 90%; max-width: 700px; max-height: 90vh;
             display: flex; flex-direction: column;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
             transform: scale(0.95); transition: var(--transicao);
@@ -210,12 +276,14 @@
             display: flex; justify-content: space-between; align-items: center;
         }
         .modal-header h2 { font-size: 1.2rem; color: var(--texto-escuro); }
-        .btn-fechar { background: transparent; border: none; font-size: 1.5rem; color: var(--texto-claro); cursor: pointer; }
+        .header-acoes { display: flex; gap: 10px; align-items: center; }
+        .btn-fechar { background: transparent; border: none; font-size: 1.8rem; color: var(--texto-claro); cursor: pointer; line-height: 1; }
         .btn-fechar:hover { color: var(--alerta-vermelho); }
 
         .modal-body {
             padding: 24px;
             overflow-y: auto;
+            background-color: #fff; /* Garantir fundo branco pro PDF */
         }
         
         .detalhe-item { margin-bottom: 16px; }
@@ -229,6 +297,9 @@
             .painel-header { flex-direction: column; align-items: flex-start; }
             .tabs-container { flex-direction: column; }
             .tab-btn { width: 100%; text-align: center; }
+            .filtro-grid { flex-direction: column; align-items: stretch; }
+            .filtro-acoes { width: 100%; justify-content: space-between; }
+            .filtro-acoes .btn { flex: 1; justify-content: center; }
         }
     </style>
 </head>
@@ -272,6 +343,45 @@
             </div>
         </div>
 
+        <div class="filtro-box">
+            <div class="filtro-grid">
+                <div class="filtro-item">
+                    <label>Data Inicial</label>
+                    <input type="date" id="filtro-data-inicio">
+                </div>
+                <div class="filtro-item">
+                    <label>Data Final</label>
+                    <input type="date" id="filtro-data-fim">
+                </div>
+                <div class="filtro-item">
+                    <label>Tipo (Ouvidoria ou e-SIC)</label>
+                    <select id="filtro-tipo">
+                        <option value="">Todos os Tipos</option>
+                        <optgroup label="Ouvidoria">
+                            <option value="Reclamação">Reclamação</option>
+                            <option value="Denúncia">Denúncia</option>
+                            <option value="Sugestão">Sugestão</option>
+                            <option value="Elogio">Elogio</option>
+                            <option value="Solicitação">Solicitação</option>
+                        </optgroup>
+                        <optgroup label="e-SIC">
+                            <option value="Pedido de acesso à informação">Pedido de Acesso</option>
+                            <option value="Recurso">Recurso</option>
+                            <option value="Reclamação LAI">Reclamação LAI</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="filtro-acoes">
+                    <button class="btn btn-primario" onclick="aplicarFiltros()">Filtrar</button>
+                    <button class="btn btn-secundario" onclick="limparFiltros()">Limpar</button>
+                    <button class="btn btn-pdf" onclick="baixarTabelaPDF()">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Baixar PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div class="tabs-container">
             <button class="tab-btn active" onclick="trocarAba('tab-ouvidoria', this)">Ouvidoria (Manifestações)</button>
             <button class="tab-btn" onclick="trocarAba('tab-esic', this)">e-SIC (Pedidos de Informação)</button>
@@ -283,7 +393,7 @@
         </div>
 
         <div id="tab-ouvidoria" class="tab-content">
-            <div class="tabela-container">
+            <div class="tabela-container" id="area-tabela-ouvidoria">
                 <table>
                     <thead>
                         <tr>
@@ -291,7 +401,7 @@
                             <th>Tipo</th>
                             <th>Identificação</th>
                             <th>Contato</th>
-                            <th>Ação</th>
+                            <th class="col-acao">Ação</th>
                         </tr>
                     </thead>
                     <tbody id="tbody-ouvidoria">
@@ -299,12 +409,12 @@
                 </table>
             </div>
             <div id="empty-ouvidoria" class="empty-state" style="display: none;">
-                Nenhuma manifestação registrada na Ouvidoria até o momento.
+                Nenhuma manifestação encontrada.
             </div>
         </div>
 
         <div id="tab-esic" class="tab-content">
-            <div class="tabela-container">
+            <div class="tabela-container" id="area-tabela-esic">
                 <table>
                     <thead>
                         <tr>
@@ -312,7 +422,7 @@
                             <th>Tipo</th>
                             <th>Solicitante</th>
                             <th>Status</th>
-                            <th>Ação</th>
+                            <th class="col-acao">Ação</th>
                         </tr>
                     </thead>
                     <tbody id="tbody-esic">
@@ -320,7 +430,7 @@
                 </table>
             </div>
             <div id="empty-esic" class="empty-state" style="display: none;">
-                Nenhum pedido registrado no e-SIC até o momento.
+                Nenhum pedido encontrado no e-SIC.
             </div>
         </div>
 
@@ -330,7 +440,10 @@
         <div class="modal-box">
             <div class="modal-header">
                 <h2>Detalhes do Registro</h2>
-                <button class="btn-fechar" onclick="fecharModal()">&times;</button>
+                <div class="header-acoes">
+                    <button class="btn btn-pdf" style="padding: 6px 12px; font-size: 0.8rem;" onclick="baixarModalPDF()">Baixar PDF</button>
+                    <button class="btn-fechar" onclick="fecharModal()">&times;</button>
+                </div>
             </div>
             <div class="modal-body" id="modal-conteudo">
                 </div>
@@ -341,7 +454,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-        // Configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCjt-ILO7yuudiqCNHNiZn3pZfNj7BPNPI",
             authDomain: "camaradoresopolis-cb675.firebaseapp.com",
@@ -354,75 +466,35 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Variáveis Globais para guardar os dados e exibir no modal
-        window.dadosOuvidoriaGlobais = [];
-        window.dadosEsicGlobais = [];
+        // Armazenamento Original e Filtrado
+        window.dadosOuvidoriaOriginais = [];
+        window.dadosEsicOriginais = [];
+        window.dadosOuvidoriaFiltrados = [];
+        window.dadosEsicFiltrados = [];
+
+        // Controle da aba ativa
+        window.abaAtiva = 'tab-ouvidoria';
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', async () => {
             await carregarDados();
         });
 
-        // Função de trocar abas
         window.trocarAba = function(idTab, btn) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
             
             document.getElementById(idTab).classList.add('active');
             btn.classList.add('active');
+            window.abaAtiva = idTab;
         }
 
-        // Funções do Modal
-        window.abrirModalOuvidoria = function(index) {
-            const d = window.dadosOuvidoriaGlobais[index];
-            let html = `
-                <div class="detalhe-item"><label>Data do Envio</label><p>${formatarData(d.data_submissao)}</p></div>
-                <div class="detalhe-item"><label>Tipo de Manifestação</label><p>${d.tipo_manifestacao || 'Não informado'}</p></div>
-                <div class="detalhe-item"><label>Identificação</label><p>${d.anonimo === 'Sim' ? 'Anônimo' : (d.nome || 'Não informado')}</p></div>
-            `;
-            if (d.anonimo !== 'Sim') {
-                html += `
-                    <div class="detalhe-item"><label>E-mail</label><p>${d.email || '-'}</p></div>
-                    <div class="detalhe-item"><label>Telefone</label><p>${d.telefone || '-'}</p></div>
-                `;
-            }
-            html += `<div class="detalhe-item"><label>Descrição Completa</label><p>${d.descricao || 'Sem descrição'}</p></div>`;
-            
-            document.getElementById('modal-conteudo').innerHTML = html;
-            document.getElementById('modal-leitura').classList.add('ativo');
-        }
-
-        window.abrirModalEsic = function(index) {
-            const d = window.dadosEsicGlobais[index];
-            const html = `
-                <div class="detalhe-item"><label>Data do Pedido</label><p>${formatarData(d.data_submissao)}</p></div>
-                <div class="detalhe-item"><label>Status</label><p>${d.status_pedido || 'Em tramitação'}</p></div>
-                <div class="detalhe-item"><label>Tipo de Pedido</label><p>${d.tipo_pedido || '-'}</p></div>
-                <div class="detalhe-item"><label>Nome do Solicitante</label><p>${d.nome || '-'}</p></div>
-                <div class="detalhe-item"><label>Documento (CPF/CNPJ)</label><p>${d.documento || '-'}</p></div>
-                <div class="detalhe-item"><label>E-mail</label><p>${d.email || '-'}</p></div>
-                <div class="detalhe-item"><label>Telefone</label><p>${d.telefone || '-'}</p></div>
-                <div class="detalhe-item"><label>Endereço</label><p>${d.endereco || 'Não preenchido'}</p></div>
-                <div class="detalhe-item"><label>Forma Preferencial de Resposta</label><p>${d.forma_recebimento || '-'}</p></div>
-                <div class="detalhe-item"><label>Descrição do Pedido</label><p>${d.descricao || 'Sem descrição'}</p></div>
-            `;
-            document.getElementById('modal-conteudo').innerHTML = html;
-            document.getElementById('modal-leitura').classList.add('ativo');
-        }
-
-        window.fecharModal = function() {
-            document.getElementById('modal-leitura').classList.remove('ativo');
-        }
-
-        // Formatação de data Firebase
         function formatarData(timestamp) {
             if (!timestamp) return "Data Indisponível";
-            // Verifica se é o objeto nativo do firestore
             const date = timestamp.toDate ? timestamp.toDate() : new Date();
             return date.toLocaleString('pt-BR');
         }
 
-        // Definir cor das Badges de Ouvidoria
         function getBadgeOuvidoria(tipo) {
             if(tipo === 'Reclamação' || tipo === 'Denúncia') return 'bg-vermelho';
             if(tipo === 'Elogio') return 'bg-verde';
@@ -430,7 +502,6 @@
             return 'bg-cinza';
         }
 
-        // Definir cor das Badges do e-SIC
         function getBadgeEsic(status) {
             if(status === 'Em tramitação') return 'bg-amarelo';
             if(status === 'Atendido') return 'bg-verde';
@@ -445,34 +516,13 @@
                 let ouvidorias = [];
                 queryOuv.forEach(doc => ouvidorias.push(doc.data()));
                 
-                // Ordenar do mais novo para o mais velho
                 ouvidorias.sort((a, b) => {
                     const dataA = a.data_submissao ? a.data_submissao.toMillis() : 0;
                     const dataB = b.data_submissao ? b.data_submissao.toMillis() : 0;
                     return dataB - dataA; 
                 });
                 
-                window.dadosOuvidoriaGlobais = ouvidorias;
-                document.getElementById('total-ouvidoria').innerText = ouvidorias.length;
-
-                const tbodyOuv = document.getElementById('tbody-ouvidoria');
-                if (ouvidorias.length === 0) {
-                    document.getElementById('empty-ouvidoria').style.display = 'block';
-                    tbodyOuv.parentElement.style.display = 'none';
-                } else {
-                    ouvidorias.forEach((d, index) => {
-                        const tr = document.createElement('tr');
-                        const isAnonimo = d.anonimo === 'Sim';
-                        tr.innerHTML = `
-                            <td>${formatarData(d.data_submissao)}</td>
-                            <td><span class="badge ${getBadgeOuvidoria(d.tipo_manifestacao)}">${d.tipo_manifestacao || '-'}</span></td>
-                            <td><strong>${isAnonimo ? 'Anônimo' : (d.nome || '-')}</strong></td>
-                            <td>${isAnonimo ? 'Sigiloso' : (d.email || d.telefone || '-')}</td>
-                            <td><button class="btn-acao" onclick="abrirModalOuvidoria(${index})">Ler na íntegra</button></td>
-                        `;
-                        tbodyOuv.appendChild(tr);
-                    });
-                }
+                window.dadosOuvidoriaOriginais = ouvidorias;
 
                 // 2. Puxar dados do e-SIC
                 const queryEsic = await getDocs(collection(db, "esic_pedidos"));
@@ -485,38 +535,207 @@
                     return dataB - dataA; 
                 });
 
-                window.dadosEsicGlobais = esics;
-                document.getElementById('total-esic').innerText = esics.length;
+                window.dadosEsicOriginais = esics;
 
-                const tbodyEsic = document.getElementById('tbody-esic');
-                if (esics.length === 0) {
-                    document.getElementById('empty-esic').style.display = 'block';
-                    tbodyEsic.parentElement.style.display = 'none';
-                } else {
-                    esics.forEach((d, index) => {
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td>${formatarData(d.data_submissao)}</td>
-                            <td>${d.tipo_pedido || '-'}</td>
-                            <td><strong>${d.nome || '-'}</strong></td>
-                            <td><span class="badge ${getBadgeEsic(d.status_pedido)}">${d.status_pedido || 'Em tramitação'}</span></td>
-                            <td><button class="btn-acao" onclick="abrirModalEsic(${index})">Ler pedido</button></td>
-                        `;
-                        tbodyEsic.appendChild(tr);
-                    });
-                }
-
-                // Remove o Loader
                 document.getElementById('loader').style.display = 'none';
-                // Mostra a primeira aba por padrão (Ouvidoria já tem "active" no HTML, mas garantimos visibilidade)
                 document.getElementById('tab-ouvidoria').classList.add('active');
 
+                // Executa filtro inicial (vazio) para renderizar tabelas
+                aplicarFiltros();
+
             } catch (error) {
-                console.error("Erro ao carregar dados do Firebase: ", error);
-                document.getElementById('loader').innerText = "Erro de conexão ao carregar os dados. Verifique a internet e tente atualizar a página.";
-                document.getElementById('loader').style.color = "var(--alerta-vermelho)";
+                console.error("Erro ao carregar dados: ", error);
+                document.getElementById('loader').innerText = "Erro ao conectar. Tente atualizar a página.";
             }
         }
+
+        // ====== LÓGICA DE FILTROS ======
+        window.aplicarFiltros = function() {
+            const dtInicioStr = document.getElementById('filtro-data-inicio').value;
+            const dtFimStr = document.getElementById('filtro-data-fim').value;
+            const tipoFiltro = document.getElementById('filtro-tipo').value.toLowerCase();
+
+            let dtInicio = dtInicioStr ? new Date(dtInicioStr + "T00:00:00").getTime() : 0;
+            let dtFim = dtFimStr ? new Date(dtFimStr + "T23:59:59").getTime() : Infinity;
+
+            // Filtra Ouvidoria
+            window.dadosOuvidoriaFiltrados = window.dadosOuvidoriaOriginais.filter(d => {
+                const tempo = d.data_submissao ? d.data_submissao.toMillis() : 0;
+                const matchData = tempo >= dtInicio && tempo <= dtFim;
+                const matchTipo = tipoFiltro === "" || (d.tipo_manifestacao && d.tipo_manifestacao.toLowerCase().includes(tipoFiltro));
+                return matchData && matchTipo;
+            });
+
+            // Filtra e-SIC
+            window.dadosEsicFiltrados = window.dadosEsicOriginais.filter(d => {
+                const tempo = d.data_submissao ? d.data_submissao.toMillis() : 0;
+                const matchData = tempo >= dtInicio && tempo <= dtFim;
+                const matchTipo = tipoFiltro === "" || (d.tipo_pedido && d.tipo_pedido.toLowerCase().includes(tipoFiltro));
+                return matchData && matchTipo;
+            });
+
+            renderizarTabelas();
+        }
+
+        window.limparFiltros = function() {
+            document.getElementById('filtro-data-inicio').value = '';
+            document.getElementById('filtro-data-fim').value = '';
+            document.getElementById('filtro-tipo').value = '';
+            aplicarFiltros();
+        }
+
+        // ====== LÓGICA DE RENDERIZAÇÃO ======
+        function renderizarTabelas() {
+            // Atualiza Contadores
+            document.getElementById('total-ouvidoria').innerText = window.dadosOuvidoriaFiltrados.length;
+            document.getElementById('total-esic').innerText = window.dadosEsicFiltrados.length;
+
+            // Tabela Ouvidoria
+            const tbodyOuv = document.getElementById('tbody-ouvidoria');
+            tbodyOuv.innerHTML = '';
+            if (window.dadosOuvidoriaFiltrados.length === 0) {
+                document.getElementById('empty-ouvidoria').style.display = 'block';
+                tbodyOuv.parentElement.style.display = 'none';
+            } else {
+                document.getElementById('empty-ouvidoria').style.display = 'none';
+                tbodyOuv.parentElement.style.display = 'table';
+                window.dadosOuvidoriaFiltrados.forEach((d, index) => {
+                    const tr = document.createElement('tr');
+                    const isAnonimo = d.anonimo === 'Sim';
+                    tr.innerHTML = `
+                        <td>${formatarData(d.data_submissao)}</td>
+                        <td><span class="badge ${getBadgeOuvidoria(d.tipo_manifestacao)}">${d.tipo_manifestacao || '-'}</span></td>
+                        <td><strong>${isAnonimo ? 'Anônimo' : (d.nome || '-')}</strong></td>
+                        <td>${isAnonimo ? 'Sigiloso' : (d.email || d.telefone || '-')}</td>
+                        <td class="col-acao"><button class="btn-acao" onclick="abrirModalOuvidoria(${index})">Ler na íntegra</button></td>
+                    `;
+                    tbodyOuv.appendChild(tr);
+                });
+            }
+
+            // Tabela e-SIC
+            const tbodyEsic = document.getElementById('tbody-esic');
+            tbodyEsic.innerHTML = '';
+            if (window.dadosEsicFiltrados.length === 0) {
+                document.getElementById('empty-esic').style.display = 'block';
+                tbodyEsic.parentElement.style.display = 'none';
+            } else {
+                document.getElementById('empty-esic').style.display = 'none';
+                tbodyEsic.parentElement.style.display = 'table';
+                window.dadosEsicFiltrados.forEach((d, index) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${formatarData(d.data_submissao)}</td>
+                        <td>${d.tipo_pedido || '-'}</td>
+                        <td><strong>${d.nome || '-'}</strong></td>
+                        <td><span class="badge ${getBadgeEsic(d.status_pedido)}">${d.status_pedido || 'Em tramitação'}</span></td>
+                        <td class="col-acao"><button class="btn-acao" onclick="abrirModalEsic(${index})">Ler pedido</button></td>
+                    `;
+                    tbodyEsic.appendChild(tr);
+                });
+            }
+        }
+
+        // ====== LÓGICA DO MODAL ======
+        window.abrirModalOuvidoria = function(index) {
+            const d = window.dadosOuvidoriaFiltrados[index];
+            let html = `
+                <div style="margin-bottom: 20px; border-bottom: 2px solid #025d3b; padding-bottom: 10px;">
+                    <h1 style="color: #025d3b; font-size: 1.5rem; margin-bottom: 5px;">Relatório de Manifestação (Ouvidoria)</h1>
+                    <p style="color: #64748b; font-size: 0.85rem;">Gerado pelo Sistema da Câmara Municipal</p>
+                </div>
+                <div class="detalhe-item"><label>Data do Envio</label><p>${formatarData(d.data_submissao)}</p></div>
+                <div class="detalhe-item"><label>Tipo de Manifestação</label><p>${d.tipo_manifestacao || 'Não informado'}</p></div>
+                <div class="detalhe-item"><label>Identificação</label><p>${d.anonimo === 'Sim' ? 'Anônimo' : (d.nome || 'Não informado')}</p></div>
+            `;
+            if (d.anonimo !== 'Sim') {
+                html += `
+                    <div class="detalhe-item"><label>E-mail</label><p>${d.email || '-'}</p></div>
+                    <div class="detalhe-item"><label>Telefone</label><p>${d.telefone || '-'}</p></div>
+                `;
+            }
+            html += `<div class="detalhe-item"><label>Descrição Completa</label><p style="border-left: 4px solid #025d3b;">${d.descricao || 'Sem descrição'}</p></div>`;
+            
+            document.getElementById('modal-conteudo').innerHTML = html;
+            document.getElementById('modal-leitura').classList.add('ativo');
+        }
+
+        window.abrirModalEsic = function(index) {
+            const d = window.dadosEsicFiltrados[index];
+            const html = `
+                <div style="margin-bottom: 20px; border-bottom: 2px solid #0284c7; padding-bottom: 10px;">
+                    <h1 style="color: #0284c7; font-size: 1.5rem; margin-bottom: 5px;">Pedido de Informação (e-SIC)</h1>
+                    <p style="color: #64748b; font-size: 0.85rem;">Gerado pelo Sistema da Câmara Municipal</p>
+                </div>
+                <div class="detalhe-item"><label>Data do Pedido</label><p>${formatarData(d.data_submissao)}</p></div>
+                <div class="detalhe-item"><label>Status Atual</label><p>${d.status_pedido || 'Em tramitação'}</p></div>
+                <div class="detalhe-item"><label>Tipo de Pedido</label><p>${d.tipo_pedido || '-'}</p></div>
+                <div class="detalhe-item"><label>Nome do Solicitante</label><p>${d.nome || '-'}</p></div>
+                <div class="detalhe-item"><label>Documento (CPF/CNPJ)</label><p>${d.documento || '-'}</p></div>
+                <div class="detalhe-item"><label>E-mail</label><p>${d.email || '-'}</p></div>
+                <div class="detalhe-item"><label>Telefone</label><p>${d.telefone || '-'}</p></div>
+                <div class="detalhe-item"><label>Endereço Completo</label><p>${d.endereco || 'Não preenchido'}</p></div>
+                <div class="detalhe-item"><label>Forma Preferencial de Resposta</label><p>${d.forma_recebimento || '-'}</p></div>
+                <div class="detalhe-item"><label>Descrição do Pedido</label><p style="border-left: 4px solid #0284c7;">${d.descricao || 'Sem descrição'}</p></div>
+            `;
+            document.getElementById('modal-conteudo').innerHTML = html;
+            document.getElementById('modal-leitura').classList.add('ativo');
+        }
+
+        window.fecharModal = function() {
+            document.getElementById('modal-leitura').classList.remove('ativo');
+        }
+
+        // ====== LÓGICA DE EXPORTAÇÃO PDF (HTML2PDF) ======
+        
+        // PDF da Tabela Atual Visível
+        window.baixarTabelaPDF = function() {
+            // Descobre qual tabela está ativa
+            let elementoParaImprimir = window.abaAtiva === 'tab-ouvidoria' 
+                ? document.getElementById('area-tabela-ouvidoria') 
+                : document.getElementById('area-tabela-esic');
+            
+            // Verifica se a tabela não está oculta (estado vazio)
+            if(elementoParaImprimir.style.display === 'none') {
+                alert("Não há dados para exportar com os filtros atuais.");
+                return;
+            }
+
+            // Oculta a coluna de Ação temporariamente para o PDF
+            const colunasAcao = elementoParaImprimir.querySelectorAll('.col-acao');
+            colunasAcao.forEach(el => el.style.display = 'none');
+
+            // Prepara a configuração do PDF
+            const opt = {
+                margin:       10,
+                filename:     `Relatorio_${window.abaAtiva === 'tab-ouvidoria' ? 'Ouvidoria' : 'e-SIC'}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+            };
+
+            // Gera e salva
+            html2pdf().set(opt).from(elementoParaImprimir).save().then(() => {
+                // Restaura a exibição da coluna Ação
+                colunasAcao.forEach(el => el.style.display = '');
+            });
+        }
+
+        // PDF do Modal Individual (Pedido/Manifestação específica)
+        window.baixarModalPDF = function() {
+            const elementoParaImprimir = document.getElementById('modal-conteudo');
+            
+            const opt = {
+                margin:       15,
+                filename:     `Documento_Individual.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(elementoParaImprimir).save();
+        }
+
     </script>
 </body>
 </html>
