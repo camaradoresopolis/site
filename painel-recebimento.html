@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Recebimento | Ouvidoria e e-SIC</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Variáveis de Cores */
+        :root { 
+            --cor-fundo: #f4f6f8; 
+            --cor-primaria: #025d3b; 
+            --cor-primaria-hover: #01472c; 
+            --cor-primaria-bg: rgba(2, 93, 59, 0.08); 
+            --branco: #ffffff; 
+            --texto-escuro: #1e293b; 
+            --texto-medio: #475569; 
+            --texto-claro: #64748b; 
+            --borda: #e2e8f0; 
+            --transicao: all 0.3s ease; 
+            --alerta-azul: #0284c7;
+            --alerta-vermelho: #dc2626;
+            --alerta-amarelo: #d97706;
+            --alerta-verde: #059669;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--cor-fundo); 
+            color: var(--texto-escuro); 
+            line-height: 1.6; 
+            padding: 40px 20px; 
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        /* Botão Voltar Topo */
+        .btn-voltar-simples { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+            text-decoration: none; 
+            color: var(--texto-medio); 
+            font-size: 1rem; 
+            font-weight: 500; 
+            margin-bottom: 25px; 
+            transition: var(--transicao); 
+        }
+        .btn-voltar-simples:hover { color: var(--cor-primaria); }
+        .btn-voltar-simples svg { width: 20px; height: 20px; stroke: currentColor; }
+
+        /* Cabeçalho do Painel */
+        .painel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .painel-titulo h1 {
+            font-size: 1.8rem;
+            color: var(--texto-escuro);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .painel-titulo h1 svg { width: 28px; height: 28px; fill: var(--cor-primaria); }
+        .painel-titulo p { color: var(--texto-claro); font-size: 0.95rem; margin-top: 4px; }
+
+        /* Cards de Resumo */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background-color: var(--branco);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--borda);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background-color: var(--cor-primaria-bg);
+            color: var(--cor-primaria);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .stat-icon svg { width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        
+        .stat-info h3 { font-size: 0.9rem; color: var(--texto-claro); font-weight: 600; text-transform: uppercase; margin-bottom: 4px; }
+        .stat-info .valor { font-size: 2rem; color: var(--texto-escuro); font-weight: 700; line-height: 1; }
+
+        /* Abas de Navegação (Tabs) */
+        .tabs-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--borda);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--texto-claro);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: var(--transicao);
+        }
+        .tab-btn:hover { background: #e2e8f0; color: var(--texto-escuro); }
+        .tab-btn.active { background: var(--cor-primaria); color: var(--branco); }
+
+        /* Conteúdo das Abas */
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+
+        /* Tabelas Profissionais */
+        .tabela-container {
+            background: var(--branco);
+            border: 1px solid var(--borda);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        thead { background-color: #f8fafc; border-bottom: 1px solid var(--borda); }
+        th { padding: 16px; font-size: 0.85rem; font-weight: 600; color: var(--texto-claro); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+        td { padding: 16px; font-size: 0.95rem; color: var(--texto-escuro); border-bottom: 1px solid var(--borda); vertical-align: middle; }
+        tbody tr:hover { background-color: #f1f5f9; }
+        tbody tr:last-child td { border-bottom: none; }
+
+        /* Badges de Status/Tipos */
+        .badge {
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        .bg-verde { background: #d1fae5; color: var(--alerta-verde); }
+        .bg-vermelho { background: #fee2e2; color: var(--alerta-vermelho); }
+        .bg-amarelo { background: #fef3c7; color: var(--alerta-amarelo); }
+        .bg-azul { background: #e0f2fe; color: var(--alerta-azul); }
+        .bg-cinza { background: #e2e8f0; color: var(--texto-medio); }
+
+        /* Botão Ação na Tabela */
+        .btn-acao {
+            background-color: var(--cor-primaria-bg);
+            color: var(--cor-primaria);
+            border: 1px solid transparent;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transicao);
+            white-space: nowrap;
+        }
+        .btn-acao:hover { background-color: var(--cor-primaria); color: var(--branco); }
+
+        /* Estado de Carregamento e Vazio */
+        .loading-state, .empty-state { text-align: center; padding: 60px 20px; color: var(--texto-claro); font-size: 1.1rem; }
+        .loading-spinner { border: 4px solid rgba(0, 0, 0, 0.1); width: 40px; height: 40px; border-radius: 50%; border-left-color: var(--cor-primaria); animation: spin 1s linear infinite; margin: 0 auto 15px auto; }
+
+        /* Modal para Leitura Completa */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; opacity: 0; visibility: hidden; transition: var(--transicao);
+        }
+        .modal-overlay.ativo { opacity: 1; visibility: visible; }
+        
+        .modal-box {
+            background-color: var(--branco);
+            border-radius: 12px;
+            width: 90%; max-width: 600px; max-height: 90vh;
+            display: flex; flex-direction: column;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: scale(0.95); transition: var(--transicao);
+        }
+        .modal-overlay.ativo .modal-box { transform: scale(1); }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--borda);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .modal-header h2 { font-size: 1.2rem; color: var(--texto-escuro); }
+        .btn-fechar { background: transparent; border: none; font-size: 1.5rem; color: var(--texto-claro); cursor: pointer; }
+        .btn-fechar:hover { color: var(--alerta-vermelho); }
+
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+        }
+        
+        .detalhe-item { margin-bottom: 16px; }
+        .detalhe-item label { display: block; font-size: 0.8rem; color: var(--texto-claro); text-transform: uppercase; margin-bottom: 4px; font-weight: 600; }
+        .detalhe-item p { font-size: 0.95rem; color: var(--texto-escuro); background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid var(--borda); white-space: pre-wrap; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            .painel-header { flex-direction: column; align-items: flex-start; }
+            .tabs-container { flex-direction: column; }
+            .tab-btn { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <a href="https://www.doresopolis.mg.leg.br/transparencia" class="btn-voltar-simples">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Voltar para Transparência
+        </a>
+
+        <div class="painel-header">
+            <div class="painel-titulo">
+                <h1>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M216,40V216a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V40A16,16,0,0,1,56,24H200A16,16,0,0,1,216,40ZM56,40V216H200V40ZM88,80a8,8,0,0,0,8,8h64a8,8,0,0,0,0-16H96A8,8,0,0,0,88,80Zm8,48h64a8,8,0,0,0,0-16H96A8,8,0,0,0,96,128Zm0,40h64a8,8,0,0,0,0-16H96A8,8,0,0,0,96,168Z"></path></svg>
+                    Painel de Recebimento
+                </h1>
+                <p>Gerencie as manifestações da Ouvidoria e os pedidos do e-SIC recebidos pelo site.</p>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </div>
+                <div class="stat-info">
+                    <h3>Total Ouvidoria</h3>
+                    <div class="valor" id="total-ouvidoria">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background-color: #e0f2fe; color: #0284c7;">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                </div>
+                <div class="stat-info">
+                    <h3>Total e-SIC</h3>
+                    <div class="valor" id="total-esic">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="trocarAba('tab-ouvidoria', this)">Ouvidoria (Manifestações)</button>
+            <button class="tab-btn" onclick="trocarAba('tab-esic', this)">e-SIC (Pedidos de Informação)</button>
+        </div>
+
+        <div id="loader" class="loading-state">
+            <div class="loading-spinner"></div>
+            Sincronizando com o banco de dados...
+        </div>
+
+        <div id="tab-ouvidoria" class="tab-content">
+            <div class="tabela-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Tipo</th>
+                            <th>Identificação</th>
+                            <th>Contato</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-ouvidoria">
+                        </tbody>
+                </table>
+            </div>
+            <div id="empty-ouvidoria" class="empty-state" style="display: none;">
+                Nenhuma manifestação registrada na Ouvidoria até o momento.
+            </div>
+        </div>
+
+        <div id="tab-esic" class="tab-content">
+            <div class="tabela-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Tipo</th>
+                            <th>Solicitante</th>
+                            <th>Status</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-esic">
+                        </tbody>
+                </table>
+            </div>
+            <div id="empty-esic" class="empty-state" style="display: none;">
+                Nenhum pedido registrado no e-SIC até o momento.
+            </div>
+        </div>
+
+    </div>
+
+    <div id="modal-leitura" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>Detalhes do Registro</h2>
+                <button class="btn-fechar" onclick="fecharModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-conteudo">
+                </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCjt-ILO7yuudiqCNHNiZn3pZfNj7BPNPI",
+            authDomain: "camaradoresopolis-cb675.firebaseapp.com",
+            projectId: "camaradoresopolis-cb675",
+            storageBucket: "camaradoresopolis-cb675.firebasestorage.app",
+            messagingSenderId: "498806818920",
+            appId: "1:498806818920:web:7d293de944298717fc13dd"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Variáveis Globais para guardar os dados e exibir no modal
+        window.dadosOuvidoriaGlobais = [];
+        window.dadosEsicGlobais = [];
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', async () => {
+            await carregarDados();
+        });
+
+        // Função de trocar abas
+        window.trocarAba = function(idTab, btn) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(idTab).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        // Funções do Modal
+        window.abrirModalOuvidoria = function(index) {
+            const d = window.dadosOuvidoriaGlobais[index];
+            let html = `
+                <div class="detalhe-item"><label>Data do Envio</label><p>${formatarData(d.data_submissao)}</p></div>
+                <div class="detalhe-item"><label>Tipo de Manifestação</label><p>${d.tipo_manifestacao || 'Não informado'}</p></div>
+                <div class="detalhe-item"><label>Identificação</label><p>${d.anonimo === 'Sim' ? 'Anônimo' : (d.nome || 'Não informado')}</p></div>
+            `;
+            if (d.anonimo !== 'Sim') {
+                html += `
+                    <div class="detalhe-item"><label>E-mail</label><p>${d.email || '-'}</p></div>
+                    <div class="detalhe-item"><label>Telefone</label><p>${d.telefone || '-'}</p></div>
+                `;
+            }
+            html += `<div class="detalhe-item"><label>Descrição Completa</label><p>${d.descricao || 'Sem descrição'}</p></div>`;
+            
+            document.getElementById('modal-conteudo').innerHTML = html;
+            document.getElementById('modal-leitura').classList.add('ativo');
+        }
+
+        window.abrirModalEsic = function(index) {
+            const d = window.dadosEsicGlobais[index];
+            const html = `
+                <div class="detalhe-item"><label>Data do Pedido</label><p>${formatarData(d.data_submissao)}</p></div>
+                <div class="detalhe-item"><label>Status</label><p>${d.status_pedido || 'Em tramitação'}</p></div>
+                <div class="detalhe-item"><label>Tipo de Pedido</label><p>${d.tipo_pedido || '-'}</p></div>
+                <div class="detalhe-item"><label>Nome do Solicitante</label><p>${d.nome || '-'}</p></div>
+                <div class="detalhe-item"><label>Documento (CPF/CNPJ)</label><p>${d.documento || '-'}</p></div>
+                <div class="detalhe-item"><label>E-mail</label><p>${d.email || '-'}</p></div>
+                <div class="detalhe-item"><label>Telefone</label><p>${d.telefone || '-'}</p></div>
+                <div class="detalhe-item"><label>Endereço</label><p>${d.endereco || 'Não preenchido'}</p></div>
+                <div class="detalhe-item"><label>Forma Preferencial de Resposta</label><p>${d.forma_recebimento || '-'}</p></div>
+                <div class="detalhe-item"><label>Descrição do Pedido</label><p>${d.descricao || 'Sem descrição'}</p></div>
+            `;
+            document.getElementById('modal-conteudo').innerHTML = html;
+            document.getElementById('modal-leitura').classList.add('ativo');
+        }
+
+        window.fecharModal = function() {
+            document.getElementById('modal-leitura').classList.remove('ativo');
+        }
+
+        // Formatação de data Firebase
+        function formatarData(timestamp) {
+            if (!timestamp) return "Data Indisponível";
+            // Verifica se é o objeto nativo do firestore
+            const date = timestamp.toDate ? timestamp.toDate() : new Date();
+            return date.toLocaleString('pt-BR');
+        }
+
+        // Definir cor das Badges de Ouvidoria
+        function getBadgeOuvidoria(tipo) {
+            if(tipo === 'Reclamação' || tipo === 'Denúncia') return 'bg-vermelho';
+            if(tipo === 'Elogio') return 'bg-verde';
+            if(tipo === 'Sugestão') return 'bg-azul';
+            return 'bg-cinza';
+        }
+
+        // Definir cor das Badges do e-SIC
+        function getBadgeEsic(status) {
+            if(status === 'Em tramitação') return 'bg-amarelo';
+            if(status === 'Atendido') return 'bg-verde';
+            if(status === 'Indeferido') return 'bg-vermelho';
+            return 'bg-cinza';
+        }
+
+        async function carregarDados() {
+            try {
+                // 1. Puxar dados da Ouvidoria
+                const queryOuv = await getDocs(collection(db, "ouvidoria_manifestacoes"));
+                let ouvidorias = [];
+                queryOuv.forEach(doc => ouvidorias.push(doc.data()));
+                
+                // Ordenar do mais novo para o mais velho
+                ouvidorias.sort((a, b) => {
+                    const dataA = a.data_submissao ? a.data_submissao.toMillis() : 0;
+                    const dataB = b.data_submissao ? b.data_submissao.toMillis() : 0;
+                    return dataB - dataA; 
+                });
+                
+                window.dadosOuvidoriaGlobais = ouvidorias;
+                document.getElementById('total-ouvidoria').innerText = ouvidorias.length;
+
+                const tbodyOuv = document.getElementById('tbody-ouvidoria');
+                if (ouvidorias.length === 0) {
+                    document.getElementById('empty-ouvidoria').style.display = 'block';
+                    tbodyOuv.parentElement.style.display = 'none';
+                } else {
+                    ouvidorias.forEach((d, index) => {
+                        const tr = document.createElement('tr');
+                        const isAnonimo = d.anonimo === 'Sim';
+                        tr.innerHTML = `
+                            <td>${formatarData(d.data_submissao)}</td>
+                            <td><span class="badge ${getBadgeOuvidoria(d.tipo_manifestacao)}">${d.tipo_manifestacao || '-'}</span></td>
+                            <td><strong>${isAnonimo ? 'Anônimo' : (d.nome || '-')}</strong></td>
+                            <td>${isAnonimo ? 'Sigiloso' : (d.email || d.telefone || '-')}</td>
+                            <td><button class="btn-acao" onclick="abrirModalOuvidoria(${index})">Ler na íntegra</button></td>
+                        `;
+                        tbodyOuv.appendChild(tr);
+                    });
+                }
+
+                // 2. Puxar dados do e-SIC
+                const queryEsic = await getDocs(collection(db, "esic_pedidos"));
+                let esics = [];
+                queryEsic.forEach(doc => esics.push(doc.data()));
+
+                esics.sort((a, b) => {
+                    const dataA = a.data_submissao ? a.data_submissao.toMillis() : 0;
+                    const dataB = b.data_submissao ? b.data_submissao.toMillis() : 0;
+                    return dataB - dataA; 
+                });
+
+                window.dadosEsicGlobais = esics;
+                document.getElementById('total-esic').innerText = esics.length;
+
+                const tbodyEsic = document.getElementById('tbody-esic');
+                if (esics.length === 0) {
+                    document.getElementById('empty-esic').style.display = 'block';
+                    tbodyEsic.parentElement.style.display = 'none';
+                } else {
+                    esics.forEach((d, index) => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${formatarData(d.data_submissao)}</td>
+                            <td>${d.tipo_pedido || '-'}</td>
+                            <td><strong>${d.nome || '-'}</strong></td>
+                            <td><span class="badge ${getBadgeEsic(d.status_pedido)}">${d.status_pedido || 'Em tramitação'}</span></td>
+                            <td><button class="btn-acao" onclick="abrirModalEsic(${index})">Ler pedido</button></td>
+                        `;
+                        tbodyEsic.appendChild(tr);
+                    });
+                }
+
+                // Remove o Loader
+                document.getElementById('loader').style.display = 'none';
+                // Mostra a primeira aba por padrão (Ouvidoria já tem "active" no HTML, mas garantimos visibilidade)
+                document.getElementById('tab-ouvidoria').classList.add('active');
+
+            } catch (error) {
+                console.error("Erro ao carregar dados do Firebase: ", error);
+                document.getElementById('loader').innerText = "Erro de conexão ao carregar os dados. Verifique a internet e tente atualizar a página.";
+                document.getElementById('loader').style.color = "var(--alerta-vermelho)";
+            }
+        }
+    </script>
+</body>
+</html>
