@@ -283,8 +283,8 @@
         .icone-sucesso {
             width: 70px;
             height: 70px;
-            background-color: #d1fae5; /* Verde claro */
-            color: #059669; /* Verde esmeralda */
+            background-color: #d1fae5; 
+            color: #059669; 
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -429,11 +429,11 @@
                 <div class="form-group">
                     <p class="pergunta-titulo">Qual serviço foi solicitado?</p>
                     <div class="opcoes-grupo">
-                        <label class="radio-label"><input type="radio" name="servico" value="CIAC" checked> CAC</label>
+                        <label class="radio-label"><input type="radio" name="servico" value="CAC" checked> CAC</label>
                         <label class="radio-label"><input type="radio" name="servico" value="Ouvidoria"> Ouvidoria</label>
-                        <label class="radio-label"><input type="radio" name="servico" value="Diretoria Legislativa"> Cursos e Treinamentos</label>
-                        <label class="radio-label"><input type="radio" name="servico" value="Escola do Legislativo"> Atendimento em Unidades de Serviços</label>
-                        <label class="radio-label"><input type="radio" name="servico" value="Recursos Humanos"> e-SIC</label>
+                        <label class="radio-label"><input type="radio" name="servico" value="Cursos e Treinamentos"> Cursos e Treinamentos</label>
+                        <label class="radio-label"><input type="radio" name="servico" value="Atendimento em Unidades de Servicos"> Atendimento em Unidades de Serviços</label>
+                        <label class="radio-label"><input type="radio" name="servico" value="e-SIC"> e-SIC</label>
                         <label class="radio-label"><input type="radio" name="servico" value="Outro"> Outro</label>
                     </div>
                 </div>
@@ -549,11 +549,9 @@
             };
 
             try {
-                // Inserindo no Firebase
                 await addDoc(collection(db, "pesquisas_satisfacao"), dadosSubmissao);
                 form.reset();
                 
-                // Exibe o modal elegante de sucesso ao invés do alert()
                 modalSucesso.classList.add('ativo');
                 
             } catch (error) {
