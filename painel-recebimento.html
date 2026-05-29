@@ -352,6 +352,7 @@
                     <button class="btn-fechar" onclick="fecharModal()">&times;</button>
                 </div>
             </div>
+            
             <div class="modal-body" id="modal-conteudo">
                 </div>
         </div>
@@ -359,7 +360,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        // IMPORTANTE: Adicionado o 'doc' e 'updateDoc' para permitir a edição de status
+        import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         // CREDENCIAIS DE ACESSO
         const CREDENCIAIS = {
@@ -456,7 +458,13 @@
                 // 1. Puxar dados da Ouvidoria
                 const queryOuv = await getDocs(collection(db, "ouvidoria_manifestacoes"));
                 let ouvidorias = [];
-                queryOuv.forEach(doc => ouvidorias.push(doc.data()));
+                // IMPORTANTE: Capturamos o ID do documento para podermos editar caso necessário
+                queryOuv.forEach(docSnap => {
+                    let d = docSnap.data();
+                    d.id = docSnap.id;
+                    ouvidorias.push(d);
+                });
+                
                 ouvidorias.sort((a, b) => {
                     const dataA = a.data_submissao ? a.data_submissao.toMillis() : 0;
                     const dataB = b.data_submissao ? b.data_submissao.toMillis() : 0;
@@ -467,7 +475,12 @@
                 // 2. Puxar dados do e-SIC
                 const queryEsic = await getDocs(collection(db, "esic_pedidos"));
                 let esics = [];
-                queryEsic.forEach(doc => esics.push(doc.data()));
+                queryEsic.forEach(docSnap => {
+                    let d = docSnap.data();
+                    d.id = docSnap.id;
+                    esics.push(d);
+                });
+                
                 esics.sort((a, b) => {
                     const dataA = a.data_submissao ? a.data_submissao.toMillis() : 0;
                     const dataB = b.data_submissao ? b.data_submissao.toMillis() : 0;
@@ -593,13 +606,27 @@
 
         window.abrirModalEsic = function(index) {
             const d = window.dadosEsicFiltrados[index];
+            
+            // Aqui adicionamos o controle dropdown para atualizar o STATUS DO E-SIC
             const html = `
                 <div style="margin-bottom: 20px; border-bottom: 2px solid #0284c7; padding-bottom: 10px;">
                     <h1 style="color: #0284c7; font-size: 1.5rem; margin-bottom: 5px;">Pedido de Informação (e-SIC)</h1>
                     <p style="color: #64748b; font-size: 0.85rem;">Gerado pelo Sistema da Câmara Municipal</p>
                 </div>
+
+                <div class="detalhe-item" style="background: #f1f5f9; padding: 15px; border-radius: 8px; border: 1px dashed #0284c7;">
+                    <label style="color: #0284c7;">Status da Tramitação (Irá refletir no Relatório Estatístico Público)</label>
+                    <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
+                        <select id="select-status-esic" style="padding: 10px; border-radius: 6px; border: 1px solid var(--borda); outline: none; flex: 1;">
+                            <option value="Em tramitação" ${d.status_pedido === 'Em tramitação' ? 'selected' : ''}>Em tramitação</option>
+                            <option value="Atendido" ${d.status_pedido === 'Atendido' ? 'selected' : ''}>Atendido (Deferido)</option>
+                            <option value="Indeferido" ${d.status_pedido === 'Indeferido' ? 'selected' : ''}>Indeferido</option>
+                        </select>
+                        <button class="btn btn-primario" id="btn-atualizar-status" onclick="atualizarStatusEsic('${d.id}')">Atualizar Status</button>
+                    </div>
+                </div>
+
                 <div class="detalhe-item"><label>Data do Pedido</label><p>${formatarData(d.data_submissao)}</p></div>
-                <div class="detalhe-item"><label>Status Atual</label><p>${d.status_pedido || 'Em tramitação'}</p></div>
                 <div class="detalhe-item"><label>Tipo de Pedido</label><p>${d.tipo_pedido || '-'}</p></div>
                 <div class="detalhe-item"><label>Nome do Solicitante</label><p>${d.nome || '-'}</p></div>
                 <div class="detalhe-item"><label>Documento (CPF/CNPJ)</label><p>${d.documento || '-'}</p></div>
@@ -615,6 +642,39 @@
 
         window.fecharModal = function() {
             document.getElementById('modal-leitura').classList.remove('ativo');
+        }
+
+        // ====== LÓGICA DE ATUALIZAÇÃO DO STATUS NO FIREBASE ======
+        window.atualizarStatusEsic = async function(docId) {
+            const novoStatus = document.getElementById('select-status-esic').value;
+            const btnAtualizar = document.getElementById('btn-atualizar-status');
+            
+            btnAtualizar.innerText = "Salvando...";
+            btnAtualizar.disabled = true;
+
+            try {
+                // Referência direta ao documento específico usando o ID
+                const docRef = doc(db, "esic_pedidos", docId);
+                // Atualiza somente o campo de status
+                await updateDoc(docRef, {
+                    status_pedido: novoStatus
+                });
+                
+                alert(`Status atualizado com sucesso para: ${novoStatus}`);
+                fecharModal();
+                
+                // Recarrega os dados para a tabela atualizar a cor da Badge
+                document.getElementById('loader').style.display = 'block';
+                document.getElementById('tab-esic').classList.remove('active');
+                await carregarDados();
+                
+            } catch (error) {
+                console.error("Erro ao atualizar status:", error);
+                alert("Erro ao atualizar o status. Verifique as regras do Firebase.");
+            } finally {
+                btnAtualizar.innerText = "Atualizar Status";
+                btnAtualizar.disabled = false;
+            }
         }
 
         // ====== LÓGICA DE EXPORTAÇÃO PDF ======
@@ -645,6 +705,11 @@
 
         window.baixarModalPDF = function() {
             const elementoParaImprimir = document.getElementById('modal-conteudo');
+            
+            // Oculta a área de edição de status para não sair no PDF impresso
+            const areaEdicaoStatus = elementoParaImprimir.querySelector('div[style*="border: 1px dashed"]');
+            if(areaEdicaoStatus) areaEdicaoStatus.style.display = 'none';
+
             const opt = {
                 margin: 15,
                 filename: `Documento_Individual.pdf`,
@@ -652,7 +717,11 @@
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
-            html2pdf().set(opt).from(elementoParaImprimir).save();
+            
+            html2pdf().set(opt).from(elementoParaImprimir).save().then(() => {
+                // Restaura a visibilidade
+                if(areaEdicaoStatus) areaEdicaoStatus.style.display = 'block';
+            });
         }
     </script>
 </body>
