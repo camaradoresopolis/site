@@ -352,13 +352,53 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        let todasAsPesquisas = []; // Armazena cache dos dados
-        let instanciasGraficos = {}; // Guarda instancias do Chart.js para destruir ao atualizar
+        let todasAsPesquisas = []; 
+        let instanciasGraficos = {}; 
 
         // Paletas de Cores padrão dos relatórios
-        const coresRosca = ['#36A2EB', '#586776', '#D9537F', '#F6C23E', '#20c997'];
+        const coresRosca = ['#36A2EB', '#D9537F', '#586776', '#F6C23E', '#20c997', '#9b59b6', '#fd7e14', '#e83e8c', '#6f42c1'];
         const corBarra = '#4ab2d4';
         const corBarraHorizontal = '#479b93';
+
+        // Mapeamento para garantir acentos nas legendas e inicializar as categorias zeradas
+        function mapLabel(val) {
+            const map = {
+                "Nao informado": "Não informado",
+                "Ate 20 anos": "Até 20 anos",
+                "Ensino Medio Incompleto": "Ensino Médio Incompleto",
+                "Ensino Medio": "Ensino Médio",
+                "Pos Graduado/Especializacao": "Pós Graduado/Especialização",
+                "Nao": "Não",
+                "Otimo": "Ótimo",
+                "Diretoria de Financas": "Diretoria de Finanças",
+                "Comunicacao Social": "Comunicação Social"
+            };
+            return map[val] || val || "Não informado";
+        }
+
+        // Gera a base zerada de todos os gráficos para eles sempre aparecerem
+        function getAggPadrao() {
+            return {
+                sexo: { "Masculino": 0, "Feminino": 0, "Não informado": 0 },
+                idade: { "Até 20 anos": 0, "21 a 40 anos": 0, "41 a 60 anos": 0, "Acima de 60 anos": 0, "Não informado": 0 },
+                escolaridade: { "Ensino Fundamental Incompleto": 0, "Ensino Fundamental": 0, "Ensino Médio Incompleto": 0, "Ensino Médio": 0, "Superior Incompleto": 0, "Superior": 0, "Pós Graduado/Especialização": 0, "Mestrado/Doutorado": 0, "Não informado": 0 },
+                atendido: { "Sim": 0, "Não": 0 },
+                servicos: { "CIAC": 0, "Ouvidoria": 0, "Diretoria Legislativa": 0, "Escola do Legislativo": 0, "Recursos Humanos": 0, "Diretoria de Compras e Contratos": 0, "Diretoria de Finanças": 0, "Comunicação Social": 0, "Outro": 0 },
+                satServico: { "Ótimo": 0, "Bom": 0, "Regular": 0, "Ruim": 0 },
+                satAtendimento: { "Ótimo": 0, "Bom": 0, "Regular": 0, "Ruim": 0 },
+                satPrazos: { "Ótimo": 0, "Bom": 0, "Regular": 0, "Ruim": 0 }
+            };
+        }
+
+        // Função de contagem segura
+        function countProp(obj, val) {
+            let chave = mapLabel(val ? val.trim() : "Não informado");
+            if (obj[chave] !== undefined) {
+                obj[chave]++;
+            } else {
+                obj[chave] = 1; // Caso venha alguma opção exótica não mapeada
+            }
+        }
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', async () => {
@@ -378,11 +418,10 @@
                 
                 querySnapshot.forEach((doc) => {
                     let dado = doc.data();
-                    // Converte timestamp do Firebase para objeto Date nativo
                     if(dado.data_submissao && dado.data_submissao.seconds) {
                         dado.dataJs = new Date(dado.data_submissao.seconds * 1000);
                     } else {
-                        dado.dataJs = new Date(); // Fallback
+                        dado.dataJs = new Date(); 
                     }
                     todasAsPesquisas.push(dado);
                 });
@@ -399,7 +438,6 @@
         }
 
         function renderizarDashboard() {
-            // Filtro de Data
             const dtInitStr = document.getElementById('data-inicial').value;
             const dtEndStr = document.getElementById('data-final').value;
             
@@ -414,16 +452,13 @@
                 });
             }
 
-            // Atualiza contador
             const countStr = dadosFiltrados.length.toString().padStart(2, '0');
             document.getElementById('total-participantes').innerText = countStr;
 
-            // Agregação de Dados
-            const agg = {
-                sexo: {}, idade: {}, escolaridade: {}, atendido: {}, 
-                servicos: {}, satServico: {}, satAtendimento: {}, satPrazos: {}
-            };
+            // Inicia todos os atributos zerados para o gráfico sempre aparecer
+            const agg = getAggPadrao();
 
+            // Preenche apenas com as informações encontradas
             dadosFiltrados.forEach(d => {
                 countProp(agg.sexo, d.genero);
                 countProp(agg.idade, d.idade);
@@ -435,7 +470,7 @@
                 countProp(agg.satPrazos, d.cumprimento_prazos);
             });
 
-            // Criar Gráficos
+            // Criar Gráficos (Mesmo zerados, eles vão rederizar a estrutura visual)
             criarGrafico('chartSexo', 'doughnut', agg.sexo, coresRosca);
             criarGrafico('chartIdade', 'doughnut', agg.idade, coresRosca);
             criarGrafico('chartEscolaridade', 'doughnut', agg.escolaridade, coresRosca);
@@ -447,18 +482,9 @@
             criarGrafico('chartSatPrazos', 'barHorizontal', agg.satPrazos, [corBarraHorizontal]);
         }
 
-        // Função auxiliar de contagem
-        function countProp(obj, val) {
-            let chave = val ? val.trim() : "Não informado";
-            if(chave === "") chave = "Não informado";
-            obj[chave] = (obj[chave] || 0) + 1;
-        }
-
-        // Função universal para criar gráficos com Chart.js
         function criarGrafico(canvasId, tipo, dadosObj, paleta) {
             const ctx = document.getElementById(canvasId).getContext('2d');
             
-            // Destrói gráfico antigo se existir (para o filtro funcionar)
             if (instanciasGraficos[canvasId]) {
                 instanciasGraficos[canvasId].destroy();
             }
@@ -473,16 +499,16 @@
                 plugins: { legend: { position: 'right' } }
             };
 
-            // Ajustes específicos por tipo
+            // Ajustes para gráficos de barras para garantir que o layout fique vazio e bonito
             if (tipo === 'bar' || tipo === 'barHorizontal') {
-                options.plugins.legend.display = false; // Remove legenda lateral para barras
+                options.plugins.legend.display = false; 
                 options.scales = {
-                    y: { beginAtZero: true, ticks: { precision: 0 } }
+                    y: { beginAtZero: true, suggestedMax: 5, ticks: { precision: 0 } }
                 };
                 if (tipo === 'barHorizontal') {
-                    options.indexAxis = 'y'; // Transforma em barra horizontal
+                    options.indexAxis = 'y'; 
                     options.scales = {
-                        x: { beginAtZero: true, ticks: { precision: 0 } },
+                        x: { beginAtZero: true, suggestedMax: 5, ticks: { precision: 0 } },
                         y: {}
                     };
                 }
