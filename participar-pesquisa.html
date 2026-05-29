@@ -34,32 +34,27 @@
         
         .container { max-width: 1000px; margin: 0 auto; }
         
-        /* Botão Voltar do Topo */
-        .btn-voltar-topo { 
+        /* Botão Voltar Simples (Estilo da Imagem) */
+        .btn-voltar-simples { 
             display: inline-flex; 
             align-items: center; 
             gap: 8px; 
             text-decoration: none; 
-            color: var(--texto-medio); 
-            font-size: 0.95rem; 
-            font-weight: 600; 
+            color: #334155; /* Cor cinza/azulada da imagem */
+            font-size: 1.05rem; 
+            font-weight: 500; 
             margin-bottom: 30px; 
             transition: var(--transicao); 
-            padding: 8px 12px; 
-            border-radius: 8px; 
-            background-color: transparent; 
         }
         
-        .btn-voltar-topo:hover { 
+        .btn-voltar-simples:hover { 
             color: var(--cor-primaria); 
-            background-color: rgba(0,0,0,0.03); 
-            transform: translateX(-4px); 
         }
         
-        .btn-voltar-topo svg { 
+        .btn-voltar-simples svg { 
             width: 20px; 
             height: 20px; 
-            fill: currentColor; 
+            stroke: currentColor; 
         }
 
         /* Cabeçalho */
@@ -277,8 +272,11 @@
 
     <div class="container">
         
-        <a href="https://site-five-sand-34.vercel.app/pesquisa-satisfacao.html" class="btn-voltar-topo">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+        <a href="https://site-five-sand-34.vercel.app/pesquisa-satisfacao.html" class="btn-voltar-simples">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
             Voltar para Pesquisa de Satisfação
         </a>
 
