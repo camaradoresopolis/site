@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ouvidoria e e-SIC — Câmara Municipal de Doresópolis</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Estilos Base Originais */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',Arial,sans-serif;background:#f4f6f4;padding:1.5rem 1rem}
+.wrap{max-width:900px;margin:0 auto}
+.header{background:#0f4c2a;border-radius:14px;padding:24px 32px;margin-bottom:1.5rem;display:flex;align-items:center;gap:16px}
+.header-icon{width:44px;height:44px;background:rgba(255,255,255,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.header-icon svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.header h1{font-size:18px;font-weight:600;color:#fff}
+.header p{font-size:11px;color:rgba(255,255,255,0.55);margin-top:3px}
+.tabs{display:flex;gap:8px;margin-bottom:1.25rem;flex-wrap:wrap}
+.tab-btn{flex:1;min-width:140px;padding:11px 12px;border:2px solid #1a5c3a;background:#fff;color:#1a5c3a;font-weight:600;font-size:12px;border-radius:10px;cursor:pointer;transition:all .18s;font-family:'Inter',Arial,sans-serif;text-align:center}
+.tab-btn.active{background:#0f4c2a;color:#fff;border-color:#0f4c2a}
+.tab-btn:hover:not(.active){background:#e8f4ef}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.card{background:#fff;border:0.5px solid #e0e0e0;border-radius:12px;overflow:hidden;margin-bottom:1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
+.card-header{background:#f8faf8;border-bottom:0.5px solid #e0e0e0;padding:14px 20px;display:flex;align-items:center;gap:8px}
+.card-header svg{width:15px;height:15px;stroke:#0f4c2a;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.card-header span{font-size:12px;font-weight:600;color:#0f4c2a;letter-spacing:0.3px;text-transform:uppercase}
+
+.card.accordion-card{overflow:hidden}
+.card.accordion-card summary.card-header{cursor:pointer;list-style:none;user-select:none;position:relative;padding-right:44px}
+.card.accordion-card summary.card-header::-webkit-details-marker{display:none}
+.card.accordion-card summary.card-header::after{content:'+';position:absolute;right:20px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;background:#e8f4ef;color:#0f4c2a;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;line-height:1}
+.card.accordion-card[open] summary.card-header::after{content:'−'}
+.card.accordion-card:not([open]) summary.card-header{border-bottom:none}
+.card-body{padding:20px 24px}
+.card-body p{font-size:13px;color:#333;line-height:1.8;margin-bottom:10px}
+.card-body p:last-child{margin-bottom:0}
+.card-body strong{font-weight:600;color:#0f4c2a}
+.card-body a{color:#0f4c2a;text-decoration:none}
+.card-body a:hover{text-decoration:underline}
+.prazo-row{display:flex;gap:10px;margin:14px 0}
+.prazo-card{flex:1;background:#e8f4ef;border-radius:8px;padding:12px 10px;text-align:center}
+.prazo-card .num{font-size:20px;font-weight:600;color:#0f4c2a}
+.prazo-card .label{font-size:10px;color:#1a5c3a;margin-top:2px;line-height:1.4}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.info-item{background:#f8faf8;border-radius:8px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px}
+.info-item svg{width:16px;height:16px;stroke:#0f4c2a;fill:none;stroke-width:1.8;stroke-linecap:round;flex-shrink:0;margin-top:1px}
+.info-item-text .lbl{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px}
+.info-item-text .val{font-size:13px;color:#222;font-weight:500;line-height:1.4}
+.info-item-text a{color:#0f4c2a;text-decoration:none}
+.notice{background:#e8f4ef;border-left:3px solid #0f4c2a;border-radius:0 8px 8px 0;padding:12px 16px;margin-top:12px}
+.notice p{font-size:12px;color:#0f4c2a;line-height:1.7;margin:0}
+.alert{background:#fff8e8;border-left:3px solid #b8860b;border-radius:0 8px 8px 0;padding:12px 16px;margin-top:12px}
+.alert p{font-size:12px;color:#7a5a00;line-height:1.7;margin:0}
+
+table.stat-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:10px}
+table.stat-table th{background:#0f4c2a;color:#fff;padding:10px 12px;text-align:left;font-weight:600}
+table.stat-table td{padding:10px 12px;border-bottom:0.5px solid #eee;color:#333}
+table.stat-table tr:last-child td{border-bottom:none}
+table.stat-table tr:nth-child(even) td{background:#f8faf8}
+
+.serv-item{border:0.5px solid #e0e0e0;border-radius:10px;padding:16px 18px;margin-bottom:10px}
+.serv-item:last-child{margin-bottom:0}
+.serv-title{font-size:13.5px;font-weight:600;color:#0f4c2a;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.serv-title svg{width:15px;height:15px;stroke:#0f4c2a;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.serv-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.serv-badge{font-size:11px;padding:3px 10px;border-radius:6px;font-weight:500}
+.serv-badge.prazo{background:#e8f4ef;color:#0f4c2a}
+.serv-badge.req{background:#f0f0f0;color:#555}
+.serv-desc{font-size:12.5px;color:#555;line-height:1.6;margin-top:4px}
+
+/* --- NOVOS ESTILOS PARA OS FORMULÁRIOS NATIVOS --- */
+.form-group { padding: 18px 0; border-bottom: 1px dotted #e0e0e0; }
+.form-group:last-of-type { border-bottom: none; }
+.form-group:first-of-type { padding-top: 0; }
+.pergunta-titulo { font-size: 13.5px; color: #0f4c2a; font-weight: 600; margin-bottom: 12px; display: block; }
+.pergunta-titulo span.req { color: #dc2626; }
+.opcoes-grupo { display: flex; flex-direction: column; gap: 8px; }
+.radio-label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #333; cursor: pointer; }
+.radio-label input[type="radio"] { width: 15px; height: 15px; accent-color: #0f4c2a; cursor: pointer; }
+.input-texto { width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13px; color: #333; background-color: #f9fafb; transition: all 0.2s; outline: none; }
+.input-texto:focus { border-color: #0f4c2a; background-color: #fff; box-shadow: 0 0 0 3px rgba(15, 76, 42, 0.1); }
+.textarea-input { resize: vertical; min-height: 100px; }
+.btn-enviar { background-color: #0f4c2a; color: #fff; padding: 12px 24px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; margin-top: 10px; width: 100%; }
+.btn-enviar:hover:not(:disabled) { background-color: #0b3d21; transform: translateY(-1px); }
+.btn-enviar:disabled { background-color: #94a3b8; cursor: not-allowed; }
+
+/* Modal de Sucesso */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 9999; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+.modal-overlay.ativo { opacity: 1; visibility: visible; }
+.modal-box { background-color: #fff; border-radius: 12px; padding: 30px; text-align: center; max-width: 350px; width: 90%; transform: scale(0.9); transition: all 0.3s ease; }
+.modal-overlay.ativo .modal-box { transform: scale(1); }
+.icone-sucesso { width: 60px; height: 60px; background-color: #d1fae5; color: #059669; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; }
+.icone-sucesso svg { width: 30px; height: 30px; stroke: currentColor; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.modal-box h3 { font-size: 18px; color: #1f2937; margin-bottom: 8px; font-weight: 700; }
+.modal-box p { color: #4b5563; font-size: 13px; margin-bottom: 20px; line-height: 1.5; }
+.btn-concluir { background-color: #0f4c2a; color: #fff; padding: 10px 0; width: 100%; border-radius: 6px; font-weight: 600; border: none; cursor: pointer; font-size: 13px;}
+
+@media(max-width:600px){
+  .info-grid{grid-template-columns:1fr}
+  .prazo-row{flex-direction:column}
+  .tabs{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="header-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+    <div>
+      <h1>Ouvidoria, e-SIC e Carta de Serviços</h1>
+      <p>Câmara Municipal de Doresópolis — Canais Oficiais de Atendimento ao Cidadão</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn" onclick="showTab('ouvidoria',this)">Ouvidoria</button>
+    <button class="tab-btn" onclick="showTab('esic',this)">e-SIC</button>
+    <button class="tab-btn active" onclick="showTab('relatorio',this)">Relatório Estatístico</button>
+    <button class="tab-btn" onclick="showTab('sigilo',this)">Rol de Sigilo</button>
+    <button class="tab-btn" onclick="showTab('carta',this)">Carta de Serviços</button>
+  </div>
+
+  <div id="ouvidoria" class="tab-content">
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span class="">Sobre a Ouvidoria</span></div>
+      <div class="card-body">
+        <p>A <strong>Ouvidoria da Câmara Municipal de Doresópolis</strong> é o canal oficial para recebimento de reclamações, denúncias, sugestões, elogios e solicitações dos cidadãos, em conformidade com a Lei Federal nº 12.527/2011 (Lei de Acesso à Informação). O sigilo da identidade do manifestante será garantido quando solicitado.</p>
+        <div class="prazo-row">
+          <div class="prazo-card"><div class="num">20</div><div class="label">dias contados para resposta</div></div>
+          <div class="prazo-card"><div class="num">+10</div><div class="label">dias prorrogáveis mediante justificativa</div></div>
+          <div class="prazo-card"><div class="num">LAI</div><div class="label">Lei Federal nº 12.527/2011</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span>Formulário Eletrônico — Ouvidoria</span></div>
+      <div class="card-body">
+        <form id="form-ouvidoria">
+            
+            <div class="form-group">
+                <label class="pergunta-titulo">Tipo de Manifestação <span class="req">*</span></label>
+                <div class="opcoes-grupo">
+                    <label class="radio-label"><input type="radio" name="ouv_tipo" value="Reclamação" required> Reclamação</label>
+                    <label class="radio-label"><input type="radio" name="ouv_tipo" value="Denúncia"> Denúncia</label>
+                    <label class="radio-label"><input type="radio" name="ouv_tipo" value="Sugestão"> Sugestão</label>
+                    <label class="radio-label"><input type="radio" name="ouv_tipo" value="Elogio"> Elogio</label>
+                    <label class="radio-label"><input type="radio" name="ouv_tipo" value="Solicitação"> Solicitação</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="pergunta-titulo">Deseja manter em anônimo? <span class="req">*</span></label>
+                <div class="opcoes-grupo">
+                    <label class="radio-label"><input type="radio" name="ouv_anonimo" value="Sim" required> Sim</label>
+                    <label class="radio-label"><input type="radio" name="ouv_anonimo" value="Não"> Não</label>
+                </div>
+            </div>
+
+            <div id="ouv_bloco_identificacao" style="display: none;">
+                <div class="form-group">
+                    <label class="pergunta-titulo">Nome Completo <span class="req">*</span></label>
+                    <input type="text" class="input-texto" id="ouv_nome" name="ouv_nome" placeholder="Seu nome">
+                </div>
+                <div class="form-group">
+                    <label class="pergunta-titulo">E-mail <span class="req">*</span></label>
+                    <input type="email" class="input-texto" id="ouv_email" name="ouv_email" placeholder="Seu e-mail">
+                </div>
+                <div class="form-group">
+                    <label class="pergunta-titulo">Telefone <span class="req">*</span></label>
+                    <input type="text" class="input-texto" id="ouv_telefone" name="ouv_telefone" placeholder="(00) 00000-0000">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="pergunta-titulo">Descrição detalhada da manifestação <span class="req">*</span></label>
+                <textarea class="input-texto textarea-input" name="ouv_descricao" required placeholder="Sua resposta..."></textarea>
+            </div>
+
+            <button type="submit" id="btn-enviar-ouv" class="btn-enviar">Enviar Manifestação</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="esic" class="tab-content">
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>Sobre o e-SIC</span></div>
+      <div class="card-body">
+        <p>O <strong>e-SIC — Serviço de Informação ao Cidadão</strong> é o canal oficial para pedidos de acesso à informação da Câmara Municipal de Doresópolis, em cumprimento à Lei Federal nº 12.527/2011. O solicitante receberá confirmação com dados para acompanhamento do pedido.</p>
+        <div class="prazo-row">
+          <div class="prazo-card"><div class="num" >20</div><div class="label" >dias contados para resposta</div></div>
+          <div class="prazo-card"><div class="num">+10</div><div class="label">dias prorrogáveis mediante justificativa</div></div>
+          <div class="prazo-card"><div class="num">LAI</div><div class="label">Lei Federal nº 12.527/2011</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span>Formulário Eletrônico — e-SIC</span></div>
+      <div class="card-body">
+        <form id="form-esic">
+
+            <div class="form-group">
+                <label class="pergunta-titulo">Nome Completo <span class="req">*</span></label>
+                <input type="text" class="input-texto" name="esic_nome" required placeholder="Sua resposta">
+            </div>
+
+            <div class="form-group">
+                <label class="pergunta-titulo">CPF ou CNPJ <span class="req">*</span></label>
+                <input type="text" class="input-texto" name="esic_documento" required placeholder="Sua resposta">
+            </div>
+
+            <div class="form-group">
+                <label class="pergunta-titulo">E-mail <span class="req">*</span></label>
+                <input type="email" class="input-texto" name="esic_email" required placeholder="Sua resposta">
+            </div>
+
+            <div class="form-group">
+                <label class="pergunta-titulo">Telefone <span class="req">*</span></label>
+                <input type="text" class="input-texto" name="esic_telefone" required placeholder="Sua resposta">
+            </div>
+
+            <div class="form-group">
+                <label class="pergunta-titulo">Endereço Completo</label>
+                <input type="text" class="input-texto" name="esic_endereco" placeholder="Sua resposta">
+            </div>
+
+            <div class="form-group">
+                <label class="pergunta-titulo">Tipo de pedido <span class="req">*</span></label>
+                <div class="opcoes-grupo">
+                    <label class="radio-label"><input type="radio" name="esic_tipo" value="Pedido de acesso à informação" required> Pedido de acesso à informação</label>
+                    <label class="radio-label"><input type="radio" name="esic_tipo" value="Recurso"> Recurso</label>
+                    <label class="radio-label"><input type="radio" name="esic_tipo" value="Reclamação LAI"> Reclamação LAI</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="pergunta-titulo">Descrição detalhada do pedido <span class="req">*</span></label>
+                <textarea class="input-texto textarea-input" name="esic_descricao" required placeholder="Sua resposta"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="pergunta-titulo">Forma preferencial de recebimento da resposta <span class="req">*</span></label>
+                <div class="opcoes-grupo">
+                    <label class="radio-label"><input type="radio" name="esic_recebimento" value="E-mail" required> E-mail</label>
+                    <label class="radio-label"><input type="radio" name="esic_recebimento" value="Carta"> Carta</label>
+                    <label class="radio-label"><input type="radio" name="esic_recebimento" value="Consulta no local"> Consulta no local (Sede da Câmara)</label>
+                </div>
+            </div>
+
+            <button type="submit" id="btn-enviar-esic" class="btn-enviar">Enviar Pedido</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="relatorio" class="tab-content active">
+    
+    <details class="card accordion-card">
+      <summary class="card-header"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>Relatórios Estatísticos — Exercícios 2022 e 2023</span></summary>
+      <div class="card-body">
+        <p>A Câmara Municipal de Doresópolis/MG declara, para fins de transparência pública, que nos exercícios de 2022 e 2023 ainda não havia sido implantada a Ouvidoria no âmbito deste Poder Legislativo.</p>
+      </div>
+    </details>
+
+    <details class="card accordion-card">
+      <summary class="card-header"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg><span>Relatórios Estatísticos — Exercícios 2024 e 2025</span></summary>
+      <div class="card-body">
+        <p>A Câmara Municipal de Doresópolis/MG declara, para fins de transparência pública, que a Ouvidoria foi implantada por meio da <a href="#">Resolução nº 001/2024</a>.</p>
+        <p>Declara, ainda, que nos exercícios de 2024 e 2025 não houve registro de pedidos de acesso à informação ou manifestações.</p>
+      </div>
+    </details>
+
+    <details class="card accordion-card" open>
+      <summary class="card-header"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg><span>RELATÓRIOS ESTATÍSTICOS — EXERCÍCIO 2026 (AO VIVO)</span></summary>
+      <div class="card-body">
+        <p>Em cumprimento ao art. 30, inciso IV, da Lei Federal nº 12.527/2011, a Câmara Municipal de Doresópolis divulga o <strong>Relatório Estatístico</strong> alimentado em tempo real pelas plataformas integradas.</p>
+        
+        <table class="stat-table" style="margin-top:16px">
+          <tbody><tr><th colspan="2">Pedidos de Acesso à Informação — e-SIC</th></tr>
+          <tr><td>Total de pedidos recebidos</td><td id="stat-esic-total"><strong>0</strong></td></tr>
+          <tr><td>Pedidos atendidos (deferidos)</td><td id="stat-esic-deferidos"><strong>0</strong></td></tr>
+          <tr><td>Pedidos indeferidos</td><td id="stat-esic-indeferidos"><strong>0</strong></td></tr>
+          <tr><td>Pedidos em tramitação</td><td id="stat-esic-tramitacao"><strong>0</strong></td></tr>
+          <tr><td>Recursos interpostos</td><td id="stat-esic-recursos"><strong>0</strong></td></tr>
+        </tbody></table>
+        
+        <table class="stat-table" style="margin-top:16px">
+          <tbody><tr><th colspan="2">Manifestações — Ouvidoria</th></tr>
+          <tr><td>Reclamações</td><td id="stat-ouv-reclamacoes"><strong>0</strong></td></tr>
+          <tr><td>Denúncias</td><td id="stat-ouv-denuncias"><strong>0</strong></td></tr>
+          <tr><td>Sugestões</td><td id="stat-ouv-sugestoes"><strong>0</strong></td></tr>
+          <tr><td>Elogios</td><td id="stat-ouv-elogios"><strong>0</strong></td></tr>
+          <tr><td>Solicitações</td><td id="stat-ouv-solicitacoes"><strong>0</strong></td></tr>
+          <tr style="background:#e8f4ef;"><td><strong>Total de Manifestações</strong></td><td id="stat-ouv-total"><strong>0</strong></td></tr>
+        </tbody></table>
+        
+        <table class="stat-table" style="margin-top:16px">
+          <tbody><tr><th colspan="2">Perfil Geral dos Solicitantes</th></tr>
+          <tr><td>Pessoa Física / Jurídica (Identificados)</td><td id="stat-perfil-identificados"><strong>0</strong></td></tr>
+          <tr><td>Manifestações anônimas</td><td id="stat-perfil-anonimas"><strong>0</strong></td></tr>
+        </tbody></table>
+        
+        <div class="notice" style="margin-top:16px"><p>Os dados acima refletem o exercício de 2026 e são atualizados automaticamente a cada envio recebido pelos canais eletrônicos.</p></div>
+      </div>
+    </details>
+  </div>
+
+  <div id="sigilo" class="tab-content">
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span>Rol de Informações Sigilosas</span></div>
+      <div class="card-body">
+        <p>A Câmara Municipal de Doresópolis/MG declara que não possui informações classificadas nos graus Reservado, Secreto ou Ultrassecreto.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="carta" class="tab-content">
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg><span>Carta de Serviços ao Usuário</span></div>
+      <div class="card-body">
+        <p>Serviços detalhados encontram-se disponíveis no portal oficial.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="modal-sucesso" class="modal-overlay">
+    <div class="modal-box">
+        <div class="icone-sucesso">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h3>Recebido com sucesso!</h3>
+        <p>Sua manifestação foi registrada no nosso sistema. Agradecemos a sua participação.</p>
+        <button class="btn-concluir" onclick="fecharModal()">Concluir</button>
+    </div>
+</div>
+
+<script>
+// Lógica de Abas
+function showTab(tab,btn){
+  document.querySelectorAll('.tab-content').forEach(function(el){ el.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(el){ el.classList.remove('active'); });
+  document.getElementById(tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+// Fechar Modal
+function fecharModal(){
+    document.getElementById('modal-sucesso').classList.remove('ativo');
+}
+</script>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    // Configuração do Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyCjt-ILO7yuudiqCNHNiZn3pZfNj7BPNPI",
+        authDomain: "camaradoresopolis-cb675.firebaseapp.com",
+        projectId: "camaradoresopolis-cb675",
+        storageBucket: "camaradoresopolis-cb675.firebasestorage.app",
+        messagingSenderId: "498806818920",
+        appId: "1:498806818920:web:7d293de944298717fc13dd",
+        measurementId: "G-6Q18KLKV0B"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // ================= Lógica Visual (Ouvidoria) =================
+    const radiosAnonimo = document.querySelectorAll('input[name="ouv_anonimo"]');
+    const divIdentificacao = document.getElementById('ouv_bloco_identificacao');
+    const inputsIdent = divIdentificacao.querySelectorAll('input');
+
+    radiosAnonimo.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            if(e.target.value === 'Não') {
+                divIdentificacao.style.display = 'block';
+                inputsIdent.forEach(inp => inp.setAttribute('required', 'true'));
+            } else {
+                divIdentificacao.style.display = 'none';
+                inputsIdent.forEach(inp => {
+                    inp.removeAttribute('required');
+                    inp.value = ''; // Limpa os campos
+                });
+            }
+        });
+    });
+
+    // ================= Envio Ouvidoria =================
+    const formOuvidoria = document.getElementById('form-ouvidoria');
+    const btnOuv = document.getElementById('btn-enviar-ouv');
+
+    formOuvidoria.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const textoOriginal = btnOuv.innerText;
+        btnOuv.innerText = "Enviando...";
+        btnOuv.disabled = true;
+
+        const formData = new FormData(formOuvidoria);
+        const dados = {
+            tipo_manifestacao: formData.get('ouv_tipo'),
+            anonimo: formData.get('ouv_anonimo'),
+            nome: formData.get('ouv_nome') || '',
+            email: formData.get('ouv_email') || '',
+            telefone: formData.get('ouv_telefone') || '',
+            descricao: formData.get('ouv_descricao'),
+            data_submissao: serverTimestamp()
+        };
+
+        try {
+            await addDoc(collection(db, "ouvidoria_manifestacoes"), dados);
+            formOuvidoria.reset();
+            divIdentificacao.style.display = 'none'; // Reseta a div
+            document.getElementById('modal-sucesso').classList.add('ativo');
+            carregarEstatisticas(); // Atualiza a tela de relatórios na hora
+        } catch (error) {
+            console.error(error);
+            alert("Erro ao enviar manifestação.");
+        } finally {
+            btnOuv.innerText = textoOriginal;
+            btnOuv.disabled = false;
+        }
+    });
+
+    // ================= Envio e-SIC =================
+    const formEsic = document.getElementById('form-esic');
+    const btnEsic = document.getElementById('btn-enviar-esic');
+
+    formEsic.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const textoOriginal = btnEsic.innerText;
+        btnEsic.innerText = "Enviando...";
+        btnEsic.disabled = true;
+
+        const formData = new FormData(formEsic);
+        const dados = {
+            nome: formData.get('esic_nome'),
+            documento: formData.get('esic_documento'),
+            email: formData.get('esic_email'),
+            telefone: formData.get('esic_telefone'),
+            endereco: formData.get('esic_endereco') || '',
+            tipo_pedido: formData.get('esic_tipo'),
+            descricao: formData.get('esic_descricao'),
+            forma_recebimento: formData.get('esic_recebimento'),
+            status_pedido: 'Em tramitação', // Status padrão inicial
+            data_submissao: serverTimestamp()
+        };
+
+        try {
+            await addDoc(collection(db, "esic_pedidos"), dados);
+            formEsic.reset();
+            document.getElementById('modal-sucesso').classList.add('ativo');
+            carregarEstatisticas(); // Atualiza a tela de relatórios na hora
+        } catch (error) {
+            console.error(error);
+            alert("Erro ao enviar pedido.");
+        } finally {
+            btnEsic.innerText = textoOriginal;
+            btnEsic.disabled = false;
+        }
+    });
+
+    // ================= Carregar Estatísticas =================
+    async function carregarEstatisticas() {
+        try {
+            // 1. Ouvidoria
+            const queryOuv = await getDocs(collection(db, "ouvidoria_manifestacoes"));
+            let ouvTotal = 0, reclamacoes = 0, denuncias = 0, sugestoes = 0, elogios = 0, solicitacoes = 0, anonimas = 0;
+
+            queryOuv.forEach(doc => {
+                const d = doc.data();
+                ouvTotal++;
+                if (d.tipo_manifestacao === 'Reclamação') reclamacoes++;
+                if (d.tipo_manifestacao === 'Denúncia') denuncias++;
+                if (d.tipo_manifestacao === 'Sugestão') sugestoes++;
+                if (d.tipo_manifestacao === 'Elogio') elogios++;
+                if (d.tipo_manifestacao === 'Solicitação') solicitacoes++;
+                if (d.anonimo === 'Sim') anonimas++;
+            });
+
+            document.getElementById('stat-ouv-total').innerHTML = `<strong>${ouvTotal}</strong>`;
+            document.getElementById('stat-ouv-reclamacoes').innerHTML = `<strong>${reclamacoes}</strong>`;
+            document.getElementById('stat-ouv-denuncias').innerHTML = `<strong>${denuncias}</strong>`;
+            document.getElementById('stat-ouv-sugestoes').innerHTML = `<strong>${sugestoes}</strong>`;
+            document.getElementById('stat-ouv-elogios').innerHTML = `<strong>${elogios}</strong>`;
+            document.getElementById('stat-ouv-solicitacoes').innerHTML = `<strong>${solicitacoes}</strong>`;
+
+            // 2. e-SIC
+            const queryEsic = await getDocs(collection(db, "esic_pedidos"));
+            let esicTotal = 0, recursos = 0, tramitacao = 0;
+
+            queryEsic.forEach(doc => {
+                const d = doc.data();
+                esicTotal++;
+                if (d.tipo_pedido === 'Recurso') recursos++;
+                if (d.status_pedido === 'Em tramitação') tramitacao++;
+            });
+
+            document.getElementById('stat-esic-total').innerHTML = `<strong>${esicTotal}</strong>`;
+            document.getElementById('stat-esic-tramitacao').innerHTML = `<strong>${tramitacao}</strong>`;
+            document.getElementById('stat-esic-recursos').innerHTML = `<strong>${recursos}</strong>`;
+            // Deferidos e indeferidos mantidos zerados até você criar painel administrativo
+
+            // 3. Perfil (Somatório)
+            const identificados = (ouvTotal - anonimas) + esicTotal; // Todos do e-SIC são identificados
+            
+            document.getElementById('stat-perfil-identificados').innerHTML = `<strong>${identificados}</strong>`;
+            document.getElementById('stat-perfil-anonimas').innerHTML = `<strong>${anonimas}</strong>`;
+
+        } catch (e) {
+            console.error("Erro ao puxar estatísticas: ", e);
+        }
+    }
+
+    // Carrega no início da página
+    document.addEventListener('DOMContentLoaded', carregarEstatisticas);
+
+</script>
+</body>
+</html>
