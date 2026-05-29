@@ -620,6 +620,7 @@ atualizarDatas();
     // ================= Carregar Estatísticas =================
     async function carregarEstatisticas() {
         try {
+            // 1. Ouvidoria
             const queryOuv = await getDocs(collection(db, "ouvidoria_manifestacoes"));
             let ouvTotal = 0, reclamacoes = 0, denuncias = 0, sugestoes = 0, elogios = 0, solicitacoes = 0, anonimas = 0;
 
@@ -641,20 +642,28 @@ atualizarDatas();
             document.getElementById('stat-ouv-elogios').innerHTML = `<strong>${elogios}</strong>`;
             document.getElementById('stat-ouv-solicitacoes').innerHTML = `<strong>${solicitacoes}</strong>`;
 
+            // 2. e-SIC
             const queryEsic = await getDocs(collection(db, "esic_pedidos"));
-            let esicTotal = 0, recursos = 0, tramitacao = 0;
+            let esicTotal = 0, recursos = 0, tramitacao = 0, deferidos = 0, indeferidos = 0;
 
             queryEsic.forEach(doc => {
                 const d = doc.data();
                 esicTotal++;
                 if (d.tipo_pedido === 'Recurso') recursos++;
+                
+                // Contabilização inteligente dos status
                 if (d.status_pedido === 'Em tramitação') tramitacao++;
+                if (d.status_pedido === 'Atendido') deferidos++;
+                if (d.status_pedido === 'Indeferido') indeferidos++;
             });
 
             document.getElementById('stat-esic-total').innerHTML = `<strong>${esicTotal}</strong>`;
             document.getElementById('stat-esic-tramitacao').innerHTML = `<strong>${tramitacao}</strong>`;
             document.getElementById('stat-esic-recursos').innerHTML = `<strong>${recursos}</strong>`;
+            document.getElementById('stat-esic-deferidos').innerHTML = `<strong>${deferidos}</strong>`;
+            document.getElementById('stat-esic-indeferidos').innerHTML = `<strong>${indeferidos}</strong>`;
 
+            // 3. Perfil (Somatório)
             const identificados = (ouvTotal - anonimas) + esicTotal; 
             
             document.getElementById('stat-perfil-identificados').innerHTML = `<strong>${identificados}</strong>`;
@@ -665,7 +674,9 @@ atualizarDatas();
         }
     }
 
+    // Carrega no início da página
     document.addEventListener('DOMContentLoaded', carregarEstatisticas);
+
 </script>
 </body>
 </html>
