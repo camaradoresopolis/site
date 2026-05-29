@@ -34,16 +34,16 @@
         
         .container { max-width: 1000px; margin: 0 auto; }
         
-        /* Botão Voltar Simples (Estilo da Imagem) */
+        /* Botão Voltar Simples (Exclusivo no Topo) */
         .btn-voltar-simples { 
             display: inline-flex; 
             align-items: center; 
             gap: 8px; 
             text-decoration: none; 
-            color: #334155; /* Cor cinza/azulada da imagem */
+            color: #334155; 
             font-size: 1.05rem; 
             font-weight: 500; 
-            margin-bottom: 30px; 
+            margin-bottom: 20px; 
             transition: var(--transicao); 
         }
         
@@ -205,12 +205,11 @@
             min-height: 120px;
         }
 
-        /* Rodapé do Formulário (Botões) */
+        /* Rodapé do Formulário */
         .form-footer {
             margin-top: 20px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: flex-start;
             padding-top: 20px;
             border-top: 1px solid var(--borda);
         }
@@ -245,13 +244,92 @@
             box-shadow: 0 4px 12px rgba(2, 93, 59, 0.2);
         }
 
-        .btn-voltar {
-            background-color: #64748b;
-            color: var(--branco);
+        /* Modal de Sucesso */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transicao);
         }
 
-        .btn-voltar:hover {
-            background-color: #475569;
+        .modal-overlay.ativo {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background-color: var(--branco);
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: scale(0.9);
+            transition: var(--transicao);
+        }
+
+        .modal-overlay.ativo .modal-box {
+            transform: scale(1);
+        }
+
+        .icone-sucesso {
+            width: 70px;
+            height: 70px;
+            background-color: #d1fae5; /* Verde claro */
+            color: #059669; /* Verde esmeralda */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px auto;
+        }
+
+        .icone-sucesso svg {
+            width: 36px;
+            height: 36px;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .modal-box h3 {
+            font-size: 1.5rem;
+            color: var(--texto-escuro);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .modal-box p {
+            color: var(--texto-medio);
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+
+        .btn-concluir {
+            background-color: var(--cor-primaria);
+            color: var(--branco);
+            padding: 12px 0;
+            width: 100%;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: var(--transicao);
+        }
+
+        .btn-concluir:hover {
+            background-color: var(--cor-primaria-hover);
+            box-shadow: 0 4px 12px rgba(2, 93, 59, 0.2);
         }
 
         /* Animações */
@@ -261,10 +339,7 @@
         /* Responsividade */
         @media (max-width: 600px) {
             .conteudo-box { padding: 24px 16px; }
-            .form-footer { flex-direction: column; gap: 16px; }
             .btn { width: 100%; text-align: center; }
-            .btn-voltar { order: 2; }
-            .btn-enviar { order: 1; }
         }
     </style>
 </head>
@@ -411,20 +486,30 @@
 
                 <div class="form-footer">
                     <button type="submit" id="btn-enviar" class="btn btn-enviar">Responder pesquisa</button>
-                    <a href="https://site-five-sand-34.vercel.app/pesquisa-satisfacao.html" class="btn btn-voltar">Voltar</a>
                 </div>
 
             </form>
         </div>
     </div>
 
+    <div id="modal-sucesso" class="modal-overlay">
+        <div class="modal-box">
+            <div class="icone-sucesso">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <h3>Muito obrigado!</h3>
+            <p>Sua pesquisa de satisfação foi enviada com sucesso e é muito importante para nós.</p>
+            <a href="https://site-five-sand-34.vercel.app/pesquisa-satisfacao.html" class="btn-concluir">Concluir</a>
+        </div>
+    </div>
+
     <script type="module">
-        // Importando as funções principais do Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-        // CONFIGURAÇÃO DO SEU PROJETO FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyCjt-ILO7yuudiqCNHNiZn3pZfNj7BPNPI",
             authDomain: "camaradoresopolis-cb675.firebaseapp.com",
@@ -435,25 +520,21 @@
             measurementId: "G-6Q18KLKV0B"
         };
 
-        // Inicializando o Firebase App, Analytics e Firestore
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const db = getFirestore(app);
 
-        // Capturando o formulário e o botão
         const form = document.getElementById('form-pesquisa');
         const btnEnviar = document.getElementById('btn-enviar');
+        const modalSucesso = document.getElementById('modal-sucesso');
 
-        // Monitorando o evento de envio (submit) do formulário
         form.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Impede o recarregamento da página
+            event.preventDefault(); 
 
-            // Alterando o estado do botão para evitar envios duplicados
             const textoOriginal = btnEnviar.innerText;
             btnEnviar.innerText = "Enviando...";
             btnEnviar.disabled = true;
 
-            // Extraindo dados dos inputs utilizando o FormData
             const formData = new FormData(form);
             const dadosSubmissao = {
                 genero: formData.get('genero') || '',
@@ -467,26 +548,23 @@
                 qualidade_atendimento: formData.get('qualidade_atendimento') || '',
                 cumprimento_prazos: formData.get('cumprimento_prazos') || '',
                 sugestao: formData.get('sugestao') || '',
-                data_submissao: serverTimestamp() // Carimbo de tempo nativo do Firebase
+                data_submissao: serverTimestamp() 
             };
 
             try {
-                // Inserindo os dados dentro da coleção "pesquisas_satisfacao" no Firestore
-                const docRef = await addDoc(collection(db, "pesquisas_satisfacao"), dadosSubmissao);
-                
-                // Mensagem de sucesso e limpeza
-                alert("Muito obrigado! Sua pesquisa de satisfação foi enviada com sucesso.");
+                // Inserindo no Firebase
+                await addDoc(collection(db, "pesquisas_satisfacao"), dadosSubmissao);
                 form.reset();
-                window.location.href = "https://site-five-sand-34.vercel.app/pesquisa-satisfacao.html"; // Redireciona para o link fornecido
+                
+                // Exibe o modal elegante de sucesso ao invés do alert()
+                modalSucesso.classList.add('ativo');
                 
             } catch (error) {
                 console.error("Erro ao enviar o documento: ", error);
                 alert("Ocorreu um erro ao enviar sua pesquisa. Por favor, tente novamente mais tarde.");
-            } finally {
-                // Restaurando o botão
                 btnEnviar.innerText = textoOriginal;
                 btnEnviar.disabled = false;
-            }
+            } 
         });
     </script>
 </body>
