@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portal Institucional - Acesso rápido a Funcionários, Vereadores e informações.">
+    <title>Portal Institucional</title>
+    
+    <!-- Importação de fonte profissional do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Variáveis CSS para fácil manutenção */
+        :root {
+            --primary-color: #005a33;
+            --primary-hover: #007a45;
+            --bg-color: #f4f4f9;
+            --text-color: #ffffff;
+            --transition-speed: 0.3s;
+            --shadow-default: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 12px 24px rgba(0, 90, 51, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px;
+            -webkit-font-smoothing: antialiased; /* Deixa a fonte mais nítida no Chrome/Safari */
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        main {
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            list-style: none; /* Remove as bolinhas da tag <ul> */
+        }
+
+        .card {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            padding: 40px 24px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: var(--shadow-default);
+            outline: 2px solid transparent;
+            outline-offset: 4px;
+            /* Transição suave e orgânica */
+            transition: transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1),
+                        background-color var(--transition-speed) ease,
+                        box-shadow var(--transition-speed) ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            background-color: var(--primary-hover);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Acessibilidade: Destaque visual ao navegar pela tecla TAB */
+        .card:focus-visible {
+            outline-color: var(--primary-hover);
+        }
+
+        .card h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .icon svg {
+            width: 64px;
+            height: 64px;
+            fill: var(--text-color);
+        }
+
+        .icon-stroke svg {
+            fill: none;
+            stroke: var(--text-color);
+            stroke-width: 1.75;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <!-- Navegação semântica -->
+        <nav aria-label="Navegação Principal do Portal">
+            <ul class="card-grid">
+                
+                <li>
+                    <a href="https://www.doresopolis.mg.leg.br/sobre/funcionarios" class="card" aria-label="Acessar página de Funcionários">
+                        <div class="icon icon-stroke" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                <circle cx="18" cy="18" r="5" fill="var(--primary-color)" stroke="var(--text-color)" stroke-width="1.75"></circle>
+                                <path d="M16 18l1.5 1.5L20 17" stroke="var(--text-color)" stroke-width="1.75"></path>
+                            </svg>
+                        </div>
+                        <h2>Funcionários</h2>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://www.doresopolis.mg.leg.br/sobre/vereadores-1" class="card" aria-label="Acessar página de Vereadores">
+                        <div class="icon icon-stroke" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                <path d="M9 15l-1.5 4 1.5 2 1.5-2-1.5-4z" fill="var(--text-color)" stroke="none"></path>
+                            </svg>
+                        </div>
+                        <h2>Vereadores</h2>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://www.doresopolis.mg.leg.br/sobre" class="card" aria-label="Acessar informações Sobre a Câmara">
+                        <div class="icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
+                            </svg>
+                        </div>
+                        <h2>Sobre</h2>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+    </main>
+
+</body>
+</html>
