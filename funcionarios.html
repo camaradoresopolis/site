@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quadro de Servidores e Prestadores de Serviços da Câmara Municipal">
+    <title>Servidores e Serviços - Portal Institucional</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #005a33;
+            --primary-hover: #007a45;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            
+            /* Cores dos Crachás (Badges) */
+            --bg-efetivo: #e6fffa;
+            --text-efetivo: #047481;
+            --bg-comissionado: #fefcbf;
+            --text-comissionado: #b7791f;
+            --bg-contratado: #edf2f7;
+            --text-contratado: #4a5568;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Área de Filtros Dinâmicos */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: #fff;
+            border: 1px solid #e2e8f0;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 90, 51, 0.2);
+        }
+
+        /* Grid de Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        /* Estilização do Card */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .card-header {
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1a202c;
+            line-height: 1.3;
+            margin-bottom: 6px;
+        }
+
+        .card-role {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        /* Badges de Vínculo */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-efetivo {
+            background-color: var(--bg-efetivo);
+            color: var(--text-efetivo);
+        }
+
+        .badge-comissionado {
+            background-color: var(--bg-comissionado);
+            color: var(--text-comissionado);
+        }
+
+        .badge-contratado {
+            background-color: var(--bg-contratado);
+            color: var(--text-contratado);
+        }
+
+        /* Seção de Contatos dentro do Card */
+        .card-contacts {
+            border-top: 1px solid #edf2f7;
+            padding-top: 16px;
+            margin-top: auto;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #4a5568;
+            text-decoration: none;
+            margin-bottom: 8px;
+            transition: color 0.2s ease;
+        }
+
+        .contact-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-item:hover {
+            color: var(--primary-hover);
+        }
+
+        .contact-item svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: var(--text-muted);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        .contact-item:hover svg {
+            stroke: var(--primary-hover);
+        }
+
+        /* Classe utilitária para animação de sumir/aparecer */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Servidores e Prestadores de Serviços</h1>
+            <p>Transparência e recursos humanos da Câmara Municipal de Doresópolis</p>
+        </header>
+
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterCards('all')">Todos</button>
+            <button class="filter-btn" onclick="filterCards('efetivo')">Servidores Efetivos</button>
+            <button class="filter-btn" onclick="filterCards('comissionado')">Comissionados</button>
+            <button class="filter-btn" onclick="filterCards('contratado')">Contratados / Empresas</button>
+        </div>
+
+        <main class="grid" id="staff-grid">
+            
+            <div class="card" data-category="efetivo">
+                <div class="card-header">
+                    <h2 class="card-title">Controle Interno</h2>
+                    <div class="card-role">Departamento de Controle Geral</div>
+                    <span class="badge badge-efetivo">Servidor Efetivo</span>
+                </div>
+                <div class="card-contacts">
+                    <a href="mailto:controladoria@camaradoresopolis.com.br" class="contact-item">
+                        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        controladoria@camaradoresopolis.com.br
+                    </a>
+                </div>
+            </div>
+
+            <div class="card" data-category="efetivo">
+                <div class="card-header">
+                    <h2 class="card-title">Flávio dos Santos Paim</h2>
+                    <div class="card-role">Auxiliar Administrativo / Atendimento ao Cidadão</div>
+                    <span class="badge badge-efetivo">Servidor Efetivo</span>
+                </div>
+                <div class="card-contacts">
+                    <a href="mailto:cac@camaradoresopolis.com.br" class="contact-item">
+                        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        cac@camaradoresopolis.com.br
+                    </a>
+                </div>
+            </div>
+
+            <div class="card" data-category="efetivo">
+                <div class="card-header">
+                    <h2 class="card-title">Thais Rafaela Návega Andrade</h2>
+                    <div class="card-role">Secretária Administrativa / Compras e Licitação</div>
+                    <span class="badge badge-efetivo">Servidora Efetiva</span>
+                </div>
+                <div class="card-contacts">
+                    <a href="mailto:compras@camaradoresopolis.com.br" class="contact-item">
+                        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        compras@camaradoresopolis.com.br
+                    </a>
+                </div>
+            </div>
+
+            <div class="card" data-category="comissionado">
+                <div class="card-header">
+                    <h2 class="card-title">Marina de Souza Faria</h2>
+                    <div class="card-role">Assessoria Legislativa / Tesoureira</div>
+                    <span class="badge badge-comissionado">Comissionada</span>
+                </div>
+                <div class="card-contacts">
+                    <a href="tel:37999941938" class="contact-item">
+                        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        (37) 99994-1938
+                    </a>
+                    <a href="mailto:assessoria@camaradoresopolis.com.br" class="contact-item">
+                        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        assessoria@camaradoresopolis.com.br
+                    </a>
+                </div>
+            </div>
+
+            <div class="card" data-category="efetivo">
+                <div class="card-header">
+                    <h2 class="card-title">Daiane Ferreira da Silva Costa</h2>
+                    <div class="card-role">Auxiliar de Serviços Gerais</div>
+                    <span class="badge badge-efetivo">Servidora Efetiva</span>
+                </div>
+                <div class="card-contacts">
+                    <span class="contact-item" style="cursor: default; hover: none;">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        Contato via Presencial / Ofício
+                    </span>
+                </div>
+            </div>
+
+            <div class="card" data-category="contratado">
+                <div class="card-header">
+                    <h2 class="card-title">Rogério Marcelino Alves</h2>
+                    <div class="card-role">Assessor Jurídico</div>
+                    <span class="badge badge-contratado">Contratado</span>
+                </div>
+                <div class="card-contacts">
+                    <span class="contact-item" style="cursor: default;">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        Atendimento sob Demanda
+                    </span>
+                </div>
+            </div>
+
+            <div class="card" data-category="contratado">
+                <div class="card-header">
+                    <h2 class="card-title">Flavio Henrique Borges</h2>
+                    <div class="card-role">Assessor Contábil / Contador</div>
+                    <span class="badge badge-contratado">Contratado</span>
+                </div>
+                <div class="card-contacts">
+                    <span class="contact-item" style="cursor: default;">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        Atendimento sob Demanda
+                    </span>
+                </div>
+            </div>
+
+            <div class="card" data-category="contratado">
+                <div class="card-header">
+                    <h2 class="card-title">GH Space Tech</h2>
+                    <div class="card-role">Departamento de Tecnologia</div>
+                    <span class="badge badge-contratado">Contratado</span>
+                </div>
+                <div class="card-contacts">
+                    <a href="mailto:ti@camaradoresopolis.com.br" class="contact-item">
+                        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        ti@camaradoresopolis.com.br
+                    </a>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function filterCards(category) {
+            // Atualizar estado ativo do botão
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filtrar os Cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.classList.remove('hidden');
+                } else {
+                    if (card.getAttribute('data-category') === category) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
