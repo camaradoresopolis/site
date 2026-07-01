@@ -642,19 +642,60 @@
                 </div>
 
                 <div class="detalhe-item" style="background: #f1f5f9; padding: 15px; border-radius: 8px; border: 1px dashed #0284c7;">
-                    <label style="color: #0284c7;">Status da Tramitação (Irá refletir no Relatório Estatístico Público)</label>
-                    <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
-                        <select id="select-status-esic" style="padding: 10px; border-radius: 6px; border: 1px solid var(--borda); outline: none; flex: 1;">
-                            <option value="Em tramitação" ${d.status_pedido === 'Em tramitação' ? 'selected' : ''}>Em tramitação</option>
-                            <option value="Atendido" ${d.status_pedido === 'Atendido' ? 'selected' : ''}>Atendido (Deferido)</option>
-                            <option value="Indeferido" ${d.status_pedido === 'Indeferido' ? 'selected' : ''}>Indeferido</option>
+                    <label style="color: #0284c7; font-size:0.95rem;">TRAMITAÇÃO EM 3 INSTÂNCIAS — LEI Nº 12.527/2011 (LAI)</label>
+                    <p style="font-size:0.8rem; color:#64748b; margin-top:4px;">O <strong>status geral</strong> é definido automaticamente pela última instância decidida e reflete no Relatório Estatístico Público. Preencha apenas as instâncias aplicáveis. Todas as respostas ficam visíveis ao cidadão na consulta de protocolo.</p>
+                    <div style="margin-top:8px; padding:8px 12px; background:#e0f2fe; border-radius:6px; font-size:0.85rem;">Status geral atual: <strong id="esic-status-geral">${d.status_pedido || 'Em tramitação'}</strong></div>
+
+                    <!-- 1ª INSTÂNCIA -->
+                    <div style="background:#fff; border:1px solid var(--borda); border-radius:8px; padding:12px; margin-top:12px;">
+                        <div style="font-weight:700; color:#025d3b; font-size:0.9rem;">1ª Instância — Resposta ao Pedido (Serviço de Informação ao Cidadão)</div>
+                        <div style="font-size:0.78rem; color:#64748b; margin-bottom:8px;">Prazo: 20 dias, prorrogável por +10 (art. 13). Autoridade: servidor do SIC.</div>
+                        <label style="font-size:0.8rem; color:#475569;">Decisão</label>
+                        <select id="i1-decisao" style="width:100%; padding:9px; border-radius:6px; border:1px solid var(--borda); margin-top:4px;">
+                            <option value="Pendente">Pendente / Em análise</option>
+                            <option value="Deferido">Deferido (acesso concedido)</option>
+                            <option value="Parcialmente deferido">Parcialmente deferido</option>
+                            <option value="Indeferido">Indeferido (acesso negado)</option>
                         </select>
+                        <label style="font-size:0.8rem; color:#475569; margin-top:8px; display:block;">Resposta oficial</label>
+                        <textarea id="i1-texto" style="width:100%; min-height:80px; padding:9px; border-radius:6px; border:1px solid var(--borda); margin-top:4px; resize:vertical; font-family:inherit; font-size:0.88rem;" placeholder="Fundamentação e resposta ao pedido de acesso à informação..."></textarea>
+                        <label style="font-size:0.8rem; color:#475569; margin-top:8px; display:block;">Responsável</label>
+                        <input id="i1-autor" style="width:100%; padding:9px; border-radius:6px; border:1px solid var(--borda); margin-top:4px; font-family:inherit; font-size:0.88rem;" placeholder="Servidor responsável pelo SIC">
                     </div>
-                    <label style="color: #0284c7; margin-top:12px;">Resposta Oficial (visível ao cidadão na consulta de protocolo)</label>
-                    <textarea id="resposta-esic-texto" style="width:100%; min-height:110px; padding:10px; border-radius:6px; border:1px solid var(--borda); font-family:inherit; font-size:0.9rem; margin-top:5px; resize:vertical;" placeholder="Digite a resposta oficial ao pedido de acesso à informação...">${d.resposta || ''}</textarea>
-                    <label style="color: #0284c7; margin-top:12px;">Nome do Responsável pela Resposta</label>
-                    <input type="text" id="resposta-esic-autor" style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--borda); font-family:inherit; font-size:0.9rem; margin-top:5px;" value="${d.respondido_por || 'Flávio dos Santos Paim'}" placeholder="Nome do servidor responsável">
-                    <button class="btn btn-primario" id="btn-atualizar-status" style="margin-top:12px; width:100%;" onclick="atualizarStatusEsic('${d.id}')">Salvar Status e Resposta</button>
+
+                    <!-- 2ª INSTÂNCIA -->
+                    <div style="background:#fff; border:1px solid var(--borda); border-radius:8px; padding:12px; margin-top:10px;">
+                        <div style="font-weight:700; color:#b45309; font-size:0.9rem;">2ª Instância — Recurso à Presidência da Câmara</div>
+                        <div style="font-size:0.78rem; color:#64748b; margin-bottom:8px;">Prazo de decisão: 5 dias (art. 18, §1º). Cabível em caso de indeferimento.</div>
+                        <label style="font-size:0.8rem; color:#475569;">Decisão do recurso</label>
+                        <select id="i2-decisao" style="width:100%; padding:9px; border-radius:6px; border:1px solid var(--borda); margin-top:4px;">
+                            <option value="Sem recurso">Não houve recurso</option>
+                            <option value="Provido">Provido (acesso concedido)</option>
+                            <option value="Negado">Negado (mantida a negativa)</option>
+                        </select>
+                        <label style="font-size:0.8rem; color:#475569; margin-top:8px; display:block;">Fundamentação da decisão</label>
+                        <textarea id="i2-texto" style="width:100%; min-height:70px; padding:9px; border-radius:6px; border:1px solid var(--borda); margin-top:4px; resize:vertical; font-family:inherit; font-size:0.88rem;" placeholder="Decisão da Presidência sobre o recurso..."></textarea>
+                        <label style="font-size:0.8rem; color:#475569; margin-top:8px; display:block;">Autoridade responsável</label>
+                        <input id="i2-autor" style="width:100%; padding:9px; border-radius:6px; border:1px solid var(--borda); margin-top:4px; font-family:inherit; font-size:0.88rem;" placeholder="Presidência da Câmara">
+                    </div>
+
+                    <!-- 3ª INSTÂNCIA -->
+                    <div style="background:#fff; border:1px solid var(--borda); border-radius:8px; padding:12px; margin-top:10px;">
+                        <div style="font-weight:700; color:#b91c1c; font-size:0.9rem;">3ª Instância — Recurso à Mesa Diretora</div>
+                        <div style="font-size:0.78rem; color:#64748b; margin-bottom:8px;">Prazo de decisão: 5 dias (art. 18, §2º). Cabível se mantida a negativa pela Presidência.</div>
+                        <label style="font-size:0.8rem; color:#475569;">Decisão do recurso</label>
+                        <select id="i3-decisao" style="width:100%; padding:9px; border-radius:6px; border:1px solid var(--borda); margin-top:4px;">
+                            <option value="Sem recurso">Não houve recurso</option>
+                            <option value="Provido">Provido (acesso concedido)</option>
+                            <option value="Negado">Negado (mantida a negativa)</option>
+                        </select>
+                        <label style="font-size:0.8rem; color:#475569; margin-top:8px; display:block;">Fundamentação da decisão</label>
+                        <textarea id="i3-texto" style="width:100%; min-height:70px; padding:9px; border-radius:6px; border:1px solid var(--borda); margin-top:4px; resize:vertical; font-family:inherit; font-size:0.88rem;" placeholder="Decisão da Mesa Diretora sobre o recurso..."></textarea>
+                        <label style="font-size:0.8rem; color:#475569; margin-top:8px; display:block;">Autoridade responsável</label>
+                        <input id="i3-autor" style="width:100%; padding:9px; border-radius:6px; border:1px solid var(--borda); margin-top:4px; font-family:inherit; font-size:0.88rem;" placeholder="Mesa Diretora">
+                    </div>
+
+                    <button class="btn btn-primario" id="btn-atualizar-status" style="margin-top:14px; width:100%;" onclick="atualizarStatusEsic('${d.id}')">Salvar Tramitação</button>
                 </div>
 
                 <div class="detalhe-item"><label>Data do Pedido</label><p>${formatarData(d.data_submissao)}</p></div>
@@ -668,6 +709,19 @@
                 <div class="detalhe-item"><label>Descrição do Pedido</label><p style="border-left: 4px solid #0284c7;">${d.descricao || 'Sem descrição'}</p></div>
             `;
             document.getElementById('modal-conteudo').innerHTML = html;
+
+            // Preenche as 3 instâncias (com compatibilidade para registros antigos)
+            const mapAntigo = d.status_pedido === 'Atendido' ? 'Deferido' : (d.status_pedido === 'Indeferido' ? 'Indeferido' : 'Pendente');
+            document.getElementById('i1-decisao').value = d.instancia1_decisao || mapAntigo;
+            document.getElementById('i1-texto').value = d.instancia1_texto || d.resposta || '';
+            document.getElementById('i1-autor').value = d.instancia1_autor || d.respondido_por || 'Flávio dos Santos Paim';
+            document.getElementById('i2-decisao').value = d.instancia2_decisao || 'Sem recurso';
+            document.getElementById('i2-texto').value = d.instancia2_texto || '';
+            document.getElementById('i2-autor').value = d.instancia2_autor || 'Presidência da Câmara';
+            document.getElementById('i3-decisao').value = d.instancia3_decisao || 'Sem recurso';
+            document.getElementById('i3-texto').value = d.instancia3_texto || '';
+            document.getElementById('i3-autor').value = d.instancia3_autor || 'Mesa Diretora';
+
             document.getElementById('modal-leitura').classList.add('ativo');
         }
 
@@ -675,12 +729,39 @@
             document.getElementById('modal-leitura').classList.remove('ativo');
         }
 
-        // ====== LÓGICA DE ATUALIZAÇÃO DO STATUS NO FIREBASE ======
+        // ====== LÓGICA DE TRAMITAÇÃO EM 3 INSTÂNCIAS (e-SIC) ======
+        // Converte a decisão de uma instância no desfecho para o status geral.
+        function desfechoInstancia(dec) {
+            if (dec === 'Deferido' || dec === 'Parcialmente deferido' || dec === 'Provido') return 'Atendido';
+            if (dec === 'Indeferido' || dec === 'Negado') return 'Indeferido';
+            return null; // Pendente ou Sem recurso
+        }
+
         window.atualizarStatusEsic = async function(docId) {
-            const novoStatus = document.getElementById('select-status-esic').value;
-            const resposta = document.getElementById('resposta-esic-texto').value.trim();
-            const autor = document.getElementById('resposta-esic-autor').value.trim();
+            const i1d = document.getElementById('i1-decisao').value;
+            const i1t = document.getElementById('i1-texto').value.trim();
+            const i1a = document.getElementById('i1-autor').value.trim();
+            const i2d = document.getElementById('i2-decisao').value;
+            const i2t = document.getElementById('i2-texto').value.trim();
+            const i2a = document.getElementById('i2-autor').value.trim();
+            const i3d = document.getElementById('i3-decisao').value;
+            const i3t = document.getElementById('i3-texto').value.trim();
+            const i3a = document.getElementById('i3-autor').value.trim();
             const btnAtualizar = document.getElementById('btn-atualizar-status');
+
+            // Status geral = última instância decidida
+            let statusGeral = 'Em tramitação';
+            if (desfechoInstancia(i3d)) statusGeral = desfechoInstancia(i3d);
+            else if (desfechoInstancia(i2d)) statusGeral = desfechoInstancia(i2d);
+            else if (desfechoInstancia(i1d)) statusGeral = desfechoInstancia(i1d);
+
+            const houveRecurso = (i2d !== 'Sem recurso') || (i3d !== 'Sem recurso');
+            const recursosQtd = (i2d !== 'Sem recurso' ? 1 : 0) + (i3d !== 'Sem recurso' ? 1 : 0);
+
+            // Última resposta preenchida (para exibição compatível e destaque público)
+            let ultimaResposta = i1t, ultimoAutor = i1a;
+            if (i2d !== 'Sem recurso' && i2t) { ultimaResposta = i2t; ultimoAutor = i2a; }
+            if (i3d !== 'Sem recurso' && i3t) { ultimaResposta = i3t; ultimoAutor = i3a; }
 
             btnAtualizar.innerText = "Salvando...";
             btnAtualizar.disabled = true;
@@ -688,13 +769,18 @@
             try {
                 const docRef = doc(db, "esic_pedidos", docId);
                 await updateDoc(docRef, {
-                    status_pedido: novoStatus,
-                    resposta: resposta,
-                    respondido_por: autor,
+                    instancia1_decisao: i1d, instancia1_texto: i1t, instancia1_autor: i1a,
+                    instancia2_decisao: i2d, instancia2_texto: i2t, instancia2_autor: i2a,
+                    instancia3_decisao: i3d, instancia3_texto: i3t, instancia3_autor: i3a,
+                    status_pedido: statusGeral,
+                    houve_recurso: houveRecurso,
+                    recursos_qtd: recursosQtd,
+                    resposta: ultimaResposta,
+                    respondido_por: ultimoAutor,
                     data_resposta: new Date()
                 });
 
-                alert(`Pedido atualizado com sucesso. Status: ${novoStatus}`);
+                alert(`Tramitação salva com sucesso. Status geral: ${statusGeral}`);
                 fecharModal();
 
                 document.getElementById('loader').style.display = 'block';
@@ -702,10 +788,10 @@
                 await carregarDados();
 
             } catch (error) {
-                console.error("Erro ao atualizar pedido:", error);
-                alert("Erro ao atualizar. Verifique as regras do Firebase.");
+                console.error("Erro ao salvar tramitação:", error);
+                alert("Erro ao salvar. Verifique as regras do Firebase.");
             } finally {
-                btnAtualizar.innerText = "Salvar Status e Resposta";
+                btnAtualizar.innerText = "Salvar Tramitação";
                 btnAtualizar.disabled = false;
             }
         }

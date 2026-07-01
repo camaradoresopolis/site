@@ -803,8 +803,10 @@ atualizarDatas();
             queryEsic.forEach(doc => {
                 const d = doc.data();
                 esicTotal++;
+                // Recursos: pedidos enviados como "Recurso" + recursos registrados nas instâncias 2 e 3
                 if (d.tipo_pedido === 'Recurso') recursos++;
-                
+                if (d.recursos_qtd) recursos += d.recursos_qtd;
+
                 // Contabilização inteligente dos status
                 if (d.status_pedido === 'Em tramitação') tramitacao++;
                 if (d.status_pedido === 'Atendido') deferidos++;
@@ -891,13 +893,36 @@ atualizarDatas();
             html += `<tr><td>Situação</td><td><strong>${status}</strong></td></tr>`;
             html += `</tbody></table>`;
 
-            if (d.resposta && d.resposta.trim() !== '') {
+            let temResposta = false;
+            if (origem === 'esic') {
+                // Linha do tempo das 3 instâncias (LAI)
+                const instancias = [
+                    { titulo: '1ª Instância — Resposta do Serviço de Informação ao Cidadão', dec: d.instancia1_decisao, txt: d.instancia1_texto, autor: d.instancia1_autor },
+                    { titulo: '2ª Instância — Recurso à Presidência da Câmara', dec: d.instancia2_decisao, txt: d.instancia2_texto, autor: d.instancia2_autor },
+                    { titulo: '3ª Instância — Recurso à Mesa Diretora', dec: d.instancia3_decisao, txt: d.instancia3_texto, autor: d.instancia3_autor }
+                ];
+                instancias.forEach(i => {
+                    const decValida = i.dec && i.dec !== 'Pendente' && i.dec !== 'Sem recurso';
+                    const temTexto = i.txt && i.txt.trim() !== '';
+                    if (decValida || temTexto) {
+                        temResposta = true;
+                        html += `<div class="notice" style="margin-top:14px"><p><strong>${i.titulo}</strong></p>`;
+                        if (decValida) html += `<p style="margin-top:6px"><strong>Decisão:</strong> ${i.dec}</p>`;
+                        if (temTexto) html += `<p style="margin-top:6px">${i.txt.replace(/\n/g, '<br>')}</p>`;
+                        if (i.autor && i.autor.trim() !== '') html += `<p style="margin-top:8px"><strong>Responsável:</strong> ${i.autor}</p>`;
+                        html += `</div>`;
+                    }
+                });
+            }
+            if (!temResposta && d.resposta && d.resposta.trim() !== '') {
+                temResposta = true;
                 html += `<div class="notice" style="margin-top:14px"><p><strong>Resposta oficial:</strong><br>${d.resposta.replace(/\n/g, '<br>')}</p>`;
                 if (d.respondido_por && d.respondido_por.trim() !== '') {
                     html += `<p style="margin-top:8px"><strong>Respondido por:</strong> ${d.respondido_por}</p>`;
                 }
                 html += `</div>`;
-            } else {
+            }
+            if (!temResposta) {
                 html += `<div class="alert" style="margin-top:14px"><p>Sua solicitação está <strong>${status.toLowerCase()}</strong>. A resposta oficial será disponibilizada aqui dentro dos prazos legais (art. 13 da Portaria nº 029/2026 — LAI).</p></div>`;
             }
             html += '</div></div>';
