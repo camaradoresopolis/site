@@ -667,6 +667,7 @@
                     <div style="background:#fff; border:1px solid var(--borda); border-radius:8px; padding:12px; margin-top:10px;">
                         <div style="font-weight:700; color:#b45309; font-size:0.9rem;">2ª Instância — Recurso à Presidência da Câmara</div>
                         <div style="font-size:0.78rem; color:#64748b; margin-bottom:8px;">Prazo de decisão: 5 dias (art. 18, §1º). Cabível em caso de indeferimento.</div>
+                        ${d.recurso2_solicitado ? `<div style="background:#fef3c7; border:1px solid #fcd34d; border-radius:6px; padding:8px 10px; margin-bottom:8px; font-size:0.82rem; color:#92400e;"><strong>⚠ Recurso interposto pelo cidadão em ${formatarData(d.recurso2_data)}:</strong><br>${(d.recurso2_razoes || '').replace(/\n/g, '<br>')}</div>` : ''}
                         <label style="font-size:0.8rem; color:#475569;">Decisão do recurso</label>
                         <select id="i2-decisao" style="width:100%; padding:9px; border-radius:6px; border:1px solid var(--borda); margin-top:4px;">
                             <option value="Sem recurso">Não houve recurso</option>
@@ -683,6 +684,7 @@
                     <div style="background:#fff; border:1px solid var(--borda); border-radius:8px; padding:12px; margin-top:10px;">
                         <div style="font-weight:700; color:#b91c1c; font-size:0.9rem;">3ª Instância — Recurso à Mesa Diretora</div>
                         <div style="font-size:0.78rem; color:#64748b; margin-bottom:8px;">Prazo de decisão: 5 dias (art. 18, §2º). Cabível se mantida a negativa pela Presidência.</div>
+                        ${d.recurso3_solicitado ? `<div style="background:#fee2e2; border:1px solid #fca5a5; border-radius:6px; padding:8px 10px; margin-bottom:8px; font-size:0.82rem; color:#991b1b;"><strong>⚠ Recurso interposto pelo cidadão em ${formatarData(d.recurso3_data)}:</strong><br>${(d.recurso3_razoes || '').replace(/\n/g, '<br>')}</div>` : ''}
                         <label style="font-size:0.8rem; color:#475569;">Decisão do recurso</label>
                         <select id="i3-decisao" style="width:100%; padding:9px; border-radius:6px; border:1px solid var(--borda); margin-top:4px;">
                             <option value="Sem recurso">Não houve recurso</option>
@@ -768,7 +770,7 @@
 
             try {
                 const docRef = doc(db, "esic_pedidos", docId);
-                await updateDoc(docRef, {
+                const payload = {
                     instancia1_decisao: i1d, instancia1_texto: i1t, instancia1_autor: i1a,
                     instancia2_decisao: i2d, instancia2_texto: i2t, instancia2_autor: i2a,
                     instancia3_decisao: i3d, instancia3_texto: i3t, instancia3_autor: i3a,
@@ -778,7 +780,11 @@
                     resposta: ultimaResposta,
                     respondido_por: ultimoAutor,
                     data_resposta: new Date()
-                });
+                };
+                // Decisão em instância recursal implica recurso interposto (contabiliza no relatório)
+                if (i2d !== 'Sem recurso') payload.recurso2_solicitado = true;
+                if (i3d !== 'Sem recurso') payload.recurso3_solicitado = true;
+                await updateDoc(docRef, payload);
 
                 alert(`Tramitação salva com sucesso. Status geral: ${statusGeral}`);
                 fecharModal();

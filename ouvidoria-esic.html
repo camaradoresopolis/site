@@ -628,7 +628,7 @@ atualizarDatas();
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, serverTimestamp, doc, runTransaction, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, getDocs, serverTimestamp, doc, updateDoc, runTransaction, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     // Configuração do Firebase
     const firebaseConfig = {
@@ -803,9 +803,10 @@ atualizarDatas();
             queryEsic.forEach(doc => {
                 const d = doc.data();
                 esicTotal++;
-                // Recursos: pedidos enviados como "Recurso" + recursos registrados nas instâncias 2 e 3
+                // Recursos interpostos: pedidos enviados como "Recurso" + recursos protocolados nas 2ª e 3ª instâncias
                 if (d.tipo_pedido === 'Recurso') recursos++;
-                if (d.recursos_qtd) recursos += d.recursos_qtd;
+                if (d.recurso2_solicitado) recursos++;
+                if (d.recurso3_solicitado) recursos++;
 
                 // Contabilização inteligente dos status
                 if (d.status_pedido === 'Em tramitação') tramitacao++;
@@ -864,13 +865,13 @@ atualizarDatas();
             // Busca no e-SIC
             const qEsic = query(collection(db, "esic_pedidos"), where("protocolo", "==", valor));
             const snapEsic = await getDocs(qEsic);
-            snapEsic.forEach(d => { encontrado = d.data(); origem = 'esic'; });
+            snapEsic.forEach(s => { encontrado = s.data(); encontrado._id = s.id; origem = 'esic'; });
 
             // Busca na Ouvidoria
             if (!encontrado) {
                 const qOuv = query(collection(db, "ouvidoria_manifestacoes"), where("protocolo", "==", valor));
                 const snapOuv = await getDocs(qOuv);
-                snapOuv.forEach(d => { encontrado = d.data(); origem = 'ouvidoria'; });
+                snapOuv.forEach(s => { encontrado = s.data(); encontrado._id = s.id; origem = 'ouvidoria'; });
             }
 
             if (!encontrado) {
@@ -925,6 +926,37 @@ atualizarDatas();
             if (!temResposta) {
                 html += `<div class="alert" style="margin-top:14px"><p>Sua solicitação está <strong>${status.toLowerCase()}</strong>. A resposta oficial será disponibilizada aqui dentro dos prazos legais (art. 13 da Portaria nº 029/2026 — LAI).</p></div>`;
             }
+
+            // ===== Opções de Recurso (e-SIC) =====
+            if (origem === 'esic') {
+                const i1 = d.instancia1_decisao, i2 = d.instancia2_decisao, i3 = d.instancia3_decisao;
+                const i2Decidido = i2 && i2 !== 'Sem recurso';
+                const i3Decidido = i3 && i3 !== 'Sem recurso';
+                const rec2 = d.recurso2_solicitado === true;
+                const rec3 = d.recurso3_solicitado === true;
+                const dataRec = ts => (ts && ts.toDate ? ts.toDate().toLocaleDateString('pt-BR') : '');
+
+                // 2ª Instância — cabível quando indeferido na 1ª
+                if (i1 === 'Indeferido' && !i2Decidido) {
+                    if (!rec2) {
+                        html += `<div class="alert" style="margin-top:14px"><p>Seu pedido foi <strong>indeferido na 1ª instância</strong>. Você pode interpor <strong>recurso à Presidência da Câmara</strong> no prazo de 10 dias (art. 18). Prazo de decisão: 5 dias (art. 18, §1º).</p></div>
+                        <div id="recurso-box-2" style="margin-top:10px"><button type="button" class="btn-enviar" style="width:auto;padding:10px 20px" onclick="abrirFormRecurso('${d._id}',2)">Entrar com Recurso — 2ª Instância (Presidência)</button></div>`;
+                    } else {
+                        html += `<div class="notice" style="margin-top:14px"><p><strong>Recurso à Presidência da Câmara protocolado${dataRec(d.recurso2_data) ? ' em ' + dataRec(d.recurso2_data) : ''}.</strong> Aguardando decisão (prazo de 5 dias — art. 18, §1º).</p></div>`;
+                    }
+                }
+
+                // 3ª Instância — cabível quando negado na 2ª
+                if (i2 === 'Negado' && !i3Decidido) {
+                    if (!rec3) {
+                        html += `<div class="alert" style="margin-top:14px"><p>Seu recurso foi <strong>negado pela Presidência (2ª instância)</strong>. Você pode interpor <strong>recurso à Mesa Diretora</strong> no prazo de 10 dias (art. 18, §2º). Prazo de decisão: 5 dias.</p></div>
+                        <div id="recurso-box-3" style="margin-top:10px"><button type="button" class="btn-enviar" style="width:auto;padding:10px 20px" onclick="abrirFormRecurso('${d._id}',3)">Entrar com Recurso — 3ª Instância (Mesa Diretora)</button></div>`;
+                    } else {
+                        html += `<div class="notice" style="margin-top:14px"><p><strong>Recurso à Mesa Diretora protocolado${dataRec(d.recurso3_data) ? ' em ' + dataRec(d.recurso3_data) : ''}.</strong> Aguardando decisão (prazo de 5 dias — art. 18, §2º).</p></div>`;
+                    }
+                }
+            }
+
             html += '</div></div>';
             resultado.innerHTML = html;
 
@@ -936,6 +968,48 @@ atualizarDatas();
             btn.disabled = false;
         }
     });
+
+    // ================= Interposição de Recurso pelo Cidadão =================
+    window.abrirFormRecurso = function(docId, instancia) {
+        const box = document.getElementById('recurso-box-' + instancia);
+        if (!box) return;
+        const autoridade = instancia === 2 ? 'Presidência da Câmara' : 'Mesa Diretora';
+        box.innerHTML = `
+            <div class="card" style="margin-bottom:0"><div class="card-body">
+                <label class="pergunta-titulo">Razões do recurso à ${autoridade} <span class="req">*</span></label>
+                <textarea id="recurso-texto-${instancia}" class="input-texto textarea-input" placeholder="Descreva as razões do seu recurso..." required></textarea>
+                <button type="button" class="btn-enviar" onclick="enviarRecurso('${docId}',${instancia})">Protocolar Recurso</button>
+            </div></div>`;
+    };
+
+    window.enviarRecurso = async function(docId, instancia) {
+        const texto = document.getElementById('recurso-texto-' + instancia);
+        const razoes = texto ? texto.value.trim() : '';
+        if (!razoes) { alert('Por favor, descreva as razões do recurso.'); return; }
+
+        const box = document.getElementById('recurso-box-' + instancia);
+        const btn = box ? box.querySelector('button') : null;
+        if (btn) { btn.innerText = 'Enviando...'; btn.disabled = true; }
+
+        try {
+            const campos = {};
+            campos['recurso' + instancia + '_solicitado'] = true;
+            campos['recurso' + instancia + '_razoes'] = razoes;
+            campos['recurso' + instancia + '_data'] = serverTimestamp();
+            // O recurso reabre a tramitação para análise da instância competente
+            campos['status_pedido'] = 'Em tramitação';
+            await updateDoc(doc(db, 'esic_pedidos', docId), campos);
+
+            alert('Recurso protocolado com sucesso. Acompanhe a decisão nesta mesma consulta de protocolo.');
+            carregarEstatisticas();
+            // Recarrega a consulta para refletir a nova situação
+            document.getElementById('form-consulta').requestSubmit();
+        } catch (error) {
+            console.error(error);
+            alert('Erro ao protocolar o recurso. Tente novamente.');
+            if (btn) { btn.innerText = 'Protocolar Recurso'; btn.disabled = false; }
+        }
+    };
 
     // ================= Download do Relatório Estatístico (CSV) =================
     window.baixarRelatorioCSV = function() {
