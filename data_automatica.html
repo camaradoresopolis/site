@@ -3,203 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Convênios e Acordos | Câmara Municipal de Doresópolis</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <title>Convênios e Acordos | Câmara Municipal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Variáveis de Cores (Padrão do Portal) */
-        :root { 
-            --cor-fundo: #f2f2f2; 
-            --cor-primaria: #025d3b; 
-            --cor-primaria-hover: #01472c; 
-            --cor-primaria-bg: rgba(2, 93, 59, 0.08); 
-            --branco: #ffffff; 
-            --texto-escuro: #1f2937; 
-            --texto-medio: #4b5563; 
-            --texto-claro: #6b7280; 
-            --borda: #e5e7eb; 
-            --transicao: all 0.3s ease; 
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
         }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--cor-fundo); 
-            color: var(--texto-escuro); 
-            line-height: 1.6; 
-            padding: 40px 20px; 
-        }
-        
-        .container { max-width: 1000px; margin: 0 auto; }
-        
-        /* Botão Voltar Simples */
-        .btn-voltar-simples { 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 8px; 
-            text-decoration: none; 
-            color: #334155; 
-            font-size: 1.05rem; 
-            font-weight: 500; 
-            margin-bottom: 30px; 
-            transition: var(--transicao); 
-        }
-        
-        .btn-voltar-simples:hover { color: var(--cor-primaria); }
-        .btn-voltar-simples svg { width: 20px; height: 20px; stroke: currentColor; }
-
-        /* Cabeçalho */
-        .header-transparencia { 
-            text-align: center; 
-            margin-bottom: 30px; 
-            animation: fadeIn 0.6s ease-out; 
-        }
-        
-        .header-transparencia svg { 
-            width: 40px; 
-            height: 40px; 
-            fill: var(--cor-primaria); 
-            margin-bottom: 10px; 
-        }
-        
-        .header-transparencia h1 { 
-            font-size: 2.2rem; 
-            color: var(--texto-escuro); 
-            font-weight: 600; 
-            margin-bottom: 15px; 
-        }
-        
-        /* Barra de Informações (Breadcrumbs) */
-        .info-bar { 
-            display: flex; 
-            justify-content: flex-start; 
-            align-items: center; 
-            padding: 12px 0; 
-            border-bottom: 1px solid var(--borda); 
-            margin-bottom: 30px; 
-            font-size: 0.85rem; 
-            color: var(--texto-claro);
-        }
-
-        .breadcrumb a { color: var(--texto-medio); text-decoration: none; transition: var(--transicao); }
-        .breadcrumb a:hover { color: var(--cor-primaria); }
-        .breadcrumb span { margin: 0 6px; color: var(--borda); }
-
-        /* Caixa de Conteúdo - Declaração */
-        .conteudo-box { 
-            background-color: var(--branco); 
-            border-radius: 12px; 
-            padding: 50px 40px; 
-            border: 1px solid var(--borda); 
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
-            animation: slideUp 0.8s ease-out; 
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #64748b;
+            font-size: 0.9rem;
+            font-weight: 600;
             margin-bottom: 30px;
+            transition: all 0.3s;
+        }
+        .btn-voltar:hover { color: #025d3b; }
+        .declaracao {
+            font-size: 1.1rem;
             text-align: justify;
-        }
-
-        .declaracao-texto {
-            font-size: 1.15rem;
-            color: var(--texto-escuro);
-            line-height: 1.8;
-            border-left: 4px solid var(--cor-primaria);
-            padding-left: 20px;
-            background-color: #f8fafc;
+            background: #f9fafb;
             padding: 30px;
-            border-radius: 0 8px 8px 0;
+            border-radius: 8px;
+            border-left: 5px solid #025d3b;
         }
-
-        /* Destaque para a data que vai mudar sozinha */
-        .data-dinamica {
-            font-weight: 700;
-            color: var(--cor-primaria);
-            background-color: var(--cor-primaria-bg);
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-
-        /* Animações */
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Responsividade */
-        @media (max-width: 600px) {
-            .conteudo-box { padding: 30px 20px; }
-            .declaracao-texto { font-size: 1rem; padding: 20px; }
-        }
+        .data-dinamica { font-weight: 700; color: #025d3b; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        
-        <a href="https://www.doresopolis.mg.leg.br/transparencia" class="btn-voltar-simples">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            Voltar para Transparência
-        </a>
+    <a href="https://www.doresopolis.mg.leg.br/transparencia" class="btn-voltar">
+        ← Voltar para Transparência
+    </a>
 
-        <div class="header-transparencia">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-                <path d="M232,120h-8V64a16,16,0,0,0-16-16H48A16,16,0,0,0,32,64v56H24a8,8,0,0,0,0,16h8v56a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V136h8a8,8,0,0,0,0-16ZM48,64H208v56H48ZM208,192H48V136H208v56Zm-40-24a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"></path>
-            </svg>
-            <h1>Convênios, Acordos e Termos</h1>
-        </div>
-
-        <div class="info-bar">
-            <div class="breadcrumb">
-                <a href="#">Principal</a> <span>/</span> 
-                <a href="https://www.doresopolis.mg.leg.br/transparencia">Transparência</a> <span>/</span> 
-                <strong style="color: var(--texto-escuro); font-weight: 500;">Convênios e Acordos</strong>
-            </div>
-        </div>
-
-        <div class="conteudo-box">
-            <div class="declaracao-texto">
-                A Câmara Municipal de Doresópolis/MG declara, para os devidos fins de transparência pública, que até a presente data, 
-                <span id="data-dinamica" class="data-dinamica">Calculando data...</span>, 
-                não houve recebimento de recursos financeiros decorrentes de acordos, convênios, ajustes, termos de cooperação ou instrumentos congêneres vinculados a esta Casa Legislativa.
-            </div>
-        </div>
-
+    <div class="declaracao">
+        A Câmara Municipal de Doresópolis/MG declara, para os devidos fins de transparência pública, que até a presente data, 
+        <span id="data-dinamica" class="data-dinamica">Calculando data...</span>, 
+        não houve recebimento de recursos financeiros decorrentes de acordos, convênios, ajustes, termos de cooperação ou instrumentos congêneres vinculados a esta Casa Legislativa.
     </div>
 
     <script>
         function atualizarDataDeclaracao() {
-            // Data de Início definida no sistema: 01 de julho de 2026
-            // ATENÇÃO: No Javascript, o mês começa do ZERO. Portanto, Julho é o mês 6.
+            // Data de início base: 01/07/2026
             var dataBase = new Date(2026, 6, 1); 
-
-            // Pega a data exata do momento em que o cidadão acessa a página
             var hoje = new Date();
-            // Zera as horas para calcular apenas a diferença de dias exatos
             hoje.setHours(0, 0, 0, 0);
 
-            // Calcula a diferença em milissegundos
             var msPorDia = 24 * 60 * 60 * 1000;
             var diferencaDias = Math.floor((hoje - dataBase) / msPorDia);
             
-            // Define o ciclo de 29 dias (Quantas vezes 29 dias já se passaram desde a data base)
-            var ciclos = 0;
-            if (diferencaDias > 0) {
-                ciclos = Math.floor(diferencaDias / 29);
-            }
+            // Calcula o número de ciclos de 29 dias
+            var ciclos = Math.max(0, Math.floor(diferencaDias / 29));
 
-            // Calcula a nova data com base no ciclo
+            // Calcula a data atualizada somando os ciclos
             var dataAtualizada = new Date(dataBase.getTime() + (ciclos * 29 * msPorDia));
 
-            // Formata a data para o padrão de leitura: "01 de julho de 2026"
-            var opcoesFormato = { day: '2-digit', month: 'long', year: 'numeric' };
-            var dataFormatada = dataAtualizada.toLocaleDateString('pt-BR', opcoesFormato);
-
-            // Injeta a data pronta no texto
-            document.getElementById('data-dinamica').textContent = dataFormatada;
+            // Formata a data
+            var opcoes = { day: 'numeric', month: 'long', year: 'numeric' };
+            document.getElementById('data-dinamica').textContent = dataAtualizada.toLocaleDateString('pt-BR', opcoes);
         }
 
-        // Executa a função imediatamente ao carregar a página
         document.addEventListener('DOMContentLoaded', atualizarDataDeclaracao);
     </script>
 
