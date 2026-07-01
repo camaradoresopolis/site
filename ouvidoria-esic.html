@@ -370,6 +370,21 @@ table.stat-table tr:nth-child(even) td{background:#f8faf8}
         <div id="consulta-resultado" style="margin-top:16px"></div>
       </div>
     </div>
+
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><span>PERDEU O PROTOCOLO? RECUPERE POR E-MAIL</span></div>
+      <div class="card-body">
+        <p>Caso tenha perdido o número, informe o <strong>e-mail utilizado</strong> no pedido (e-SIC) ou na manifestação identificada (Ouvidoria) para recuperar seus protocolos. Por segurança e proteção de dados (LGPD), exibimos apenas número, tipo, data e situação — sem o conteúdo. <strong>Manifestações anônimas não são recuperáveis.</strong></p>
+        <form id="form-recuperar" style="margin-top:8px">
+          <div class="form-group" style="padding-top:0">
+            <label class="pergunta-titulo">E-mail cadastrado <span class="req">*</span></label>
+            <input type="email" class="input-texto" id="recuperar_email" required placeholder="seu@email.com">
+          </div>
+          <button type="submit" id="btn-recuperar" class="btn-enviar">Buscar meus protocolos</button>
+        </form>
+        <div id="recuperar-resultado" style="margin-top:16px"></div>
+      </div>
+    </div>
   </div>
 
   <div id="relatorio" class="tab-content active">
@@ -963,6 +978,79 @@ atualizarDatas();
         } catch (error) {
             console.error(error);
             resultado.innerHTML = '<div class="alert"><p>Erro ao consultar o protocolo. Tente novamente.</p></div>';
+        } finally {
+            btn.innerText = textoOriginal;
+            btn.disabled = false;
+        }
+    });
+
+    // ================= Recuperação de Protocolo por E-mail =================
+    const formRecuperar = document.getElementById('form-recuperar');
+    formRecuperar.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('btn-recuperar');
+        const resultado = document.getElementById('recuperar-resultado');
+        const email = document.getElementById('recuperar_email').value.trim().toLowerCase();
+        if (!email) return;
+
+        const textoOriginal = btn.innerText;
+        btn.innerText = "Buscando...";
+        btn.disabled = true;
+        resultado.innerHTML = '';
+
+        try {
+            const encontrados = [];
+
+            // e-SIC
+            const snapEsic = await getDocs(collection(db, "esic_pedidos"));
+            snapEsic.forEach(s => {
+                const d = s.data();
+                if ((d.email || '').trim().toLowerCase() === email) {
+                    encontrados.push({
+                        protocolo: d.protocolo || '—',
+                        canal: 'e-SIC',
+                        tipo: d.tipo_pedido || 'Pedido de acesso à informação',
+                        status: d.status_pedido || 'Em tramitação',
+                        millis: d.data_submissao && d.data_submissao.toMillis ? d.data_submissao.toMillis() : 0,
+                        data: d.data_submissao && d.data_submissao.toDate ? d.data_submissao.toDate().toLocaleDateString('pt-BR') : '—'
+                    });
+                }
+            });
+
+            // Ouvidoria (apenas identificadas)
+            const snapOuv = await getDocs(collection(db, "ouvidoria_manifestacoes"));
+            snapOuv.forEach(s => {
+                const d = s.data();
+                if (d.anonimo !== 'Sim' && (d.email || '').trim().toLowerCase() === email) {
+                    encontrados.push({
+                        protocolo: d.protocolo || '—',
+                        canal: 'Ouvidoria',
+                        tipo: d.tipo_manifestacao || 'Manifestação',
+                        status: d.status || 'Recebida',
+                        millis: d.data_submissao && d.data_submissao.toMillis ? d.data_submissao.toMillis() : 0,
+                        data: d.data_submissao && d.data_submissao.toDate ? d.data_submissao.toDate().toLocaleDateString('pt-BR') : '—'
+                    });
+                }
+            });
+
+            if (encontrados.length === 0) {
+                resultado.innerHTML = '<div class="alert"><p>Nenhum protocolo localizado para este e-mail. Verifique se digitou o mesmo e-mail informado no envio. Manifestações anônimas não aparecem nesta busca.</p></div>';
+                return;
+            }
+
+            encontrados.sort((a, b) => b.millis - a.millis);
+
+            let html = '<div class="card" style="margin-bottom:0"><div class="card-body"><table class="stat-table"><tbody>';
+            html += '<tr><th>Protocolo</th><th>Canal</th><th>Tipo</th><th>Data</th><th>Situação</th></tr>';
+            encontrados.forEach(r => {
+                html += `<tr><td><strong>${r.protocolo}</strong></td><td>${r.canal}</td><td>${r.tipo}</td><td>${r.data}</td><td>${r.status}</td></tr>`;
+            });
+            html += '</tbody></table><div class="notice" style="margin-top:14px"><p>Foram encontrados <strong>' + encontrados.length + '</strong> registro(s). Use o número na consulta acima para ver a resposta oficial e, se for o caso, interpor recurso.</p></div></div></div>';
+            resultado.innerHTML = html;
+
+        } catch (error) {
+            console.error(error);
+            resultado.innerHTML = '<div class="alert"><p>Erro ao buscar protocolos. Tente novamente.</p></div>';
         } finally {
             btn.innerText = textoOriginal;
             btn.disabled = false;
