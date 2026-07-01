@@ -117,6 +117,7 @@ table.stat-table tr:nth-child(even) td{background:#f8faf8}
   <div class="tabs">
     <button class="tab-btn" onclick="showTab('ouvidoria',this)">Ouvidoria</button>
     <button class="tab-btn" onclick="showTab('esic',this)">e-SIC</button>
+    <button class="tab-btn" onclick="showTab('protocolo',this)">Consultar Protocolo</button>
     <button class="tab-btn active" onclick="showTab('relatorio',this)">Relatório Estatístico</button>
     <button class="tab-btn" onclick="showTab('sigilo',this)">Rol de Sigilo</button>
     <button class="tab-btn" onclick="showTab('carta',this)">Carta de Serviços</button>
@@ -131,6 +132,41 @@ table.stat-table tr:nth-child(even) td{background:#f8faf8}
           <div class="prazo-card"><div class="num">20</div><div class="label">dias contados para resposta</div></div>
           <div class="prazo-card"><div class="num">+10</div><div class="label">dias prorrogáveis mediante justificativa</div></div>
           <div class="prazo-card"><div class="num">LAI</div><div class="label">Lei Federal nº 12.527/2011</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>RESPONSÁVEIS E ATENDIMENTO PRESENCIAL DA OUVIDORIA</span></div>
+      <div class="card-body">
+        <p>Nos termos da <strong>Portaria nº 028/2026</strong>, com fundamento no art. 8º da <strong>Resolução nº 001/2024</strong>, a Ouvidoria da Câmara Municipal de Doresópolis é composta pelos seguintes responsáveis:</p>
+        <div class="info-grid">
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+            <div class="info-item-text"><div class="lbl">Vereador Ouvidor</div><div class="val">Keyla Maria Paim</div></div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+            <div class="info-item-text"><div class="lbl">Servidor Ouvidor</div><div class="val">Flávio dos Santos Paim</div></div>
+          </div>
+        </div>
+        <div class="info-grid" style="margin-top:12px">
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <div class="info-item-text"><div class="lbl">Endereço (atendimento presencial)</div><div class="val">Rua Farnésio Paim Pamplona, nº 61<br>Centro — Doresópolis/MG — CEP 37.926-000</div></div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.37a16 16 0 0 0 6 6l1.27-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <div class="info-item-text"><div class="lbl">Telefone</div><div class="val">(37) 3441-0012</div></div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div class="info-item-text"><div class="lbl">Horário de Funcionamento</div><div class="val">Segunda a Sexta-feira<br>08h00 às 17h00</div></div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <div class="info-item-text"><div class="lbl">E-mail</div><div class="val"><a href="mailto:ouvidoria@camaradoresopolis.com.br">ouvidoria@camaradoresopolis.com.br</a></div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -199,9 +235,71 @@ table.stat-table tr:nth-child(even) td{background:#f8faf8}
     </div>
 
     <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><span>UNIDADE E SERVIDOR RESPONSÁVEL PELO SIC</span></div>
+      <div class="card-body">
+        <p>Em cumprimento aos arts. 9º, I, e 8º, §1º, I, da Lei Federal nº 12.527/2011 e à <strong>Portaria nº 030/2026</strong>, a Câmara Municipal de Doresópolis informa a unidade e o servidor responsável pelo Serviço de Informação ao Cidadão (SIC/e-SIC):</p>
+        <div class="info-grid">
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path></svg>
+            <div class="info-item-text"><div class="lbl">Unidade Responsável</div><div class="val">Serviço de Informação ao Cidadão (SIC)<br>Assessoria Legislativa</div></div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <div class="info-item-text"><div class="lbl">Servidor Responsável</div><div class="val">Flávio dos Santos Paim</div></div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <div class="info-item-text"><div class="lbl">Endereço do SIC</div><div class="val">Rua Farnésio Paim Pamplona, nº 61<br>Centro — Doresópolis/MG — CEP 37.926-000</div></div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.37a16 16 0 0 0 6 6l1.27-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <div class="info-item-text"><div class="lbl">Telefone</div><div class="val">(37) 3441-0012</div></div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div class="info-item-text"><div class="lbl">Horário de Funcionamento</div><div class="val">Segunda a Sexta-feira<br>08h00 às 17h00</div></div>
+          </div>
+          <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <div class="info-item-text"><div class="lbl">E-mail do SIC</div><div class="val"><a href="mailto:sic@camaradoresopolis.com.br">sic@camaradoresopolis.com.br</a></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <details class="card accordion-card">
+      <summary class="card-header"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>PRAZOS, RECURSOS E AUTORIDADES COMPETENTES</span></summary>
+      <div class="card-body">
+        <p>Com fundamento na Lei Federal nº 12.527/2011 e na Portaria nº 029/2026, o procedimento de acesso à informação observa os seguintes prazos e instâncias:</p>
+        <p style="margin-top:8px"><strong>1. Resposta ao pedido:</strong> até <strong>20 dias</strong>, prorrogáveis por mais <strong>10 dias</strong> mediante justificativa expressa comunicada ao interessado (art. 13).</p>
+        <p><strong>2. Recurso (negativa de acesso):</strong> em caso de indeferimento, o interessado pode interpor recurso no prazo de <strong>10 dias</strong> a contar da ciência, dirigido à <strong>Presidência da Câmara</strong>, que decidirá em <strong>5 dias</strong> (art. 18).</p>
+        <p><strong>3. Segunda instância:</strong> mantida a negativa, cabe novo recurso à <strong>Mesa Diretora</strong> no prazo de <strong>10 dias</strong>, que decidirá em <strong>5 dias</strong> (art. 18, §2º).</p>
+        <p><strong>4. Reclamação por omissão:</strong> não havendo resposta, o requerente pode apresentar reclamação em <strong>10 dias</strong> à Presidência da Câmara, contados a partir de 30 dias da apresentação do pedido (art. 19).</p>
+        <p style="margin-top:8px"><strong>Como pedir e como recorrer:</strong> o pedido pode ser feito pelo formulário eletrônico abaixo, presencialmente na sede da Câmara ou por telefone. O recurso deve ser encaminhado pelos mesmos canais, indicando o número de protocolo do pedido original e as razões da irresignação.</p>
+        <div class="notice" style="margin-top:12px"><p><strong>Autoridades competentes:</strong> Presidência da Câmara (1ª instância recursal) e Mesa Diretora (2ª instância recursal), conforme arts. 18 a 20 da Portaria nº 029/2026.</p></div>
+      </div>
+    </details>
+
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg><span>LEGISLAÇÃO E INSTRUMENTO NORMATIVO LOCAL — LAI</span></div>
+      <div class="card-body">
+        <p>Em cumprimento ao art. 45 da Lei Federal nº 12.527/2011, a Câmara Municipal de Doresópolis divulga os atos normativos locais que regulamentam o acesso à informação e a estrutura de atendimento ao cidadão:</p>
+        <ul style="margin-left:20px;margin-top:10px;line-height:1.9;color:#333;font-size:13px">
+          <li><strong>Lei Federal nº 12.527/2011</strong> — Lei de Acesso à Informação (LAI).</li>
+          <li><strong>Portaria nº 029/2026</strong> — Regulamenta o acesso à informação no âmbito da Câmara Municipal de Doresópolis.</li>
+          <li><strong>Portaria nº 030/2026</strong> — Nomeia o servidor responsável pelo SIC/e-SIC.</li>
+          <li><strong>Portaria nº 028/2026</strong> e <strong>Resolução nº 001/2024</strong> — Instituem e compõem a Ouvidoria Legislativa Municipal.</li>
+        </ul>
+        <div class="notice" style="margin-top:12px"><p>Os textos integrais dos atos normativos estão disponíveis no <a href="https://www.doresopolis.mg.leg.br" target="_blank" rel="noopener">Portal Oficial da Câmara Municipal de Doresópolis</a>, na seção de Legislação e Transparência.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
       <div class="card-header"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span>FORMULÁRIO ELETRÔNICO — E-SIC</span></div>
       <div class="card-body">
         <form id="form-esic">
+
+            <div class="notice" style="margin-top:0;margin-bottom:8px"><p>O pedido de acesso à informação é <strong>gratuito e simples</strong>. Não é exigido o envio de documentos, assinatura reconhecida, declaração de responsabilidade ou de maioridade, nem a apresentação dos motivos do pedido (art. 10, §§1º e 3º, da Lei nº 12.527/2011).</p></div>
 
             <div class="form-group">
                 <label class="pergunta-titulo">Nome Completo <span class="req">*</span></label>
@@ -209,8 +307,8 @@ table.stat-table tr:nth-child(even) td{background:#f8faf8}
             </div>
 
             <div class="form-group">
-                <label class="pergunta-titulo">CPF ou CNPJ <span class="req">*</span></label>
-                <input type="text" class="input-texto" name="esic_documento" required placeholder="Sua resposta">
+                <label class="pergunta-titulo">CPF ou CNPJ <span style="font-weight:400;color:#888;font-size:11px">(opcional — exigido apenas para pedidos de acesso a informações pessoais)</span></label>
+                <input type="text" class="input-texto" name="esic_documento" placeholder="Sua resposta">
             </div>
 
             <div class="form-group">
@@ -253,6 +351,23 @@ table.stat-table tr:nth-child(even) td{background:#f8faf8}
 
             <button type="submit" id="btn-enviar-esic" class="btn-enviar">Enviar Pedido</button>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="protocolo" class="tab-content">
+    <div class="card">
+      <div class="card-header"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>CONSULTA DE PROTOCOLO</span></div>
+      <div class="card-body">
+        <p>Digite o número de protocolo recebido no momento do envio da sua manifestação (Ouvidoria) ou pedido (e-SIC) para acompanhar a <strong>situação</strong> e visualizar a <strong>resposta oficial</strong>, quando disponível.</p>
+        <form id="form-consulta" style="margin-top:8px">
+          <div class="form-group" style="padding-top:0">
+            <label class="pergunta-titulo">Número do Protocolo <span class="req">*</span></label>
+            <input type="text" class="input-texto" id="consulta_protocolo" required placeholder="Ex.: E-SIC 0001/2026 ou OUV 0001/2026">
+          </div>
+          <button type="submit" id="btn-consultar" class="btn-enviar">Consultar</button>
+        </form>
+        <div id="consulta-resultado" style="margin-top:16px"></div>
       </div>
     </div>
   </div>
@@ -305,6 +420,7 @@ table.stat-table tr:nth-child(even) td{background:#f8faf8}
         </tbody></table>
         
         <div class="notice" style="margin-top:16px"><p>Os dados acima refletem o exercício de 2026 e são atualizados automaticamente a cada envio recebido pelos canais eletrônicos.</p></div>
+        <button type="button" class="btn-enviar" style="width:auto;padding:10px 20px" onclick="baixarRelatorioCSV()">Baixar relatório (CSV)</button>
       </div>
     </details>
   </div>
@@ -477,6 +593,11 @@ table.stat-table tr:nth-child(even) td{background:#f8faf8}
         </div>
         <h3>Recebido com sucesso!</h3>
         <p>Sua manifestação foi registrada no nosso sistema. Agradecemos a sua participação.</p>
+        <div id="modal-protocolo" style="background:#e8f4ef;border-radius:8px;padding:14px;margin-bottom:16px;display:none">
+            <div style="font-size:11px;color:#1a5c3a;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Número do Protocolo</div>
+            <div id="modal-protocolo-num" style="font-size:20px;font-weight:700;color:#0f4c2a"></div>
+            <div style="font-size:11px;color:#1a5c3a;margin-top:6px">Guarde este número para acompanhar sua solicitação na aba "Consultar Protocolo".</div>
+        </div>
         <button class="btn-concluir" onclick="fecharModal()">Concluir</button>
     </div>
 </div>
@@ -507,7 +628,7 @@ atualizarDatas();
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, getDocs, serverTimestamp, doc, runTransaction, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     // Configuração do Firebase
     const firebaseConfig = {
@@ -522,6 +643,24 @@ atualizarDatas();
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+
+    // ================= Sistema de Protocolo =================
+    // Gera número de protocolo sequencial por ano e por canal, de forma atômica.
+    // Formato: "E-SIC 0001/2026" (esic) ou "OUV 0001/2026" (ouvidoria).
+    async function gerarProtocolo(canal) {
+        const ano = new Date().getFullYear();
+        const prefixo = canal === 'esic' ? 'E-SIC' : 'OUV';
+        const contadorRef = doc(db, "protocolo_contadores", `${canal}_${ano}`);
+        const seq = await runTransaction(db, async (transaction) => {
+            const snap = await transaction.get(contadorRef);
+            const atual = snap.exists() ? (snap.data().ultimo || 0) : 0;
+            const proximo = atual + 1;
+            transaction.set(contadorRef, { ultimo: proximo, ano: ano, canal: canal }, { merge: true });
+            return proximo;
+        });
+        const numeroFmt = String(seq).padStart(4, '0');
+        return { protocolo: `${prefixo} ${numeroFmt}/${ano}`, numero: seq, ano: ano, canal: canal };
+    }
 
     // ================= Lógica Visual (Ouvidoria) =================
     const radiosAnonimo = document.querySelectorAll('input[name="ouv_anonimo"]');
@@ -554,22 +693,30 @@ atualizarDatas();
         btnOuv.disabled = true;
 
         const formData = new FormData(formOuvidoria);
-        const dados = {
-            tipo_manifestacao: formData.get('ouv_tipo'),
-            anonimo: formData.get('ouv_anonimo'),
-            nome: formData.get('ouv_nome') || '',
-            email: formData.get('ouv_email') || '',
-            telefone: formData.get('ouv_telefone') || '',
-            descricao: formData.get('ouv_descricao'),
-            data_submissao: serverTimestamp()
-        };
 
         try {
+            const p = await gerarProtocolo('ouvidoria');
+            const dados = {
+                protocolo: p.protocolo,
+                protocolo_numero: p.numero,
+                protocolo_ano: p.ano,
+                canal: 'ouvidoria',
+                tipo_manifestacao: formData.get('ouv_tipo'),
+                anonimo: formData.get('ouv_anonimo'),
+                nome: formData.get('ouv_nome') || '',
+                email: formData.get('ouv_email') || '',
+                telefone: formData.get('ouv_telefone') || '',
+                descricao: formData.get('ouv_descricao'),
+                status: 'Recebida',
+                resposta: '',
+                respondido_por: '',
+                data_submissao: serverTimestamp()
+            };
             await addDoc(collection(db, "ouvidoria_manifestacoes"), dados);
             formOuvidoria.reset();
-            divIdentificacao.style.display = 'none'; 
-            document.getElementById('modal-sucesso').classList.add('ativo');
-            carregarEstatisticas(); 
+            divIdentificacao.style.display = 'none';
+            mostrarModalSucesso(p.protocolo);
+            carregarEstatisticas();
         } catch (error) {
             console.error(error);
             alert("Erro ao enviar manifestação.");
@@ -590,24 +737,31 @@ atualizarDatas();
         btnEsic.disabled = true;
 
         const formData = new FormData(formEsic);
-        const dados = {
-            nome: formData.get('esic_nome'),
-            documento: formData.get('esic_documento'),
-            email: formData.get('esic_email'),
-            telefone: formData.get('esic_telefone'),
-            endereco: formData.get('esic_endereco') || '',
-            tipo_pedido: formData.get('esic_tipo'),
-            descricao: formData.get('esic_descricao'),
-            forma_recebimento: formData.get('esic_recebimento'),
-            status_pedido: 'Em tramitação', 
-            data_submissao: serverTimestamp()
-        };
 
         try {
+            const p = await gerarProtocolo('esic');
+            const dados = {
+                protocolo: p.protocolo,
+                protocolo_numero: p.numero,
+                protocolo_ano: p.ano,
+                canal: 'esic',
+                nome: formData.get('esic_nome'),
+                documento: formData.get('esic_documento') || '',
+                email: formData.get('esic_email'),
+                telefone: formData.get('esic_telefone'),
+                endereco: formData.get('esic_endereco') || '',
+                tipo_pedido: formData.get('esic_tipo'),
+                descricao: formData.get('esic_descricao'),
+                forma_recebimento: formData.get('esic_recebimento'),
+                status_pedido: 'Em tramitação',
+                resposta: '',
+                respondido_por: '',
+                data_submissao: serverTimestamp()
+            };
             await addDoc(collection(db, "esic_pedidos"), dados);
             formEsic.reset();
-            document.getElementById('modal-sucesso').classList.add('ativo');
-            carregarEstatisticas(); 
+            mostrarModalSucesso(p.protocolo);
+            carregarEstatisticas();
         } catch (error) {
             console.error(error);
             alert("Erro ao enviar pedido.");
@@ -673,6 +827,130 @@ atualizarDatas();
             console.error("Erro ao puxar estatísticas: ", e);
         }
     }
+
+    // ================= Modal de Sucesso com Protocolo =================
+    function mostrarModalSucesso(protocolo) {
+        const bloco = document.getElementById('modal-protocolo');
+        const num = document.getElementById('modal-protocolo-num');
+        if (protocolo) {
+            num.textContent = protocolo;
+            bloco.style.display = 'block';
+        } else {
+            bloco.style.display = 'none';
+        }
+        document.getElementById('modal-sucesso').classList.add('ativo');
+    }
+
+    // ================= Consulta de Protocolo =================
+    const formConsulta = document.getElementById('form-consulta');
+    formConsulta.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('btn-consultar');
+        const resultado = document.getElementById('consulta-resultado');
+        const valor = document.getElementById('consulta_protocolo').value.trim().toUpperCase().replace(/\s+/g, ' ');
+        if (!valor) return;
+
+        const textoOriginal = btn.innerText;
+        btn.innerText = "Consultando...";
+        btn.disabled = true;
+        resultado.innerHTML = '';
+
+        try {
+            let encontrado = null;
+            let origem = null;
+
+            // Busca no e-SIC
+            const qEsic = query(collection(db, "esic_pedidos"), where("protocolo", "==", valor));
+            const snapEsic = await getDocs(qEsic);
+            snapEsic.forEach(d => { encontrado = d.data(); origem = 'esic'; });
+
+            // Busca na Ouvidoria
+            if (!encontrado) {
+                const qOuv = query(collection(db, "ouvidoria_manifestacoes"), where("protocolo", "==", valor));
+                const snapOuv = await getDocs(qOuv);
+                snapOuv.forEach(d => { encontrado = d.data(); origem = 'ouvidoria'; });
+            }
+
+            if (!encontrado) {
+                resultado.innerHTML = '<div class="alert"><p>Nenhum registro localizado para o protocolo informado. Verifique o número e tente novamente.</p></div>';
+                return;
+            }
+
+            const d = encontrado;
+            const dataEnvio = d.data_submissao && d.data_submissao.toDate ? d.data_submissao.toDate().toLocaleDateString('pt-BR') : '—';
+            const status = origem === 'esic' ? (d.status_pedido || 'Em tramitação') : (d.status || 'Recebida');
+            const tipo = origem === 'esic' ? (d.tipo_pedido || 'Pedido de acesso à informação') : (d.tipo_manifestacao || 'Manifestação');
+            const canalNome = origem === 'esic' ? 'e-SIC — Serviço de Informação ao Cidadão' : 'Ouvidoria';
+
+            let html = '<div class="card" style="margin-bottom:0"><div class="card-body">';
+            html += `<table class="stat-table"><tbody>`;
+            html += `<tr><th colspan="2">Protocolo ${d.protocolo}</th></tr>`;
+            html += `<tr><td>Canal</td><td>${canalNome}</td></tr>`;
+            html += `<tr><td>Tipo</td><td>${tipo}</td></tr>`;
+            html += `<tr><td>Data de registro</td><td>${dataEnvio}</td></tr>`;
+            html += `<tr><td>Situação</td><td><strong>${status}</strong></td></tr>`;
+            html += `</tbody></table>`;
+
+            if (d.resposta && d.resposta.trim() !== '') {
+                html += `<div class="notice" style="margin-top:14px"><p><strong>Resposta oficial:</strong><br>${d.resposta.replace(/\n/g, '<br>')}</p>`;
+                if (d.respondido_por && d.respondido_por.trim() !== '') {
+                    html += `<p style="margin-top:8px"><strong>Respondido por:</strong> ${d.respondido_por}</p>`;
+                }
+                html += `</div>`;
+            } else {
+                html += `<div class="alert" style="margin-top:14px"><p>Sua solicitação está <strong>${status.toLowerCase()}</strong>. A resposta oficial será disponibilizada aqui dentro dos prazos legais (art. 13 da Portaria nº 029/2026 — LAI).</p></div>`;
+            }
+            html += '</div></div>';
+            resultado.innerHTML = html;
+
+        } catch (error) {
+            console.error(error);
+            resultado.innerHTML = '<div class="alert"><p>Erro ao consultar o protocolo. Tente novamente.</p></div>';
+        } finally {
+            btn.innerText = textoOriginal;
+            btn.disabled = false;
+        }
+    });
+
+    // ================= Download do Relatório Estatístico (CSV) =================
+    window.baixarRelatorioCSV = function() {
+        const g = id => (document.getElementById(id) ? document.getElementById(id).innerText.trim() : '0');
+        const ano = new Date().getFullYear();
+        const linhas = [
+            ['Relatório Estatístico - Câmara Municipal de Doresópolis', ''],
+            ['Exercício', String(ano)],
+            ['Gerado em', new Date().toLocaleString('pt-BR')],
+            ['', ''],
+            ['Pedidos de Acesso à Informação (e-SIC)', ''],
+            ['Total de pedidos recebidos', g('stat-esic-total')],
+            ['Pedidos atendidos (deferidos)', g('stat-esic-deferidos')],
+            ['Pedidos indeferidos', g('stat-esic-indeferidos')],
+            ['Pedidos em tramitação', g('stat-esic-tramitacao')],
+            ['Recursos interpostos', g('stat-esic-recursos')],
+            ['', ''],
+            ['Manifestações (Ouvidoria)', ''],
+            ['Reclamações', g('stat-ouv-reclamacoes')],
+            ['Denúncias', g('stat-ouv-denuncias')],
+            ['Sugestões', g('stat-ouv-sugestoes')],
+            ['Elogios', g('stat-ouv-elogios')],
+            ['Solicitações', g('stat-ouv-solicitacoes')],
+            ['Total de manifestações', g('stat-ouv-total')],
+            ['', ''],
+            ['Perfil Geral dos Solicitantes', ''],
+            ['Identificados', g('stat-perfil-identificados')],
+            ['Anônimos', g('stat-perfil-anonimas')]
+        ];
+        const csv = '﻿' + linhas.map(l => l.map(c => `"${String(c).replace(/"/g, '""')}"`).join(';')).join('\r\n');
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Relatorio_Estatistico_${ano}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
 
     // Carrega no início da página
     document.addEventListener('DOMContentLoaded', carregarEstatisticas);

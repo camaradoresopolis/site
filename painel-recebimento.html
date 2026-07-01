@@ -303,10 +303,12 @@
                     <table>
                         <thead>
                             <tr>
+                                <th>Protocolo</th>
                                 <th>Data</th>
                                 <th>Tipo</th>
                                 <th>Identificação</th>
                                 <th>Contato</th>
+                                <th>Situação</th>
                                 <th class="col-acao">Ação</th>
                             </tr>
                         </thead>
@@ -324,6 +326,7 @@
                     <table>
                         <thead>
                             <tr>
+                                <th>Protocolo</th>
                                 <th>Data</th>
                                 <th>Tipo</th>
                                 <th>Solicitante</th>
@@ -547,12 +550,15 @@
                 window.dadosOuvidoriaFiltrados.forEach((d, index) => {
                     const tr = document.createElement('tr');
                     const isAnonimo = d.anonimo === 'Sim';
+                    const statusOuv = d.status || (d.resposta && d.resposta.trim() ? 'Respondida' : 'Recebida');
                     tr.innerHTML = `
+                        <td><strong>${d.protocolo || '—'}</strong></td>
                         <td>${formatarData(d.data_submissao)}</td>
                         <td><span class="badge ${getBadgeOuvidoria(d.tipo_manifestacao)}">${d.tipo_manifestacao || '-'}</span></td>
                         <td><strong>${isAnonimo ? 'Anônimo' : (d.nome || '-')}</strong></td>
                         <td>${isAnonimo ? 'Sigiloso' : (d.email || d.telefone || '-')}</td>
-                        <td class="col-acao"><button class="btn-acao" onclick="abrirModalOuvidoria(${index})">Ler na íntegra</button></td>
+                        <td><span class="badge ${statusOuv === 'Respondida' ? 'bg-verde' : 'bg-amarelo'}">${statusOuv}</span></td>
+                        <td class="col-acao"><button class="btn-acao" onclick="abrirModalOuvidoria(${index})">Ler / Responder</button></td>
                     `;
                     tbodyOuv.appendChild(tr);
                 });
@@ -569,11 +575,12 @@
                 window.dadosEsicFiltrados.forEach((d, index) => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
+                        <td><strong>${d.protocolo || '—'}</strong></td>
                         <td>${formatarData(d.data_submissao)}</td>
                         <td>${d.tipo_pedido || '-'}</td>
                         <td><strong>${d.nome || '-'}</strong></td>
                         <td><span class="badge ${getBadgeEsic(d.status_pedido)}">${d.status_pedido || 'Em tramitação'}</span></td>
-                        <td class="col-acao"><button class="btn-acao" onclick="abrirModalEsic(${index})">Ler pedido</button></td>
+                        <td class="col-acao"><button class="btn-acao" onclick="abrirModalEsic(${index})">Ler / Responder</button></td>
                     `;
                     tbodyEsic.appendChild(tr);
                 });
@@ -583,10 +590,11 @@
         // ====== LÓGICA DO MODAL ======
         window.abrirModalOuvidoria = function(index) {
             const d = window.dadosOuvidoriaFiltrados[index];
+            const statusOuv = d.status || (d.resposta && d.resposta.trim() ? 'Respondida' : 'Recebida');
             let html = `
                 <div style="margin-bottom: 20px; border-bottom: 2px solid #025d3b; padding-bottom: 10px;">
                     <h1 style="color: #025d3b; font-size: 1.5rem; margin-bottom: 5px;">Relatório de Manifestação (Ouvidoria)</h1>
-                    <p style="color: #64748b; font-size: 0.85rem;">Gerado pelo Sistema da Câmara Municipal</p>
+                    <p style="color: #64748b; font-size: 0.85rem;">Protocolo: <strong>${d.protocolo || '—'}</strong></p>
                 </div>
                 <div class="detalhe-item"><label>Data do Envio</label><p>${formatarData(d.data_submissao)}</p></div>
                 <div class="detalhe-item"><label>Tipo de Manifestação</label><p>${d.tipo_manifestacao || 'Não informado'}</p></div>
@@ -599,7 +607,26 @@
                 `;
             }
             html += `<div class="detalhe-item"><label>Descrição Completa</label><p style="border-left: 4px solid #025d3b;">${d.descricao || 'Sem descrição'}</p></div>`;
-            
+
+            html += `
+                <div class="detalhe-item area-resposta" style="background: #f0fdf4; padding: 15px; border-radius: 8px; border: 1px dashed #025d3b; margin-top: 20px;">
+                    <label style="color: #025d3b;">Resposta Oficial (visível ao cidadão na consulta de protocolo)</label>
+                    <textarea id="resposta-ouv-texto" style="width:100%; min-height:100px; padding:10px; border-radius:6px; border:1px solid var(--borda); font-family:inherit; font-size:0.9rem; margin-top:5px; resize:vertical;" placeholder="Digite a resposta oficial da Ouvidoria...">${d.resposta || ''}</textarea>
+                    <label style="color: #025d3b; margin-top:12px;">Nome do Responsável pela Resposta</label>
+                    <input type="text" id="resposta-ouv-autor" style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--borda); font-family:inherit; font-size:0.9rem; margin-top:5px;" value="${d.respondido_por || 'Flávio dos Santos Paim'}" placeholder="Nome do servidor responsável">
+                    <label style="color: #025d3b; margin-top:12px;">Situação</label>
+                    <div style="display:flex; gap:10px; align-items:center; margin-top:5px;">
+                        <select id="select-status-ouv" style="padding:10px; border-radius:6px; border:1px solid var(--borda); outline:none; flex:1;">
+                            <option value="Recebida" ${statusOuv === 'Recebida' ? 'selected' : ''}>Recebida</option>
+                            <option value="Em análise" ${statusOuv === 'Em análise' ? 'selected' : ''}>Em análise</option>
+                            <option value="Respondida" ${statusOuv === 'Respondida' ? 'selected' : ''}>Respondida</option>
+                            <option value="Encaminhada" ${statusOuv === 'Encaminhada' ? 'selected' : ''}>Encaminhada</option>
+                        </select>
+                        <button class="btn btn-primario" id="btn-salvar-ouv" onclick="salvarRespostaOuvidoria('${d.id}')">Salvar Resposta</button>
+                    </div>
+                </div>
+            `;
+
             document.getElementById('modal-conteudo').innerHTML = html;
             document.getElementById('modal-leitura').classList.add('ativo');
         }
@@ -611,7 +638,7 @@
             const html = `
                 <div style="margin-bottom: 20px; border-bottom: 2px solid #0284c7; padding-bottom: 10px;">
                     <h1 style="color: #0284c7; font-size: 1.5rem; margin-bottom: 5px;">Pedido de Informação (e-SIC)</h1>
-                    <p style="color: #64748b; font-size: 0.85rem;">Gerado pelo Sistema da Câmara Municipal</p>
+                    <p style="color: #64748b; font-size: 0.85rem;">Protocolo: <strong>${d.protocolo || '—'}</strong></p>
                 </div>
 
                 <div class="detalhe-item" style="background: #f1f5f9; padding: 15px; border-radius: 8px; border: 1px dashed #0284c7;">
@@ -622,8 +649,12 @@
                             <option value="Atendido" ${d.status_pedido === 'Atendido' ? 'selected' : ''}>Atendido (Deferido)</option>
                             <option value="Indeferido" ${d.status_pedido === 'Indeferido' ? 'selected' : ''}>Indeferido</option>
                         </select>
-                        <button class="btn btn-primario" id="btn-atualizar-status" onclick="atualizarStatusEsic('${d.id}')">Atualizar Status</button>
                     </div>
+                    <label style="color: #0284c7; margin-top:12px;">Resposta Oficial (visível ao cidadão na consulta de protocolo)</label>
+                    <textarea id="resposta-esic-texto" style="width:100%; min-height:110px; padding:10px; border-radius:6px; border:1px solid var(--borda); font-family:inherit; font-size:0.9rem; margin-top:5px; resize:vertical;" placeholder="Digite a resposta oficial ao pedido de acesso à informação...">${d.resposta || ''}</textarea>
+                    <label style="color: #0284c7; margin-top:12px;">Nome do Responsável pela Resposta</label>
+                    <input type="text" id="resposta-esic-autor" style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--borda); font-family:inherit; font-size:0.9rem; margin-top:5px;" value="${d.respondido_por || 'Flávio dos Santos Paim'}" placeholder="Nome do servidor responsável">
+                    <button class="btn btn-primario" id="btn-atualizar-status" style="margin-top:12px; width:100%;" onclick="atualizarStatusEsic('${d.id}')">Salvar Status e Resposta</button>
                 </div>
 
                 <div class="detalhe-item"><label>Data do Pedido</label><p>${formatarData(d.data_submissao)}</p></div>
@@ -647,33 +678,70 @@
         // ====== LÓGICA DE ATUALIZAÇÃO DO STATUS NO FIREBASE ======
         window.atualizarStatusEsic = async function(docId) {
             const novoStatus = document.getElementById('select-status-esic').value;
+            const resposta = document.getElementById('resposta-esic-texto').value.trim();
+            const autor = document.getElementById('resposta-esic-autor').value.trim();
             const btnAtualizar = document.getElementById('btn-atualizar-status');
-            
+
             btnAtualizar.innerText = "Salvando...";
             btnAtualizar.disabled = true;
 
             try {
-                // Referência direta ao documento específico usando o ID
                 const docRef = doc(db, "esic_pedidos", docId);
-                // Atualiza somente o campo de status
                 await updateDoc(docRef, {
-                    status_pedido: novoStatus
+                    status_pedido: novoStatus,
+                    resposta: resposta,
+                    respondido_por: autor,
+                    data_resposta: new Date()
                 });
-                
-                alert(`Status atualizado com sucesso para: ${novoStatus}`);
+
+                alert(`Pedido atualizado com sucesso. Status: ${novoStatus}`);
                 fecharModal();
-                
-                // Recarrega os dados para a tabela atualizar a cor da Badge
+
                 document.getElementById('loader').style.display = 'block';
                 document.getElementById('tab-esic').classList.remove('active');
                 await carregarDados();
-                
+
             } catch (error) {
-                console.error("Erro ao atualizar status:", error);
-                alert("Erro ao atualizar o status. Verifique as regras do Firebase.");
+                console.error("Erro ao atualizar pedido:", error);
+                alert("Erro ao atualizar. Verifique as regras do Firebase.");
             } finally {
-                btnAtualizar.innerText = "Atualizar Status";
+                btnAtualizar.innerText = "Salvar Status e Resposta";
                 btnAtualizar.disabled = false;
+            }
+        }
+
+        // ====== SALVAR RESPOSTA DA OUVIDORIA ======
+        window.salvarRespostaOuvidoria = async function(docId) {
+            const novoStatus = document.getElementById('select-status-ouv').value;
+            const resposta = document.getElementById('resposta-ouv-texto').value.trim();
+            const autor = document.getElementById('resposta-ouv-autor').value.trim();
+            const btnSalvar = document.getElementById('btn-salvar-ouv');
+
+            btnSalvar.innerText = "Salvando...";
+            btnSalvar.disabled = true;
+
+            try {
+                const docRef = doc(db, "ouvidoria_manifestacoes", docId);
+                await updateDoc(docRef, {
+                    status: novoStatus,
+                    resposta: resposta,
+                    respondido_por: autor,
+                    data_resposta: new Date()
+                });
+
+                alert(`Manifestação atualizada com sucesso. Situação: ${novoStatus}`);
+                fecharModal();
+
+                document.getElementById('loader').style.display = 'block';
+                document.getElementById('tab-ouvidoria').classList.remove('active');
+                await carregarDados();
+
+            } catch (error) {
+                console.error("Erro ao salvar resposta:", error);
+                alert("Erro ao salvar. Verifique as regras do Firebase.");
+            } finally {
+                btnSalvar.innerText = "Salvar Resposta";
+                btnSalvar.disabled = false;
             }
         }
 
