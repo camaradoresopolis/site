@@ -268,7 +268,9 @@
                     htmlFinal += `<p style="padding: 10px 0; color: var(--texto-medio); font-weight: 500;">Declaramos que no ano de 2024 não houve registros de diárias de viagem na Câmara Municipal.</p>`;
                 } else if (dadosAgrupados[ano]) {
                     const mesesDoAno = Object.keys(dadosAgrupados[ano]).sort((a, b) => ordemMeses.indexOf(a) - ordemMeses.indexOf(b));
-                    mesesDoAno.forEach(mes => {
+                    
+                    // Cria botões para os meses com e sem diárias
+                    ordemMeses.forEach(mes => {
                         htmlFinal += `
                             <details>
                                 <summary class="subtopico-titulo">
@@ -281,7 +283,13 @@
                                         CSV
                                     </button>
                                 </summary>
-                                <div class="subtopico-conteudo">
+                                <div class="subtopico-conteudo">`;
+                        
+                        // Verifica se há diárias para o mês
+                        if (!dadosAgrupados[ano][mes] || dadosAgrupados[ano][mes].length === 0) {
+                            htmlFinal += `<p style="padding: 10px 0; color: var(--texto-medio); font-weight: 500;">Declaramos que neste mês não houve registros de diárias de viagem na Câmara Municipal.</p>`;
+                        } else {
+                            htmlFinal += `
                                     <div class="table-responsive">
                                         <table>
                                             <thead>
@@ -297,32 +305,34 @@
                                                 </tr>
                                             </thead>
                                             <tbody>`;
-                        let somaMes = 0;
-                        dadosAgrupados[ano][mes].forEach(linha => {
+                            let somaMes = 0;
+                            dadosAgrupados[ano][mes].forEach(linha => {
+                                htmlFinal += `
+                                    <tr class="linha-dado">
+                                        <td>${linha[2]||''}</td>
+                                        <td>${linha[3]||''}</td>
+                                        <td>${linha[4]||''}</td>
+                                        <td>${linha[5]||''}</td>
+                                        <td>${linha[6]||''}</td>
+                                        <td>${linha[7]||''}</td>
+                                        <td>${linha[8]||''}</td>
+                                        <td>${linha[9]||''}</td>
+                                    </tr>`;
+                                // Agora o Valor Recebido está na posição 9 (letra J da planilha)
+                                let valStr = linha[9] || '';
+                                if (valStr.includes('R$')) {
+                                    let num = parseFloat(valStr.replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
+                                    if (!isNaN(num)) somaMes += num;
+                                }
+                            });
                             htmlFinal += `
-                                <tr class="linha-dado">
-                                    <td>${linha[2]||''}</td>
-                                    <td>${linha[3]||''}</td>
-                                    <td>${linha[4]||''}</td>
-                                    <td>${linha[5]||''}</td>
-                                    <td>${linha[6]||''}</td>
-                                    <td>${linha[7]||''}</td>
-                                    <td>${linha[8]||''}</td>
-                                    <td>${linha[9]||''}</td>
-                                </tr>`;
-                            // Agora o Valor Recebido está na posição 9 (letra J da planilha)
-                            let valStr = linha[9] || '';
-                            if (valStr.includes('R$')) {
-                                let num = parseFloat(valStr.replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
-                                if (!isNaN(num)) somaMes += num;
-                            }
-                        });
-                        htmlFinal += `
-                                        <tr class="tabela-total">
-                                            <td colspan="7">TOTAL LISTADO - ${mes.toUpperCase()}</td>
-                                            <td>${somaMes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                                        </tr>
-                                    </tbody></table></div></div></details>`;
+                                            <tr class="tabela-total">
+                                                <td colspan="7">TOTAL LISTADO - ${mes.toUpperCase()}</td>
+                                                <td>${somaMes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                                            </tr>
+                                        </tbody></table></div>`;
+                        }
+                        htmlFinal += `</div></details>`;
                     });
                 }
                 htmlFinal += `</div></details>`;
@@ -405,6 +415,11 @@
             e.stopPropagation(); e.preventDefault();
             const det = btn.closest('details');
             const tab = det.querySelector('table');
+            // Retorna se não houver tabela
+            if (!tab) {
+                alert("Nenhuma diária lançada neste mês para baixar.");
+                return;
+            }
             const topAn = det.closest('.topico-conteudo').previousElementSibling.textContent.trim();
             const mesT = det.querySelector('.subtopico-titulo-texto').textContent.trim();
             const nArq = `diarias_cm_doresopolis_${topAn}_${mesT}.csv`.replace(/\s+/g, '_').toLowerCase();
