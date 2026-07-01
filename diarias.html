@@ -157,7 +157,6 @@
                     <div>
                         <ul>
                             <li>As informações refletem a realidade atual, pois foram atualizadas em tempo real através de busca em banco de dados.</li>
-                      
                         </ul>
                     </div>
                 </div>
@@ -267,10 +266,10 @@
                 if (ano === '2024' && (!dadosAgrupados[ano] || Object.keys(dadosAgrupados[ano]).length === 0)) {
                     htmlFinal += `<p style="padding: 10px 0; color: var(--texto-medio); font-weight: 500;">Declaramos que no ano de 2024 não houve registros de diárias de viagem na Câmara Municipal.</p>`;
                 } else if (dadosAgrupados[ano]) {
-                    const mesesDoAno = Object.keys(dadosAgrupados[ano]).sort((a, b) => ordemMeses.indexOf(a) - ordemMeses.indexOf(b));
+                    // Pega somente os meses cadastrados no CSV, ordenados corretamente
+                    const mesesCadastrados = Object.keys(dadosAgrupados[ano]).sort((a, b) => ordemMeses.indexOf(a) - ordemMeses.indexOf(b));
                     
-                    // Cria botões para os meses com e sem diárias
-                    ordemMeses.forEach(mes => {
+                    mesesCadastrados.forEach(mes => {
                         htmlFinal += `
                             <details>
                                 <summary class="subtopico-titulo">
@@ -285,8 +284,10 @@
                                 </summary>
                                 <div class="subtopico-conteudo">`;
                         
-                        // Verifica se há diárias para o mês
-                        if (!dadosAgrupados[ano][mes] || dadosAgrupados[ano][mes].length === 0) {
+                        // Checa se as linhas desse mês possuem um nome de beneficiário cadastrado (coluna C -> índice 2)
+                        const temDiarias = dadosAgrupados[ano][mes].some(linha => linha.length > 2 && linha[2] && linha[2].trim() !== '');
+                        
+                        if (!temDiarias) {
                             htmlFinal += `<p style="padding: 10px 0; color: var(--texto-medio); font-weight: 500;">Declaramos que neste mês não houve registros de diárias de viagem na Câmara Municipal.</p>`;
                         } else {
                             htmlFinal += `
@@ -307,22 +308,25 @@
                                             <tbody>`;
                             let somaMes = 0;
                             dadosAgrupados[ano][mes].forEach(linha => {
-                                htmlFinal += `
-                                    <tr class="linha-dado">
-                                        <td>${linha[2]||''}</td>
-                                        <td>${linha[3]||''}</td>
-                                        <td>${linha[4]||''}</td>
-                                        <td>${linha[5]||''}</td>
-                                        <td>${linha[6]||''}</td>
-                                        <td>${linha[7]||''}</td>
-                                        <td>${linha[8]||''}</td>
-                                        <td>${linha[9]||''}</td>
-                                    </tr>`;
-                                // Agora o Valor Recebido está na posição 9 (letra J da planilha)
-                                let valStr = linha[9] || '';
-                                if (valStr.includes('R$')) {
-                                    let num = parseFloat(valStr.replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
-                                    if (!isNaN(num)) somaMes += num;
+                                // Só desenha a linha se tiver beneficiário nela
+                                if (linha.length > 2 && linha[2] && linha[2].trim() !== '') {
+                                    htmlFinal += `
+                                        <tr class="linha-dado">
+                                            <td>${linha[2]||''}</td>
+                                            <td>${linha[3]||''}</td>
+                                            <td>${linha[4]||''}</td>
+                                            <td>${linha[5]||''}</td>
+                                            <td>${linha[6]||''}</td>
+                                            <td>${linha[7]||''}</td>
+                                            <td>${linha[8]||''}</td>
+                                            <td>${linha[9]||''}</td>
+                                        </tr>`;
+                                    
+                                    let valStr = linha[9] || '';
+                                    if (valStr.includes('R$')) {
+                                        let num = parseFloat(valStr.replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
+                                        if (!isNaN(num)) somaMes += num;
+                                    }
                                 }
                             });
                             htmlFinal += `
@@ -358,7 +362,6 @@
             totais.forEach(t => t.style.display = fAtivo ? 'none' : '');
             
             linhas.forEach(linha => {
-                // A posição do nome na tabela agora é a célula 0 e o cargo é a 1
                 const nomeT = linha.cells[0].textContent.toLowerCase() + linha.cells[1].textContent.toLowerCase();
                 const textoL = linha.innerHTML;
                 let bateN = nomeF === '' || nomeT.includes(nomeF);
@@ -415,11 +418,12 @@
             e.stopPropagation(); e.preventDefault();
             const det = btn.closest('details');
             const tab = det.querySelector('table');
-            // Retorna se não houver tabela
+            
             if (!tab) {
                 alert("Nenhuma diária lançada neste mês para baixar.");
                 return;
             }
+
             const topAn = det.closest('.topico-conteudo').previousElementSibling.textContent.trim();
             const mesT = det.querySelector('.subtopico-titulo-texto').textContent.trim();
             const nArq = `diarias_cm_doresopolis_${topAn}_${mesT}.csv`.replace(/\s+/g, '_').toLowerCase();
