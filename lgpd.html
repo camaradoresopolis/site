@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página de LGPD e Privacidade da Câmara Municipal de Doresópolis/MG: identificação do Encarregado, canal de comunicação, política de privacidade, legislação e Governo Digital.">
+    <title>LGPD e Privacidade | Câmara Municipal de Doresópolis</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Variáveis de Cores */
+        :root {
+            --cor-fundo: #f2f2f2;
+            --cor-primaria: #025d3b;
+            --cor-primaria-hover: #01472c;
+            --cor-primaria-bg: rgba(2, 93, 59, 0.08);
+            --branco: #ffffff;
+            --texto-escuro: #1f2937;
+            --texto-medio: #4b5563;
+            --texto-claro: #6b7280;
+            --borda: #e5e7eb;
+            --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--texto-escuro);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Botão Voltar */
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--texto-medio);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: var(--transicao);
+            padding: 8px 16px;
+            border-radius: 8px;
+            background-color: transparent;
+        }
+
+        .btn-voltar:hover {
+            color: var(--cor-primaria);
+            background-color: var(--cor-primaria-bg);
+            transform: translateX(-4px);
+        }
+
+        .btn-voltar svg { width: 20px; height: 20px; fill: currentColor; }
+
+        /* Cabeçalho */
+        .header-transparencia {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .badge-titulo {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: var(--cor-primaria-bg);
+            color: var(--cor-primaria);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .badge-titulo svg { width: 16px; height: 16px; fill: currentColor; }
+
+        .header-transparencia h1 {
+            font-size: 2.5rem;
+            color: var(--texto-escuro);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .header-transparencia p {
+            font-size: 1.05rem;
+            color: var(--texto-medio);
+            max-width: 800px;
+            margin: 0 auto 10px auto;
+        }
+
+        /* Navegação por âncoras */
+        .indice {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 45px;
+        }
+
+        .indice a {
+            text-decoration: none;
+            color: var(--texto-medio);
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border: 1px solid var(--borda);
+            border-radius: 50px;
+            background: var(--branco);
+            transition: var(--transicao);
+        }
+
+        .indice a:hover {
+            color: var(--branco);
+            background: var(--cor-primaria);
+            border-color: var(--cor-primaria);
+        }
+
+        /* Seções */
+        .secao {
+            background-color: var(--branco);
+            border: 1px solid var(--borda);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 28px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+            animation: slideUp 0.8s ease-out;
+            scroll-margin-top: 20px;
+        }
+
+        .secao-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .icone-box {
+            width: 52px;
+            height: 52px;
+            background-color: var(--cor-primaria-bg);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .icone-box svg { width: 26px; height: 26px; fill: var(--cor-primaria); }
+
+        .secao-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--texto-escuro);
+        }
+
+        .secao-header .sub-obrigatorio,
+        .secao-header .sub-recomendado {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 3px 10px;
+            border-radius: 50px;
+            margin-top: 4px;
+        }
+
+        .sub-obrigatorio { background: #fee2e2; color: #b91c1c; }
+        .sub-recomendado { background: #dbeafe; color: #1d4ed8; }
+
+        .secao p { color: var(--texto-medio); margin-bottom: 14px; }
+        .secao p:last-child { margin-bottom: 0; }
+        .secao strong { color: var(--texto-escuro); }
+
+        /* Encarregado - destaque */
+        .encarregado-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 8px;
+        }
+
+        .info-bloco {
+            background: var(--cor-fundo);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .info-bloco h3 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--texto-claro);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .info-bloco .nome {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--cor-primaria);
+        }
+
+        .info-bloco .cargo { font-size: 0.9rem; color: var(--texto-medio); }
+
+        .contato-lista {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .contato-lista li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .contato-lista svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--cor-primaria);
+            flex-shrink: 0;
+        }
+
+        .contato-lista a {
+            color: var(--texto-escuro);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contato-lista a:hover { color: var(--cor-primaria); text-decoration: underline; }
+
+        .comite-lista {
+            list-style: none;
+            margin-top: 6px;
+        }
+        .comite-lista li {
+            padding: 6px 0;
+            border-bottom: 1px dashed var(--borda);
+            color: var(--texto-medio);
+        }
+        .comite-lista li:last-child { border-bottom: none; }
+        .comite-lista strong { color: var(--texto-escuro); }
+
+        /* Botões de Download */
+        .downloads {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .card-download {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: var(--cor-fundo);
+            border: 1px solid var(--borda);
+            border-radius: 12px;
+            padding: 18px;
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transicao);
+        }
+
+        .card-download:hover {
+            border-color: var(--cor-primaria);
+            background: var(--branco);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(2, 93, 59, 0.08);
+        }
+
+        .card-download .pdf-icone {
+            width: 46px;
+            height: 46px;
+            border-radius: 10px;
+            background: var(--cor-primaria);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .card-download .pdf-icone svg { width: 24px; height: 24px; fill: var(--branco); }
+
+        .card-download .doc-info { flex-grow: 1; }
+
+        .card-download .doc-titulo {
+            font-weight: 700;
+            font-size: 0.98rem;
+            color: var(--texto-escuro);
+            display: block;
+        }
+
+        .card-download .doc-desc {
+            font-size: 0.82rem;
+            color: var(--texto-claro);
+        }
+
+        .card-download .baixar {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--cor-primaria);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        .card-download .baixar svg { width: 16px; height: 16px; fill: var(--cor-primaria); }
+
+        /* Lista de direitos */
+        .direitos-lista {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 10px;
+            margin-top: 6px;
+        }
+        .direitos-lista li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: var(--texto-medio);
+            font-size: 0.93rem;
+        }
+        .direitos-lista svg {
+            width: 18px; height: 18px; fill: var(--cor-primaria);
+            flex-shrink: 0; margin-top: 3px;
+        }
+
+        .nota {
+            font-size: 0.85rem;
+            color: var(--texto-claro);
+            font-style: italic;
+            border-left: 3px solid var(--borda);
+            padding-left: 12px;
+            margin-top: 16px;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--texto-claro);
+            font-size: 0.85rem;
+            margin-top: 40px;
+            line-height: 1.8;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .header-transparencia h1 { font-size: 2rem; }
+            .encarregado-box { grid-template-columns: 1fr; }
+            .secao { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <a href="https://www.doresopolis.mg.leg.br/transparencia" class="btn-voltar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+            Voltar para Transparência
+        </a>
+
+        <div class="header-transparencia">
+            <span class="badge-titulo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80Zm-112-24a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"></path></svg>
+                Proteção de Dados Pessoais
+            </span>
+            <h1>LGPD e Privacidade</h1>
+            <p>A Lei Geral de Proteção de Dados (Lei nº 13.709/2018) — LGPD — é a norma brasileira que dispõe sobre o tratamento de dados pessoais, protegendo os direitos fundamentais de liberdade e privacidade do cidadão.</p>
+            <p>A adequação à LGPD na Câmara Municipal de Doresópolis, em suas funções legislativa e administrativa, visa garantir aos cidadãos a proteção e a privacidade dos dados coletados.</p>
+        </div>
+
+        <nav class="indice" aria-label="Índice da página">
+            <a href="#encarregado">Encarregado (DPO)</a>
+            <a href="#politica">Política de Privacidade</a>
+            <a href="#direitos">Direitos do Titular</a>
+            <a href="#legislacao">Legislação e Normativas</a>
+            <a href="#governo-digital">Governo Digital</a>
+        </nav>
+
+        <!-- 15.1 - ENCARREGADO -->
+        <section class="secao" id="encarregado">
+            <div class="secao-header">
+                <div class="icone-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M144,16a80.09,80.09,0,0,0-80,80v64a80,80,0,0,0,160,0V96A80.09,80.09,0,0,0,144,16Zm64,144a64.07,64.07,0,0,1-64,64H112a64.07,64.07,0,0,1-64-64V96a64.07,64.07,0,0,1,64-64h16V104a8,8,0,0,0,16,0V32h16a64.07,64.07,0,0,1,64,64Z"></path></svg>
+                </div>
+                <div>
+                    <h2>Encarregado pelo Tratamento de Dados</h2>
+                    <span class="sub-obrigatorio">Item 15.1 — Obrigatório</span>
+                </div>
+            </div>
+            <p>O Encarregado (DPO — <em>Data Protection Officer</em>) é a pessoa indicada como canal de comunicação entre a Câmara Municipal (controladora), os titulares dos dados e a Autoridade Nacional de Proteção de Dados (ANPD). Nomeado pela <strong>Portaria nº 027/2026</strong>, nos termos da Resolução nº 018/2026.</p>
+
+            <div class="encarregado-box">
+                <div class="info-bloco">
+                    <h3>Encarregado (DPO)</h3>
+                    <div class="nome">Geraldo Ferreira Pedrosa Júnior</div>
+                    <div class="cargo">Vereador — Encarregado de Proteção de Dados Pessoais</div>
+                    <h3 style="margin-top:18px;">Comitê Gestor de Proteção de Dados</h3>
+                    <ul class="comite-lista">
+                        <li><strong>Geraldo Ferreira Pedrosa Júnior</strong> — Encarregado</li>
+                        <li><strong>Humberto Soares Bueno</strong> — Membro</li>
+                        <li><strong>Keyla Maria Paim</strong> — Membro</li>
+                    </ul>
+                </div>
+                <div class="info-bloco">
+                    <h3>Canal de Comunicação</h3>
+                    <ul class="contato-lista">
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM203.43,64,128,133.15,52.57,64ZM216,192H40V74.19l82.59,75.71a8,8,0,0,0,10.82,0L216,74.19V192Z"></path></svg>
+                            <a href="mailto:assessoria@camaradoresopolis.com.br">assessoria@camaradoresopolis.com.br</a>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83,111.71a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z"></path></svg>
+                            <a href="tel:+553734410012">(37) 3441-0012</a>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z"></path></svg>
+                            <span>Rua Farnésio Paim Pamplona, nº 61, Centro — Doresópolis/MG, CEP 37.926-000</span>
+                        </li>
+                    </ul>
+                    <p class="nota">Atendimento presencial em horário de expediente da Câmara Municipal.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 15.2 - POLÍTICA DE PRIVACIDADE -->
+        <section class="secao" id="politica">
+            <div class="secao-header">
+                <div class="icone-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M208,40H48A16,16,0,0,0,32,56V112c0,53.8,43.23,98.63,99.23,111.41a24.11,24.11,0,0,0,10.59,0C198.81,210.6,224,165.75,224,112V56A16,16,0,0,0,208,40Zm-92.69,124.69a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32L109.66,147.7l61.65-61.65a8,8,0,0,1,11.32,11.32Z"></path></svg>
+                </div>
+                <div>
+                    <h2>Política de Privacidade e Proteção de Dados</h2>
+                    <span class="sub-recomendado">Item 15.2 — Recomendado</span>
+                </div>
+            </div>
+            <p>A Câmara Municipal de Doresópolis trata dados pessoais para o exercício de suas competências legais e o cumprimento de suas atribuições públicas, observando a boa-fé e os princípios da LGPD: <strong>finalidade, adequação, necessidade, livre acesso, qualidade dos dados, transparência, segurança, prevenção, não discriminação e responsabilização</strong>.</p>
+            <p>A Política de Privacidade e Proteção de Dados da Câmara está estabelecida na <strong>Resolução nº 018/2026</strong>, que regulamenta a aplicação da LGPD no âmbito da instituição, definindo competências, procedimentos, direitos dos titulares e medidas de segurança da informação.</p>
+
+            <div class="downloads">
+                <a href="documentos/Resolucao-018-2026-LGPD.pdf" class="card-download" download>
+                    <div class="pdf-icone">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <div class="doc-info">
+                        <span class="doc-titulo">Resolução nº 018/2026</span>
+                        <span class="doc-desc">Política de Privacidade e regulamentação da LGPD — PDF</span>
+                    </div>
+                    <span class="baixar">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,132.69V40a8,8,0,0,0-16,0v92.69L93.66,106.34a8,8,0,0,0-11.32,11.32Z"></path></svg>
+                        Baixar
+                    </span>
+                </a>
+            </div>
+        </section>
+
+        <!-- DIREITOS DO TITULAR -->
+        <section class="secao" id="direitos">
+            <div class="secao-header">
+                <div class="icone-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+                </div>
+                <div>
+                    <h2>Direitos do Titular dos Dados</h2>
+                </div>
+            </div>
+            <p>Qualquer cidadão pode, a qualquer momento, solicitar à Câmara Municipal o exercício de seus direitos previstos na LGPD, por meio do canal de comunicação com o Encarregado indicado acima:</p>
+            <ul class="direitos-lista">
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg> Confirmação da existência de tratamento</li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg> Acesso aos dados</li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg> Correção de dados incompletos ou desatualizados</li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg> Anonimização, bloqueio ou eliminação de dados</li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg> Portabilidade dos dados, quando aplicável</li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg> Informação sobre compartilhamento de dados</li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg> Revogação do consentimento</li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg> Revisão de decisões automatizadas</li>
+            </ul>
+            <p class="nota">Os pedidos com fundamento na proteção de dados pessoais (LGPD) não se confundem com os pedidos de acesso a informações públicas (Lei nº 12.527/2011 — LAI), que possuem procedimento próprio.</p>
+        </section>
+
+        <!-- LEGISLAÇÃO E NORMATIVAS -->
+        <section class="secao" id="legislacao">
+            <div class="secao-header">
+                <div class="icone-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-40-80a8,8,0,0,1-8,8H104a8,8,0,0,1,0-16h48A8,8,0,0,1,160,136Zm0,32a8,8,0,0,1-8,8H104a8,8,0,0,1,0-16h48A8,8,0,0,1,160,168Z"></path></svg>
+                </div>
+                <div>
+                    <h2>Legislação e Normativas Internas</h2>
+                </div>
+            </div>
+            <p>Acesse e faça o download das normas que regem a proteção de dados pessoais no âmbito da Câmara Municipal de Doresópolis:</p>
+
+            <div class="downloads">
+                <a href="documentos/Resolucao-018-2026-LGPD.pdf" class="card-download" download>
+                    <div class="pdf-icone">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <div class="doc-info">
+                        <span class="doc-titulo">Resolução nº 018/2026</span>
+                        <span class="doc-desc">Regulamenta a LGPD na Câmara — 28/05/2026</span>
+                    </div>
+                    <span class="baixar">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,132.69V40a8,8,0,0,0-16,0v92.69L93.66,106.34a8,8,0,0,0-11.32,11.32Z"></path></svg>
+                        Baixar
+                    </span>
+                </a>
+
+                <a href="documentos/Portaria-027-2026-Nomeacao-Comite-LGPD.pdf" class="card-download" download>
+                    <div class="pdf-icone">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <div class="doc-info">
+                        <span class="doc-titulo">Portaria nº 027/2026</span>
+                        <span class="doc-desc">Nomeação do Comitê Gestor e do Encarregado — 03/06/2026</span>
+                    </div>
+                    <span class="baixar">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,132.69V40a8,8,0,0,0-16,0v92.69L93.66,106.34a8,8,0,0,0-11.32,11.32Z"></path></svg>
+                        Baixar
+                    </span>
+                </a>
+
+                <a href="documentos/Resolucao-017-2026-Governo-Digital.pdf" class="card-download" download>
+                    <div class="pdf-icone">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <div class="doc-info">
+                        <span class="doc-titulo">Resolução nº 017/2026</span>
+                        <span class="doc-desc">Regulamenta o Governo Digital (Lei 14.129/2021) — 2026</span>
+                    </div>
+                    <span class="baixar">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,132.69V40a8,8,0,0,0-16,0v92.69L93.66,106.34a8,8,0,0,0-11.32,11.32Z"></path></svg>
+                        Baixar
+                    </span>
+                </a>
+            </div>
+            <p class="nota">Legislação federal de referência: Lei nº 13.709/2018 (LGPD) e Lei nº 14.129/2021 (Governo Digital).</p>
+        </section>
+
+        <!-- 15.5 - GOVERNO DIGITAL -->
+        <section class="secao" id="governo-digital">
+            <div class="secao-header">
+                <div class="icone-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M208,40H48A24,24,0,0,0,24,64V192a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V64A24,24,0,0,0,208,40Zm8,152a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V64a8,8,0,0,1,8-8H208a8,8,0,0,1,8,8ZM112,120a8,8,0,0,1-8,8H72a8,8,0,0,1,0-16h32A8,8,0,0,1,112,120Zm72,32a8,8,0,0,1-8,8H72a8,8,0,0,1,0-16H176A8,8,0,0,1,184,152Z"></path></svg>
+                </div>
+                <div>
+                    <h2>Governo Digital — Lei nº 14.129/2021</h2>
+                    <span class="sub-recomendado">Item 15.5 — Recomendado</span>
+                </div>
+            </div>
+            <p>A Lei Federal nº 14.129/2021 estabelece regras para a transformação digital na administração pública, incentivando a digitalização de processos, o compartilhamento seguro de dados entre órgãos públicos, a interoperabilidade dos sistemas, a transparência no uso de informações e a oferta de serviços online mais ágeis e acessíveis ao cidadão.</p>
+            <p>No âmbito da Câmara Municipal de Doresópolis, a Lei nº 14.129/2021 foi regulamentada pela <strong>Resolução nº 017/2026</strong>, que institui o <strong>"Programa Câmara Digital"</strong>, estabelecendo princípios, regras e instrumentos para a transformação digital, a desburocratização, a inovação e a participação do cidadão. A proteção de dados tratada nesse contexto é complementada pela Resolução nº 018/2026 (LGPD).</p>
+
+            <div class="downloads">
+                <a href="documentos/Resolucao-017-2026-Governo-Digital.pdf" class="card-download" download>
+                    <div class="pdf-icone">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path></svg>
+                    </div>
+                    <div class="doc-info">
+                        <span class="doc-titulo">Resolução nº 017/2026</span>
+                        <span class="doc-desc">Regulamenta a Lei nº 14.129/2021 — Programa Câmara Digital — PDF</span>
+                    </div>
+                    <span class="baixar">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,132.69V40a8,8,0,0,0-16,0v92.69L93.66,106.34a8,8,0,0,0-11.32,11.32Z"></path></svg>
+                        Baixar
+                    </span>
+                </a>
+            </div>
+        </section>
+
+        <footer>
+            Câmara Municipal de Doresópolis — Estado de Minas Gerais<br>
+            CNPJ: 05.608.436/0001-81 — Rua Farnésio Paim Pamplona, nº 61, Centro — CEP 37.926-000 — Fone: (37) 3441-0012<br>
+            Página elaborada em conformidade com os itens 15.1, 15.2 e 15.5 do Programa Nacional de Transparência Pública (PNTP).
+        </footer>
+
+    </div>
+
+</body>
+</html>
